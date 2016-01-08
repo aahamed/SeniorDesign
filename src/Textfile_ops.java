@@ -10,7 +10,7 @@ import java.util.List;
 public class Textfile_ops
 {
 	// Default filename for the file. Can be modified from above.
-	String filename = "default.txt";
+	String filename = "testin.txt";
 	// Makes a list called 'data' which will contain the strings from the file.
 	List<String> data = new ArrayList<String>();
 
