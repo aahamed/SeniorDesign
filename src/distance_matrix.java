@@ -13,7 +13,7 @@ public class distance_matrix
 
 	public static void main (String[] args)
 	{
-		conversion_ops TEST = new conversion_ops();
+		data_ops TEST = new data_ops();
 		TEST.parse_data();
 
 		int entries = TEST.ll.size();
@@ -37,7 +37,7 @@ public class distance_matrix
 		{
 			for (int b = 0; b < entries; b++)
 			{
-				System.out.print(distance_matrix[a][b] + " ");
+				System.out.print(distance_matrix[a][b] + ", ");
 			}
 			System.out.print("\n");
 		}
