@@ -2,15 +2,15 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class data_ops
+public class Data_ops
 {
 	List<List<Double>> ll = new ArrayList<List<Double>>();
 	// textfile_ops datafile = new textfile_ops(); // TODO: Maybe move this out?
 
 	void parse_data()
 	{
-		textfile_ops datafile = new textfile_ops(); // TODO: Maybe move this out?
-		conversion_ops convert = new conversion_ops();
+		Textfile_ops datafile = new Textfile_ops(); // TODO: Maybe move this out?
+		Conversion_ops convert = new Conversion_ops();
 		int entries;
 
 		datafile.read_file();

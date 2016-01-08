@@ -1,4 +1,4 @@
-public class conversion_ops
+public class Conversion_ops
 {
 	int deg1, min1, sec1;
 	int deg2, min2, sec2;

@@ -1,4 +1,4 @@
-public class distance_matrix
+public class Distance_matrix
 {
 	static double distance_formula(double x1, double y1, double x2, double y2)
 	{
@@ -12,7 +12,7 @@ public class distance_matrix
 
 	public static void main (String[] args)
 	{
-		data_ops latlon = new data_ops();
+		Data_ops latlon = new Data_ops();
 		int entries;
 		double lat1, lon1, lat2, lon2;
 

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class textfile_ops
+public class Textfile_ops
 {
 	// Default filename for the file. Can be modified from above.
 	String filename = "default.txt";
