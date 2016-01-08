@@ -96,10 +96,10 @@ public class PrimMST
 		
 		return parent;
     }
- 
-    public static void main (String[] args)
-    {
-        /* Let us create the following graph
+	
+	private static void test1()
+	{
+		/* Let us create the following graph
            2    3
         (0)--(1)--(2)
         |    / \   |
@@ -118,5 +118,38 @@ public class PrimMST
         // Print the solution
         int[] mst = PrimMST.primMST(graph);
 		PrimMST.printMST(mst, PrimMST.V, graph);
+	}
+	
+	private static void test2()
+	{
+		int graph[][] = new int[][] {{0, 7, 0, 3, 0},
+                                     {7, 0, 5, 8, 5},
+                                     {0, 5, 0, 0, 7},
+                                     {3, 8, 0, 0, 14},
+                                     {0, 5, 7, 14, 0},
+                                    };
+ 
+        // Print the solution
+        int[] mst = PrimMST.primMST(graph);
+		PrimMST.printMST(mst, PrimMST.V, graph);
+	}
+	
+	private static void test3()
+	{
+		int graph[][] = new int[][] {{0, 7, 3},
+                                     {7, 0, 5},
+                                     {3, 5, 0},
+                                    };
+ 
+        // Print the solution
+        int[] mst = PrimMST.primMST(graph);
+		PrimMST.printMST(mst, PrimMST.V, graph);
+	}
+ 
+    public static void main (String[] args)
+    {
+        PrimMST.test1();
+		PrimMST.test2();
+		PrimMST.test3();
     }
 }
