@@ -9,18 +9,17 @@ import java.util.List;
 
 public class Textfile_ops
 {
-	// Default filename for the file. Can be modified from above.
-	String filename = "testin.txt";
 	// Makes a list called 'data' which will contain the strings from the file.
 	List<String> data = new ArrayList<String>();
 
-	void read_file()
+	void read_file(String input)
 	{
-		// Finds path to the input file, assuming it is in the same directory of the program.
-		// TODO: Check out path builder (URL builder maybe?)
-		Path input_file = Paths.get(filename);
+		// Finds path to the input file.
+		// TODO: Check out URI class.
+		Path input_file = Paths.get(input);
+
 		// Will try and read the input file and place it into a buffer called 'reader'.
-		// Assuming text file is in UTF_8, which is usually the case.
+		// Assuming text file is in encoded in UTF_8, which is usually the case.
 		try (BufferedReader reader = Files.newBufferedReader(input_file, StandardCharsets.UTF_8))
 		{
 			// Will write each line from the input file into 'data'.
@@ -37,7 +36,7 @@ public class Textfile_ops
 		}
 	}
 
-	void write_file()
+	void write_file(String output)
 	{
 		// TODO: Will eventually get back to this.
 	}

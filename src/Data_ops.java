@@ -5,16 +5,14 @@ import java.util.List;
 public class Data_ops
 {
 	List<List<Double>> ll = new ArrayList<List<Double>>();
-	// textfile_ops datafile = new textfile_ops(); // TODO: Maybe move this out?
 
-	void parse_data()
+	void parse_data(String input)
 	{
-		Textfile_ops datafile = new Textfile_ops(); // TODO: Maybe move this out?
+		Textfile_ops datafile = new Textfile_ops();
 		Conversion_ops convert = new Conversion_ops();
-		int entries;
 
-		datafile.read_file();
-		entries = datafile.data.size();
+		datafile.read_file(input);
+		int entries = datafile.data.size();
 
 		for (int c = 0; c < entries; c++)
 		{
@@ -35,7 +33,7 @@ public class Data_ops
 		}
 	}
 
-	void combine_data()
+	void combine_data(String output)
 	{
 		// TODO: Will eventually get back to this.
 	}
