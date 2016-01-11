@@ -18,9 +18,8 @@ public class Distance_matrix
 
 	public static void main (String[] args)
 	{
-		Data_ops latlon = new Data_ops();
+		Data_ops ll = new Data_ops();
 		String input_filename = "in.txt";
-		String output_filename = "out.txt";
 		int entries;
 		double lat1, lon1, lat2, lon2;
 
@@ -29,18 +28,18 @@ public class Distance_matrix
 			input_filename = args[0];
 		}
 
-		latlon.parse_data(input_filename);
-		entries = latlon.ll.size();
+		ll.parse_data(input_filename);
+		entries = ll.latlon.size();
 		double[][] distance_matrix = new double[entries][entries];
 
 		for (int x = 0; x < entries; x++)
 		{
 			for (int y = 0; y < entries; y++)
 			{
-				lat1 = latlon.ll.get(x).get(0);
-				lon1 = latlon.ll.get(x).get(1);
-				lat2 = latlon.ll.get(y).get(0);
-				lon2 = latlon.ll.get(y).get(1);
+				lat1 = ll.latlon.get(x).get(0);
+				lon1 = ll.latlon.get(x).get(1);
+				lat2 = ll.latlon.get(y).get(0);
+				lon2 = ll.latlon.get(y).get(1);
 
 				distance_matrix[x][y] = harvesine_distance(lat1, lon1, lat2, lon2);
 			}

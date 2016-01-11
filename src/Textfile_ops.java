@@ -10,7 +10,7 @@ import java.util.List;
 public class Textfile_ops
 {
 	// Makes a list called 'data' which will contain the strings from the file.
-	List<String> data = new ArrayList<String>();
+	List<String> data_file = new ArrayList<String>();
 
 	void read_file(String input)
 	{
@@ -27,7 +27,7 @@ public class Textfile_ops
 
 			while ((line = reader.readLine()) != null)
 			{
-				data.add(line);
+				data_file.add(line);
 			}
 		}
 		catch (IOException x)
