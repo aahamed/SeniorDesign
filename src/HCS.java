@@ -15,9 +15,9 @@ public class HCS
 	 * @param r edge length of hexagon
 	 * @return Cartesian Coordinate<double>
 	 */
-	public static Coordinate<Double> hexToCart(Coordinate<Integer> p, int r)
+	public static Coordinate<Double> hexToCart(Coordinate<Integer> p)
 	{
-		double h = 	r * Math.cos(Math.PI/6);
+		double h = 	GlobalConstants.APOTHEM;
 		double x = p.getX() * 2 * h + p.getY() * 2 * h * Math.cos(Math.PI/3);
 		double y = p.getY() * 2 * h * Math.cos(Math.PI/6);
 		return new Coordinate<Double>(x, y);
@@ -29,16 +29,14 @@ public class HCS
 	{
 		int x = 3;
 		int y = 5;
-		int r = 5;
 		Coordinate<Integer> c = new Coordinate<Integer>(x, y);
-		Coordinate<Double> d = HCS.hexToCart(c, r);
+		Coordinate<Double> d = HCS.hexToCart(c);
 		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY()); //verify against matlab code
 		x = 10;
 		y = 2;
-		r = 5;
 		c.setX(x);
 		c.setY(y);
-		d = HCS.hexToCart(c, r);
+		d = HCS.hexToCart(c);
 		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY());
 		
 	}
