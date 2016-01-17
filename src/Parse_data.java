@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 15, 2016
+ * Last Edit: Jan 17, 2016
  * Description: Class for parsing and converting GPS information from a list of strings into latitude and longitude format.
  */
 
@@ -44,7 +44,7 @@ public class Parse_data
 		}
 	}
 
-	public void gps_to_ll()
+	private void gps_to_ll()
 	{
 		lat = deg1/1.0 + min1/60.0 + sec1/3600.0;
 		if (dir1 == 'S')
