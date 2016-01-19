@@ -65,11 +65,5 @@ public class Distance_matrix
 			}
 			System.out.println();
 		}
-
-		double[] com = new double[2];
-		com = ll.getCOM();
-		System.out.println();
-		System.out.printf("COM is %.3f, %.3f\n", com[0], com[1]);
-
 	}
 }

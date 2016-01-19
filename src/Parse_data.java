@@ -73,7 +73,7 @@ public class Parse_data
 
 		for (int x = 0; x < entries; x++)
 		{
-			total_x += lat_lon.get(x).get(0); 
+			total_x += lat_lon.get(x).get(0);
 			total_y += lat_lon.get(x).get(1);
 		}
 
