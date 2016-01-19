@@ -38,6 +38,12 @@ public class HCS
 		c.setY(y);
 		d = HCS.hexToCart(c);
 		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY());
+		x = 30;
+		y = 22;
+		c.setX(x);
+		c.setY(y);
+		d = HCS.hexToCart(c);
+		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY());
 		
 	}
 	
