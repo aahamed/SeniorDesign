@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 17, 2016
- * Description: Class for parsing and converting GPS information from a list of strings into latitude and longitude format.
+ * Last Edit: Jan 18, 2016
+ * Description: Class for parsing and converting GPS information from a list of strings into latitude and longitude format. Also calculates center of mass.
  */
 
 import java.util.Scanner;
@@ -63,5 +63,23 @@ public class Parse_data
 	public double getLocation(int a, int b)
 	{
 		return lat_lon.get(a).get(b);
+	}
+
+	public double[] getCOM()
+	{
+		int entries = lat_lon.size();
+		double total_x = 0.0, total_y = 0.0;
+		double[] point = new double[2];
+
+		for (int x = 0; x < entries; x++)
+		{
+			total_x += lat_lon.get(x).get(0); 
+			total_y += lat_lon.get(x).get(1);
+		}
+
+		point[0] = total_x / entries;
+		point[1] = total_y / entries;
+
+		return point;
 	}
 }
