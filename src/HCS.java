@@ -27,13 +27,28 @@ public class HCS
 	/* Unit Testing */
 	public static void test1()
 	{
-		int x = 3;
-		int y = 5;
+		int x = 0;
+		int y = 0;
 		Coordinate<Integer> c = new Coordinate<Integer>(x, y);
 		Coordinate<Double> d = HCS.hexToCart(c);
 		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY()); //verify against matlab code
-		x = 10;
+
+		x = 7000;
+		y = 7000;
+		c.setX(x);
+		c.setY(y);
+		d = HCS.hexToCart(c);
+		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY());
+		
+		x = -3;
 		y = 2;
+		c.setX(x);
+		c.setY(y);
+		d = HCS.hexToCart(c);
+		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY());
+		
+		x = 3;
+		y = -2;
 		c.setX(x);
 		c.setY(y);
 		d = HCS.hexToCart(c);
