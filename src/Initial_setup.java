@@ -18,7 +18,6 @@ class Initial_setup
 		Parse_data ll = new Parse_data(input);
 
 		int entries = ll.getSize();
-		center = ll.getCOM();
 
 		for (int x = 0; x < entries; x++)
 		{
@@ -39,11 +38,5 @@ class Initial_setup
 	public double getLocation(int a, int b)
 	{
 		return normalized.get(a).get(b);
-	}
-
-	public double[] getCOM()
-	{
-		// Might not be neccesary since the COM will be at the origin
-		return center;
 	}
 }
