@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 18, 2016
+ * Last Edit: Jan 22, 2016
  * Description: Class for calculating distance matrix from latitude and longitude.
  */
 
@@ -46,10 +46,10 @@ public class Distance_matrix
 					continue;
 				}
 
-				lat1 = ll.getLocation(x, 0);
-				lon1 = ll.getLocation(x, 1);
-				lat2 = ll.getLocation(y, 0);
-				lon2 = ll.getLocation(y, 1);
+				lat1 = ll.getLat(x);
+				lon1 = ll.getLon(x);
+				lat2 = ll.getLat(y);
+				lon2 = ll.getLon(y);
 
 				result = haversine_distance(lat1, lon1, lat2, lon2);
 				distance_matrix[x][y] = result;

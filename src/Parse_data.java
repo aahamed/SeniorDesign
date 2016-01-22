@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 18, 2016
+ * Last Edit: Jan 22, 2016
  * Description: Class for parsing and converting GPS information from a list of strings into latitude and longitude format. Also calculates center of mass.
  */
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Parse_data
 {
-	private List<List<Double>> lat_lon = new ArrayList<List<Double>>();
+	private List<Coordinate<Double>> lat_lon = new ArrayList<Coordinate<Double>>();
 	private int deg1, min1, deg2, min2;
 	private double sec1, sec2, lat, lon;
 	private char dir1, dir2;
@@ -36,11 +36,8 @@ public class Parse_data
 			dir2 = line.next().charAt(0);
 
 			line.close();
-
 			gps_to_ll();
-			lat_lon.add(new ArrayList<Double>());
-			lat_lon.get(c).add(lat);
-			lat_lon.get(c).add(lon);
+			lat_lon.add(new Coordinate<Double>(lat, lon));
 		}
 	}
 
@@ -60,11 +57,17 @@ public class Parse_data
 		return lat_lon.size();
 	}
 
-	public double getLocation(int a, int b)
+	public double getLat(int a)
 	{
-		return lat_lon.get(a).get(b);
+		return lat_lon.get(a).getX();
 	}
 
+	public double getLon(int a)
+	{
+		return lat_lon.get(a).getY();
+	}
+
+	/*
 	public double[] getCOM()
 	{
 		int entries = lat_lon.size();
@@ -82,4 +85,5 @@ public class Parse_data
 
 		return point;
 	}
+	*/
 }
