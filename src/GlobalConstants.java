@@ -17,4 +17,5 @@ public class GlobalConstants
 	public static final int R = 100; // AN transmission range
 	public static final double APOTHEM = SN_R * Math.cos(Math.PI/6);
 	public static final int H = R / SN_R;
+	public static final int r = 5;
 }
