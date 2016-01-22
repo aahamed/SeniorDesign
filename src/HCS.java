@@ -34,8 +34,8 @@ public class HCS
 	{
 		double U = (p.getX()-p.getY())/Math.sqrt(3);
 		double V = (2*p.getY())/Math.sqrt(3);
-		int u = (int)(Math.round(U/Math.sqrt(3*Math.pow((GlobalConstants.r),2))));
-		int v = (int)(Math.round(U/Math.sqrt(3*Math.pow((GlobalConstants.r),2))));
+		int u = (int)(Math.round(U/Math.sqrt(3*Math.pow((GlobalConstants.SN_R),2))));
+		int v = (int)(Math.round(U/Math.sqrt(3*Math.pow((GlobalConstants.SN_R),2))));
 		return new Coordinate<Integer>(u,v);
 	}
 	
