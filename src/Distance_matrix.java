@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 22, 2016
+ * Last Edit: Jan 23, 2016
  * Description: Class for calculating distance matrix from latitude and longitude.
  */
 
