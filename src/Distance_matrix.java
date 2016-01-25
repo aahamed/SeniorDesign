@@ -1,6 +1,12 @@
+/*
+ * Author: Josue Galeas
+ * Last Edit: Jan 18, 2016
+ * Description: Class for calculating distance matrix from latitude and longitude.
+ */
+
 public class Distance_matrix
 {
-	static double harvesine_distance(double x1, double y1, double x2, double y2)
+	static double haversine_distance(double x1, double y1, double x2, double y2)
 	{
 		double R = 6371000;
 		double phi1 = Math.toRadians(x1);
@@ -18,30 +24,36 @@ public class Distance_matrix
 
 	public static void main (String[] args)
 	{
-		Data_ops ll = new Data_ops();
-		String input_filename = "in.txt";
-		int entries;
-		double lat1, lon1, lat2, lon2;
+		String input_filename;
 
 		if (args.length > 0)
-		{
 			input_filename = args[0];
-		}
+		else
+			input_filename = "in.txt";
 
-		ll.parse_data(input_filename);
-		entries = ll.latlon.size();
+		Parse_data ll = new Parse_data(input_filename);
+		int entries = ll.getSize();
+		double lat1, lon1, lat2, lon2, result;
 		double[][] distance_matrix = new double[entries][entries];
 
 		for (int x = 0; x < entries; x++)
 		{
-			for (int y = 0; y < entries; y++)
+			for (int y = x; y < entries; y++)
 			{
-				lat1 = ll.latlon.get(x).get(0);
-				lon1 = ll.latlon.get(x).get(1);
-				lat2 = ll.latlon.get(y).get(0);
-				lon2 = ll.latlon.get(y).get(1);
+				if (x == y)
+				{
+					distance_matrix[x][y] = 0.0;
+					continue;
+				}
 
-				distance_matrix[x][y] = harvesine_distance(lat1, lon1, lat2, lon2);
+				lat1 = ll.getLocation(x, 0);
+				lon1 = ll.getLocation(x, 1);
+				lat2 = ll.getLocation(y, 0);
+				lon2 = ll.getLocation(y, 1);
+
+				result = haversine_distance(lat1, lon1, lat2, lon2);
+				distance_matrix[x][y] = result;
+				distance_matrix[y][x] = result;
 			}
 		}
 
