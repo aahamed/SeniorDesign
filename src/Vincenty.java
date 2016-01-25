@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 23, 2016
+ * Last Edit: Jan 25, 2016
  * Description: TODO
  */
 
@@ -51,6 +51,8 @@ public class Vincenty
 		}
 		while (Math.abs(lambda - lambda_p) > 1e-12 && --iterationLimit > 0);
 		// if (iterationLimit == 0) throw new Error('Formula failed to converge');
+		if (iterationLimit == 0)
+			System.out.println("ERROR: Formula failed to converge.");
 
 		double uSq = cosSqalpha * (A_E * A_E - B_E * B_E) / (B_E * B_E);
 		double A = 1.0 + uSq / 16384.0 * (4096.0 + uSq * (-768.0 + uSq * (320 - 175 * uSq)));
