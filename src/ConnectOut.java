@@ -1,3 +1,9 @@
+/*
+* Author: Aadil Ahamed
+* Date: 1/15/16
+* Description: Class to package the output of Connect.connect()
+* TODO: Describe all fields in this class -> need to ask Kai / read paper
+*/
 public class ConnectOut
 {
 	private double num;
