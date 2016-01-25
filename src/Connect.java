@@ -6,10 +6,13 @@ Description: Port of connect.m from Kai's repository
 
 public class Connect
 {
+	public static final char CONNECT_FLAG = 'a';
+	public static final char CONNECT_C_FLAG = 'c';
+	public static final char CONNECT_O_FLAG = 'o';
 	public Connect(){}
 	
 	
-	private static double calculateNum(double theta, double cart_distance)
+	private static double calculateNum(double theta, double cart_distance, char flag)
 	{
 		final double PI = Math.PI;
 		double num;
@@ -21,6 +24,10 @@ public class Connect
 		{
 			num = (cart_distance * Math.cos(theta))/(2 * GlobalConstants.R * Math.cos(PI/6));
 		}
+		if(flag == Connect.CONNECT_FLAG)
+		{
+			num = Connect.incrementNum(num, theta);	
+		}	
 		return num;
 	}
 	
@@ -45,7 +52,12 @@ public class Connect
 		}
 	}
 	
-	public static ConnectOut connect(Coordinate<Integer> p, Coordinate<Integer> q)
+   /* @param p HCS coordinate of first cluster
+	* @param q HCS coordinate of second cluster
+	* @param flag {connect - 'a', connect_C - 'c', connect_O - 'o'}
+	* @return ConnectOut - look at ConnectOut.java for details
+	*/
+	public static ConnectOut connect(Coordinate<Integer> p, Coordinate<Integer> q, char flag)
 	{
 		final double PI = Math.PI;
 		Coordinate<Double> a = HCS.hexToCart(p);
@@ -66,8 +78,7 @@ public class Connect
 			theta = Math.atan(Math.sqrt(3)/((2 * pq_vector[0] / pq_vector[1]) + 1));
 			direction[0] = 1;
 			direction[1] = 0;
-			num = Connect.calculateNum(theta, cart_distance);
-			num = Connect.incrementNum(num, theta);
+			num = Connect.calculateNum(theta, cart_distance, flag);
 			pointer = Connect.calculatePtr(num);
 		}
 		//CASE 2: Theta w.r.t x+ axis is in 2nd or 4th quadrant
@@ -79,8 +90,7 @@ public class Connect
 				theta = Math.atan((-1 * Math.sqrt(3))/((2 * pq_vector[1] / pq_vector[0]) + 1));
 				direction[0] = 0;
 				direction[1] = 1;
-				num = Connect.calculateNum(theta, cart_distance);
-				num = Connect.incrementNum(num, theta);
+				num = Connect.calculateNum(theta, cart_distance, flag);
 				pointer = Connect.calculatePtr(num);
 			}
 			// Case 2: w.r.t x+ axis
@@ -89,8 +99,7 @@ public class Connect
 				theta = Math.atan((-1 * Math.sqrt(3))/((2 * pq_vector[0] / pq_vector[1]) + 1));
 				direction[0] = -1;
 				direction[1] = 0;
-				num = Connect.calculateNum(theta, cart_distance);
-				num = Connect.incrementNum(num, theta);
+				num = Connect.calculateNum(theta, cart_distance, flag);  
 				pointer = Connect.calculatePtr(num);
 			}
 		}
@@ -100,7 +109,7 @@ public class Connect
 			theta = 0;
 			if(pq_vector[0] == 0){ direction[0] = 0; direction[1] = 1;}
 			else{ direction[0] = 1; direction[1] = 0; }
-			num = Connect.calculateNum(theta, cart_distance);
+			num = Connect.calculateNum(theta, cart_distance, Connect.CONNECT_C_FLAG); //Force exclusion of incrementNum()
 			pointer = Connect.calculatePtr(num);
 		}
 		return new ConnectOut(num, theta, pointer, direction);
@@ -110,7 +119,7 @@ public class Connect
 	{
 		Coordinate<Integer> p = new Coordinate<Integer>(0, 0);
 		Coordinate<Integer> q = new Coordinate<Integer>(10, 0);
-		System.out.println(Connect.connect(p, q)); // verify against matlab code
+		System.out.println(Connect.connect(p, q, Connect.CONNECT_FLAG)); // verify against matlab code
 	}
 	
 	public static void main(String[] args)
