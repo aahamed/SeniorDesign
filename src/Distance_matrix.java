@@ -49,5 +49,10 @@ public class Distance_matrix
 			}
 			System.out.println();
 		}
+		System.out.println();
+		for (int c = 0; c < entries; c++)
+		{
+			System.out.println(ll.getLat(c) + ", " + ll.getLon(c));
+		}
 	}
 }

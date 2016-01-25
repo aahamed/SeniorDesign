@@ -6,9 +6,9 @@
 
 public class Vincenty
 {
-	private static final double A_E = 6378137.0;
-	private static final double B_E = 6356752.314245;
-	private static final double F_E = 1.0/298.257223563;
+	private static final double A_WGS84 = 6378137.0;
+	private static final double B_WGS84 = 6356752.314245;
+	private static final double F_WGS84 = 1.0/298.257223563;
 
 	public static double inverse(double x1, double y1, double x2, double y2)
 	{
@@ -16,54 +16,62 @@ public class Vincenty
 		double phi2 = Math.toRadians(x2);
 		double lambda1 = Math.toRadians(y1);
 		double lambda2 = Math.toRadians(y2);
-		// TODO
-		double L = lambda2 - lambda1;
-		double tanU1 = (1.0 - F_E) * Math.tan(phi1);
-		double cosU1 = 1.0 / Math.sqrt((1.0 + tanU1 * tanU1));
-		double sinU1 = tanU1 * cosU1;
-		double tanU2 = (1.0 - F_E) * Math.tan(phi2);
-		double cosU2 = 1.0 / Math.sqrt((1.0 + tanU2 * tanU2));
-		double sinU2 = tanU2 * cosU2;
 
-		double lambda = L, lambda_p;
+		double L = lambda2 - lambda1;
+		double tan_U1 = (1.0 - F_WGS84) * Math.tan(phi1);
+		double cos_U1 = 1.0 / Math.sqrt((1.0 + tan_U1 * tan_U1));
+		double sin_U1 = tan_U1 * cos_U1;
+		double tan_U2 = (1.0 - F_WGS84) * Math.tan(phi2);
+		double cos_U2 = 1.0 / Math.sqrt((1.0 + tan_U2 * tan_U2));
+		double sin_U2 = tan_U2 * cos_U2;
+
+		double lambda = L, lambda_prime;
 		int iterationLimit = 100;
-		double sinlambda = 0.0, coslambda = 0.0;
-		double sinSqsigma = 0.0, sinsigma = 0.0, cossigma = 0.0, sigma = 0.0;
-		double sinalpha = 0.0, cosSqalpha = 0.0;
-		double cos2sigmaM = 0.0, C = 0.0;
+		double sin_lambda, cos_lambda;
+		double sin_sq_sigma, sin_sigma, cos_sigma, sigma;
+		double sin_alpha, cos_sq_alpha;
+		double cos_2sigma_m, C;
 
 		do
 		{
-			sinlambda = Math.sin(lambda);
-			coslambda = Math.cos(lambda);
-			sinSqsigma = (cosU2 * sinlambda) * (cosU2 * sinlambda) + (cosU1 * sinU2 - sinU1 * cosU2 * coslambda) * (cosU1 * sinU2 - sinU1 * cosU2 * coslambda);
-			sinsigma = Math.sqrt(sinSqsigma);
-			// if (sinsigma == 0) return 0;  // co-incident points
-			cossigma = sinU1 * sinU2 + cosU1 * cosU2 * coslambda;
-			sigma = Math.atan2(sinsigma, cossigma);
-			sinalpha = cosU1 * cosU2 * sinlambda / sinsigma;
-			cosSqalpha = 1.0 - sinalpha * sinalpha;
-			cos2sigmaM = cossigma - 2.0 * sinU1 * sinU2 / cosSqalpha;
-			// if (isNaN(cos2sigmaM)) cos2sigmaM = 0;  // equatorial line: cosSqalpha=0 (§6)
-			C = F_E / 16.0 * cosSqalpha * (4.0 + F_E * (4.0 - 3.0 * cosSqalpha));
-			lambda_p = lambda;
-			lambda = L + (1.0 - C) * F_E * sinalpha * (sigma + C * sinsigma * (cos2sigmaM + C * cossigma * (-1.0 + 2.0 * cos2sigmaM * cos2sigmaM)));
+			sin_lambda = Math.sin(lambda);
+			cos_lambda = Math.cos(lambda);
+			sin_sq_sigma = Math.pow((cos_U2 * sin_lambda), 2.0) + Math.pow((cos_U1 * sin_U2 - sin_U1 * cos_U2 * cos_lambda), 2.0);
+			sin_sigma = Math.sqrt(sin_sq_sigma);
+			// if (sin_sigma == 0) return 0;  // co-incident points
+			cos_sigma = sin_U1 * sin_U2 + cos_U1 * cos_U2 * cos_lambda;
+			sigma = Math.atan2(sin_sigma, cos_sigma);
+			sin_alpha = cos_U1 * cos_U2 * sin_lambda / sin_sigma;
+			cos_sq_alpha = 1.0 - sin_alpha * sin_alpha;
+			cos_2sigma_m = cos_sigma - 2.0 * sin_U1 * sin_U2 / cos_sq_alpha;
+			// if (isNaN(cos_2sigma_m)) cos_2sigma_m = 0;  // equatorial line: cos_sq_alpha=0 (§6)
+			C = F_WGS84 / 16.0 * cos_sq_alpha * (4.0 + F_WGS84 * (4.0 - 3.0 * cos_sq_alpha));
+			lambda_prime = lambda;
+			lambda = L + (1.0 - C) * F_WGS84 * sin_alpha * (sigma + C * sin_sigma * (cos_2sigma_m + C * cos_sigma * (-1.0 + 2.0 * cos_2sigma_m * cos_2sigma_m)));
 		}
-		while (Math.abs(lambda - lambda_p) > 1e-12 && --iterationLimit > 0);
+		while (Math.abs(lambda - lambda_prime) > 1e-12 && --iterationLimit > 0);
 		// if (iterationLimit == 0) throw new Error('Formula failed to converge');
 		if (iterationLimit == 0)
 			System.out.println("ERROR: Formula failed to converge.");
 
-		double uSq = cosSqalpha * (A_E * A_E - B_E * B_E) / (B_E * B_E);
-		double A = 1.0 + uSq / 16384.0 * (4096.0 + uSq * (-768.0 + uSq * (320 - 175 * uSq)));
-		double B = uSq / 1024.0 * (256.0 + uSq * (-128.0 + uSq * (74.0 - 47.0 * uSq)));
-		double delta_sigma = B * sinsigma * (cos2sigmaM + B / 4.0 * (cossigma * (-1.0 + 2.0 * cos2sigmaM * cos2sigmaM) - B / 6.0 * cos2sigmaM * (-3.0 + 4.0 * sinsigma * sinsigma) * (-3.0 + 4.0 * cos2sigmaM * cos2sigmaM)));
+		double u_sq = cos_sq_alpha * (A_WGS84 * A_WGS84 - B_WGS84 * B_WGS84) / (B_WGS84 * B_WGS84);
+		double A = 1.0 + u_sq / 16384.0 * (4096.0 + u_sq * (-768.0 + u_sq * (320 - 175 * u_sq)));
+		double B = u_sq / 1024.0 * (256.0 + u_sq * (-128.0 + u_sq * (74.0 - 47.0 * u_sq)));
 
-		double s = B_E * A * (sigma - delta_sigma);
+		double p1 = -1.0 + 2.0 * cos_2sigma_m * cos_2sigma_m;
+		double p2 = B / 6.0 * cos_2sigma_m * (-3.0 + 4.0 * sin_sigma * sin_sigma) * (-3.0 + 4.0 * cos_2sigma_m * cos_2sigma_m);
+		double delta_sigma = B * sin_sigma * (cos_2sigma_m + B / 4.0 * (cos_sigma * p1 - p2));
 
-		double fwdAz = Math.atan2(cosU2 * sinlambda,  cosU1 * sinU2 - sinU1 * cosU2 * coslambda);
-		double revAz = Math.atan2(cosU1 * sinlambda, -sinU1 * cosU2 + cosU1 * sinU2 * coslambda);
+		double s = B_WGS84 * A * (sigma - delta_sigma);
+		double fwdAz = Math.atan2(cos_U2 * sin_lambda,  cos_U1 * sin_U2 - sin_U1 * cos_U2 * cos_lambda);
+		double revAz = Math.atan2(cos_U1 * sin_lambda, -sin_U1 * cos_U2 + cos_U1 * sin_U2 * cos_lambda);
 
 		return s;
+	}
+
+	public static double direct()
+	{
+		System.out.println("ERROR: Not yet implemented.");
+		return 0.0;
 	}
 }
