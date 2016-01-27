@@ -24,11 +24,13 @@ public class Distance_matrix
 		{
 			for (int y = x; y < entries; y++)
 			{
+				/*
 				if (x == y)
 				{
 					distance_matrix[x][y] = 0.0;
 					continue;
 				}
+				*/
 
 				lat1 = ll.getLat(x);
 				lon1 = ll.getLon(x);
