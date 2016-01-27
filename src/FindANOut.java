@@ -1,3 +1,8 @@
+/*
+* Author: Aadil Ahamed
+* Date: 1/27/16
+* Description: Class to package the output of FindAN.findANm()
+*/
 public class FindANOut
 {
 	private double[][] result;
