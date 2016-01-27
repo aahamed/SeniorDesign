@@ -12,3 +12,6 @@ all:
 
 FindAN:
 	javac $(CP) $(ODIR) $(SRC)FindAN.java
+
+testFindAN:
+	java $(CP) FindAN
