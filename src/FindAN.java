@@ -31,7 +31,7 @@ public class FindAN
 	{
 		int flag = 0;
 		double[][] result = (A.solve(B)).getArray();
-		if(FindAN.perturb(result))
+		if(!FindAN.perturb(result))
 		{
 			flag = 1;
 		}
@@ -39,7 +39,7 @@ public class FindAN
 		{
 			Matrix BplusC = B.plus(C);
 			result = (A.solve(BplusC)).getArray();
-			if(FindAN.perturb(result))
+			if(!FindAN.perturb(result))
 			{
 				flag = 1;
 			}
@@ -47,7 +47,7 @@ public class FindAN
 			{
 				Matrix BplusD = B.plus(D);
 				result = (A.solve(BplusD)).getArray();
-				if(FindAN.perturb(result))
+				if(!FindAN.perturb(result))
 				{
 					flag = 1;
 				}
