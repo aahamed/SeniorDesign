@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 26, 2015
- * Description: TODO
+ * Last Edit: Jan 27, 2015
+ * Description: Maps latitude and longitude values to a 3D Cartesian space.
  */
 
 public class ThreeD_mapping
@@ -24,9 +24,9 @@ public class ThreeD_mapping
 		{
 			lat = Math.toRadians(ll.getLat(n));
 			lon = Math.toRadians(ll.getLon(n));
-			points[n][0] = Vincenty.A_WGS84 * Math.cos(lat) * Math.cos(lon);
-			points[n][1] = Vincenty.A_WGS84 * Math.cos(lat) * Math.sin(lon);
-			points[n][2] = Vincenty.B_WGS84 * Math.sin(lat);
+			points[n][0] = WGS84.A * Math.cos(lat) * Math.cos(lon);
+			points[n][1] = WGS84.A * Math.cos(lat) * Math.sin(lon);
+			points[n][2] = WGS84.B * Math.sin(lat);
 		}
 
 		System.out.print("[");

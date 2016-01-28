@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 25, 2016
- * Description: Class for calculating distance matrix from latitude and longitude.
+ * Last Edit: Jan 27, 2016
+ * Description: Class for calculating the distance matrix from 2D Cartesian coordinates.
  */
 
 public class Distance_matrix
@@ -24,13 +24,11 @@ public class Distance_matrix
 		{
 			for (int y = x; y < entries; y++)
 			{
-				/*
 				if (x == y)
 				{
 					distance_matrix[x][y] = 0.0;
 					continue;
 				}
-				*/
 
 				lat1 = ll.getLat(x);
 				lon1 = ll.getLon(x);
@@ -50,11 +48,6 @@ public class Distance_matrix
 				System.out.printf("%.3f m, ", distance_matrix[a][b]);
 			}
 			System.out.println();
-		}
-		System.out.println();
-		for (int c = 0; c < entries; c++)
-		{
-			System.out.println(ll.getLat(c) + ", " + ll.getLon(c));
 		}
 	}
 }

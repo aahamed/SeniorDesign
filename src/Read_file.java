@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 22, 2016
+ * Last Edit: Jan 27, 2016
  * Description: Class for reading GPS coordinates from a text file and storing each line into an ArrayList of strings.
  */
 
@@ -49,5 +49,15 @@ public class Read_file
 	public String getString(int x)
 	{
 		return file_data.get(x);
+	}
+
+	public void printfd()
+	{
+		int entries = file_data.size();
+
+		for (int c = 0; c < entries; c++)
+		{
+			System.out.println(file_data.get(c));
+		}
 	}
 }

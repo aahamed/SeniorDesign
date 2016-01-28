@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 22, 2016
+ * Last Edit: Jan 27, 2016
  * Description: Class for parsing and converting GPS information from a list of strings into latitude and longitude format. Also calculates center of mass.
  */
 
@@ -65,6 +65,16 @@ public class Parse_data
 	public double getLon(int a)
 	{
 		return lat_lon.get(a).getY();
+	}
+
+	public void printll()
+	{
+		int entries = lat_lon.size();
+
+		for (int c = 0; c < entries; c++)
+		{
+			System.out.println(lat_lon.get(c).getX() + ", " + lat_lon.get(c).getY());
+		}
 	}
 
 	/*
