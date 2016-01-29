@@ -78,8 +78,8 @@ public class HCS
 	}
 	
 	private static void test2(double a, double b){
-		Coordinate c = new Coordinate<Double>(a,b);
-		Coordinate d = cartToHex(c);
+		Coordinate<Double> c = new Coordinate<Double>(a,b);
+		Coordinate<Integer> d = cartToHex(c);
 		System.out.println("{"+d.getX()+", "+d.getY()+"}");
 	}
 	
