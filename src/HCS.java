@@ -32,10 +32,10 @@ public class HCS
 	 */
 	public static Coordinate<Integer> cartToHex(Coordinate<Double> p)
 	{
-		double U = (p.getX()-p.getY())/Math.sqrt(3);
+		double U = p.getX()-(p.getY()/Math.sqrt(3));
 		double V = (2*p.getY())/Math.sqrt(3);
 		int u = (int)(Math.round(U/Math.sqrt(3*Math.pow((GlobalConstants.SN_R),2))));
-		int v = (int)(Math.round(U/Math.sqrt(3*Math.pow((GlobalConstants.SN_R),2))));
+		int v = (int)(Math.round(V/Math.sqrt(3*Math.pow((GlobalConstants.SN_R),2))));
 		return new Coordinate<Integer>(u,v);
 	}
 	
@@ -77,9 +77,19 @@ public class HCS
 		
 	}
 	
+	private static void test2(double a, double b){
+		Coordinate c = new Coordinate<Double>(a,b);
+		Coordinate d = cartToHex(c);
+		System.out.println("{"+d.getX()+", "+d.getY()+"}");
+	}
+	
 	public static void main(String[] args)
 	{
 		HCS.test1();
+		double g,h;
+		g = -9889.3;
+		h = -614.36;
+		test2(g,h);
 	}
 	
 }
