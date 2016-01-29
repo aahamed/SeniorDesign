@@ -49,6 +49,7 @@ public class Mercator_mapping
 		con = Math.pow(((1.0 - con) / (1.0 + con)), com);
 		double ts = Math.tan(0.5 * ((Math.PI * 0.5) - phi)) / con;
 		double y = 0 - WGS84.A * Math.log(ts);
+
 		return y;
     }
 
@@ -68,7 +69,7 @@ public class Mercator_mapping
 
 		for (int c = 0; c < entries; c++)
 		{
-			System.out.println(mercmap.get(c).getX()/1000 + " km, " + mercmap.get(c).getY()/1000 + " km");
+			System.out.println(mercmap.get(c));
 		}
 	}
 
@@ -84,5 +85,13 @@ public class Mercator_mapping
 		}
 
 		return new Coordinate<Double>(total_x/entries, total_y/entries);
+	}
+
+	public Coordinate<Double> getConverted(Coordinate<Double> a)
+	{
+		double new_mX = lon2mercX(a.getY());
+		double new_mY = lat2mercY(a.getX());
+
+		return new Coordinate<Double>(new_mX, new_mY);
 	}
 }

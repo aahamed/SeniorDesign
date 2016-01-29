@@ -27,6 +27,8 @@ public class TEST
 		mm.printmm();
 		Coordinate<Double> mm_point = mm.getCOM();
 		System.out.println("COM: " + mm_point);
+		Coordinate<Double> ll_merc_point = mm.getConverted(ll_point);
+		System.out.println("Calculated COM: " + ll_merc_point);
 		System.out.println();
 	}
 }

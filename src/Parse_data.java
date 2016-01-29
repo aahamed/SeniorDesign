@@ -73,7 +73,7 @@ public class Parse_data
 
 		for (int c = 0; c < entries; c++)
 		{
-			System.out.println(lat_lon.get(c).getX() + ", " + lat_lon.get(c).getY());
+			System.out.println(lat_lon.get(c));
 		}
 	}
 
