@@ -53,6 +53,11 @@ public class Mercator_mapping
 		return y;
     }
 
+	public int getSize()
+	{
+		return mercmap.size();
+	}
+
 	public double getmX(int a)
 	{
 		return mercmap.get(a).getX();
@@ -89,6 +94,7 @@ public class Mercator_mapping
 
 	public Coordinate<Double> getConverted(Coordinate<Double> a)
 	{
+		// For now, this is just for testing.
 		double new_mX = lon2mercX(a.getY());
 		double new_mY = lat2mercY(a.getX());
 

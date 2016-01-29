@@ -30,5 +30,9 @@ public class TEST
 		Coordinate<Double> ll_merc_point = mm.getConverted(ll_point);
 		System.out.println("Calculated COM: " + ll_merc_point);
 		System.out.println();
+
+		Initial_setup is = new Initial_setup(input_filename);
+		System.out.println("Testing printing from Initial_setup:");
+		is.printnorm();
 	}
 }
