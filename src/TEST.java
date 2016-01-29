@@ -13,7 +13,7 @@ public class TEST
 		if (args.length > 0)
 			input_filename = args[0];
 		else
-			input_filename = "./input/in.txt";
+			input_filename = "../src/input/in.txt";
 
 		Parse_data ll = new Parse_data(input_filename);
 		System.out.println(">> Testing printing from Parse_data:");
