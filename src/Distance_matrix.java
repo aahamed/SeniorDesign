@@ -13,7 +13,7 @@ public class Distance_matrix
 		if (args.length > 0)
 			input_filename = args[0];
 		else
-			input_filename = "in.txt";
+			input_filename = "./input/in.txt";
 
 		Parse_data ll = new Parse_data(input_filename);
 		int entries = ll.getSize();
