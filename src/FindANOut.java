@@ -18,6 +18,13 @@ public class FindANOut
 	{
 		return result;
 	}
+
+	public Coordinate<Integer> getResultC(){
+		int[] temp = new int[this.result[0].length];
+		for(int n=0;n<this.result[0].length;n++)
+			temp[n] = (int)this.result[0][n];
+		return new Coordinate<Integer>(temp[0],temp[1]);
+	}
 	
 	public int getFlag()
 	{
