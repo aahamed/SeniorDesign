@@ -67,7 +67,7 @@ public class Parse_data
 		return lat_lon.get(a).getY();
 	}
 
-	public void printll()
+	public void printLL()
 	{
 		int entries = lat_lon.size();
 

@@ -43,8 +43,8 @@ public class Mercator_mapping
 		double es = 1.0 - (temp * temp);
 		double eccent = Math.sqrt(es);
 		double phi = Math.toRadians(lat);
-		double sinphi = Math.sin(phi);
-		double con = eccent * sinphi;
+		double sin_phi = Math.sin(phi);
+		double con = eccent * sin_phi;
 		double com = 0.5 * eccent;
 		con = Math.pow(((1.0 - con) / (1.0 + con)), com);
 		double ts = Math.tan(0.5 * ((Math.PI * 0.5) - phi)) / con;
@@ -68,7 +68,7 @@ public class Mercator_mapping
 		return mercmap.get(a).getY();
 	}
 
-	public void printmm()
+	public void printMM()
 	{
 		int entries = mercmap.size();
 
@@ -92,9 +92,9 @@ public class Mercator_mapping
 		return new Coordinate<Double>(total_x/entries, total_y/entries);
 	}
 
+	// For testing
 	public Coordinate<Double> getConverted(Coordinate<Double> a)
 	{
-		// For now, this is just for testing.
 		double new_mX = lon2mercX(a.getY());
 		double new_mY = lat2mercY(a.getX());
 

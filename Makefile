@@ -4,11 +4,14 @@
 BIN=./bin/
 SRC=./src/
 LIB=./lib/*
-CP=-cp '$(BIN);$(LIB)'
+CP=-cp '$(BIN):$(LIB)'
 ODIR=-d $(BIN)
 
 all:
 	javac $(CP) $(ODIR) $(SRC)*.java
+
+clean:
+	rm -rf $(BIN)*.class
 
 FindAN:
 	javac $(CP) $(ODIR) $(SRC)FindAN.java
@@ -16,3 +19,5 @@ FindAN:
 testFindAN:
 	java $(CP) FindAN
 
+test:
+	java $(CP) TEST

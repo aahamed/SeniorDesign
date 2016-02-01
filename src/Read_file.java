@@ -51,7 +51,7 @@ public class Read_file
 		return file_data.get(x);
 	}
 
-	public void printfd()
+	public void printFD()
 	{
 		int entries = file_data.size();
 
