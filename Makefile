@@ -21,3 +21,9 @@ testFindAN:
 
 test:
 	java $(CP) TEST
+
+stest:
+	java $(CP) TEST ./src/input/in_small.txt
+
+mtest:
+	java $(CP) TEST MATLAB

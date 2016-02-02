@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 28, 2016
+ * Last Edit: Feb 1, 2016
  * Description: Maps latitude and longitude values to a Mercator projection, a 2D Cartesian plane.
  */
 
@@ -75,6 +75,18 @@ public class Mercator_mapping
 		for (int c = 0; c < entries; c++)
 		{
 			System.out.println(mercmap.get(c));
+		}
+	}
+
+	public void MATLAB_TEST()
+	{
+		mercmap.clear();
+		double[] x_r = {24441.71059, 27173.75811, 3809.604489, 27401.27568, 18970.77739, 2926.21215, 8354.946566, 16406.44558, 28725.20506, 28946.65606};
+		double[] y_r = {4728.39245, 29117.78345, 28715.00845, 14561.26946, 24008.41407, 4256.590159, 12652.83848, 27472.06576, 23766.21989, 28784.77279};
+
+		for (int c = 0; c < 10; c++)
+		{
+			mercmap.add(new Coordinate<Double>(x_r[c], y_r[c]));
 		}
 	}
 

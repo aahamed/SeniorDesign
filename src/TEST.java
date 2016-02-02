@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 31, 2016
+ * Last Edit: Feb 1, 2016
  * Description: Class for testing.
  */
 
@@ -9,20 +9,30 @@ public class TEST
 	public static void main (String[] args)
 	{
 		String input_filename;
+		int override = 0;
 
 		if (args.length > 0)
 			input_filename = args[0];
 		else
 			input_filename = "./src/input/in.txt";
 
-		Initial_setup is = new Initial_setup(input_filename);
-		System.out.println(">> Testing: Printing from Initial_setup:");
-		is.printNorm();
-		System.out.println(">> Testing: Converting data to HCS:");
-		is.printNormHCS();
+		if (input_filename.equals("MATLAB"))
+		{
+			override = 1;
+			input_filename = "./src/input/in.txt";
+			System.out.println("Using MATLAB testbench.");
+		}
+		else
+			System.out.println("Using \"" + input_filename + "\" as the input file.");
 
-		Distance_matrix dm = new Distance_matrix(input_filename);
-		System.out.println(">> Testing: Printing from Distance_matrix");
+		Distance_matrix dm = new Distance_matrix(input_filename, override);
+		System.out.println(">> Testing: Printing Distance matrix");
 		dm.printDM();
+		System.out.println(">> Testing: Printing SP0 matrix");
+		dm.printSP0();
+
+		MST_calc mc = new MST_calc(input_filename, override);
+		System.out.println(">> Testing: Printing X matrix");
+		mc.printX();
 	}
 }
