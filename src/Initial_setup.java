@@ -41,7 +41,7 @@ public class Initial_setup
 		return normalized.get(a);
 	}
 
-	public Coordinate<Integer> getLocHCS(int a)
+	public Coordinate<Integer> getLoc_HCS(int a)
 	{
 		return normalized_HCS.get(a);
 	}
@@ -56,7 +56,7 @@ public class Initial_setup
 		}
 	}
 
-	public void printNormHCS()
+	public void printNorm_HCS()
 	{
 		int entries = normalized_HCS.size();
 

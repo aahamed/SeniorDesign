@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
  * Last Edit; Feb 1, 2016
- * Description: Gets normalized data set and calculates two distance matrix to be interpreted by the MST algorithm.
+ * Description: Gets normalized data set and calculates two distance matrices to be interpreted by the MST algorithm.
  */
 
 import java.util.ArrayList;
@@ -17,16 +17,16 @@ public class Distance_matrix
 		Initial_setup is = new Initial_setup(input, m);
 
 		int entries = is.getSize();
-		int result = 0;
-		initDMandSP0(entries);
+		int distance;
+		initDandSP0(entries);
 
 		for (int x = 0; x < entries; x++)
 		{
 			for (int y = (x + 1); y < entries; y++)
 			{
-				result = HCS_distance(is.getLocHCS(x), is.getLocHCS(y));
-				D_matrix.get(x).set(y, result);
-				SP0_matrix.get(x).set(y, result);
+				distance = HCS_distance(is.getLoc_HCS(x), is.getLoc_HCS(y));
+				D_matrix.get(x).set(y, distance);
+				SP0_matrix.get(x).set(y, distance);
 			}
 		}
 	}
@@ -40,7 +40,7 @@ public class Distance_matrix
 		return Math.max(Math.max(u, v), uv);
 	}
 
-	private void initDMandSP0(int size)
+	private void initDandSP0(int size)
 	{
 		for (int x = 0; x < size; x++)
 		{
@@ -60,17 +60,17 @@ public class Distance_matrix
 		return D_matrix.size();
 	}
 
-	public int getDM(int a, int b)
+	public int getDM_entry(int a, int b)
 	{
 		return D_matrix.get(a).get(b);
 	}
 
-	public int getSP0(int a, int b)
+	public int getSP0_entry(int a, int b)
 	{
 		return SP0_matrix.get(a).get(b);
 	}
 
-	public void printDM()
+	public void printD()
 	{
 		int entries = D_matrix.size();
 
