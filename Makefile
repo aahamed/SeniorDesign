@@ -16,3 +16,14 @@ FindAN:
 testFindAN:
 	java $(CP) FindAN
 
+HCS:
+	javac $(CP) $(ODIR) $(SRC)HCS.java
+
+testHCS:
+	java $(CP) HCS
+
+Connect:
+	javac $(CP) $(ODIR) $(SRC)Connect.java
+
+testConnect:
+	java $(CP) Connect

@@ -1,4 +1,7 @@
-
+/*
+* Author: Ezana Woldegabriel
+* Description: Class to package the output of locate
+*/
 public class LocateOut {
 	Coordinate<Integer> AN;
 	int exflag;

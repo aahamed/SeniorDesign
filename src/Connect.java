@@ -75,7 +75,7 @@ public class Connect
 		//CASE 1: Theta w.r.t x+ axis is in 1st or 3rd quadrant
 		if(pq_vector[0] * pq_vector [1] > 0)
 		{
-			theta = Math.atan(Math.sqrt(3)/((2 * pq_vector[0] / pq_vector[1]) + 1));
+			theta = Math.atan(Math.sqrt(3)/((2 * Math.abs(pq_vector[0]) / Math.abs((pq_vector[1])) + 1)));
 			direction[0] = 1;
 			direction[1] = 0;
 			num = Connect.calculateNum(theta, cart_distance, flag);
@@ -117,9 +117,41 @@ public class Connect
 	
 	private static void test1()
 	{
-		Coordinate<Integer> p = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> q = new Coordinate<Integer>(10, 0);
-		System.out.println(Connect.connect(p, q, Connect.CONNECT_FLAG)); // verify against matlab code
+		
+		Coordinate<Integer> p1 = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> q1 = new Coordinate<Integer>(1, 1);
+		System.out.println(Connect.connect(p1, q1, Connect.CONNECT_FLAG)); // case1 1st quadrant theta<30
+
+		Coordinate<Integer> p5 = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> q5 = new Coordinate<Integer>(10, 1);
+		System.out.println(Connect.connect(p5, q5, Connect.CONNECT_FLAG)); // case1 1rd quadrant theta>30
+
+
+
+
+		Coordinate<Integer> p2 = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> q2 = new Coordinate<Integer>(-10, 1);
+		System.out.println(Connect.connect(p2, q2, Connect.CONNECT_FLAG)); // case1 3rd quadrant theta<30
+
+
+
+
+		Coordinate<Integer> p3 = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> q3 = new Coordinate<Integer>(-1, 10);
+		System.out.println(Connect.connect(p3, q3, Connect.CONNECT_FLAG)); // case1 3rd quadrant theta>30
+
+
+
+
+		Coordinate<Integer> p4 = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> q4 = new Coordinate<Integer>(10, 0);
+		System.out.println(Connect.connect(p4, q4, Connect.CONNECT_FLAG)); // x*y=0    x!=0
+
+		Coordinate<Integer> p6 = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> q6 = new Coordinate<Integer>(0, 10);
+		System.out.println(Connect.connect(p6, q6, Connect.CONNECT_FLAG)); // x*y=0   x=0
+		
+
 	}
 	
 	public static void main(String[] args)

@@ -1,3 +1,8 @@
+/*
+* Author: Ezana Woldegabriel
+* Description: Port of locate.m
+*/
+
 import java.util.Arrays;
 
 import Jama.Matrix;

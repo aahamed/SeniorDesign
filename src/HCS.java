@@ -1,5 +1,5 @@
 /*
-Author: Aadil Ahamed
+Author: Aadil Ahamed, Ezana Woldegabriel
 Date: 1/12/16
 Description: Class containing a library of methods related 	to HCS
 */
@@ -28,7 +28,7 @@ public class HCS
 	 * Assumes Cartesian coordinates are type Double.
 	 * @param p HCS Coordinate<Integer>
 	 * @param r edge length of hexagon
-	 * @return Hex Coordinate<double>
+	 * @return Hex Coordinate<Integer>
 	 */
 	public static Coordinate<Integer> cartToHex(Coordinate<Double> p)
 	{
@@ -39,9 +39,40 @@ public class HCS
 		return new Coordinate<Integer>(u,v);
 	}
 	
-	/* Unit Testing */
-	public static void test1()
+	/*
+	* returns the max of 2 integers
+	*/
+	private static int max2(int a, int b)
 	{
+		if(a >= b)
+		{
+			return a;
+		}
+		else
+		{
+			return b;
+		}
+	}
+	
+	/*
+	* COPY OF Distance_matrix.HCS_distance()
+	*/
+	public static int distance(Coordinate<Integer> p, Coordinate<Integer> q)
+	{
+		int pX = p.getX();
+		int pY = p.getY();
+		int qX = q.getX();
+		int qY = q.getY();
+		return HCS.max2(Math.abs(pX - qX + pY - qY), max2(Math.abs(pX - qX), Math.abs(pY - qY)));
+	}
+	
+	
+	/* Unit Testing */
+	
+	
+	public static void testHexToCart()
+	{
+		System.out.println("Testing Hex to Cart:");
 		int x = 0;
 		int y = 0;
 		Coordinate<Integer> c = new Coordinate<Integer>(x, y);
@@ -75,21 +106,35 @@ public class HCS
 		d = HCS.hexToCart(c);
 		System.out.printf("HCS Coord: " + c + " Cart Coord: (%.2f, %.2f)\n", d.getX(), d.getY());
 		
+		System.out.println("-----------------------------");
+		
 	}
 	
-	private static void test2(double a, double b){
+	private static void testCartToHex(double a, double b){
+		System.out.println("Testing Cart to Hex:");
 		Coordinate<Double> c = new Coordinate<Double>(a,b);
 		Coordinate<Integer> d = cartToHex(c);
 		System.out.println("{"+d.getX()+", "+d.getY()+"}");
+		System.out.println("-----------------------------");
+	}
+	
+	private static void testDistance()
+	{
+		System.out.println("Testing distance:");
+		Coordinate<Integer> p = new Coordinate<Integer>(10, 5);
+		Coordinate<Integer> q = new Coordinate<Integer>(3, 6);
+		System.out.println("p: " + p + " q: " + q + " distance = "  + HCS.distance(p, q));
+		System.out.println("-----------------------------");
 	}
 	
 	public static void main(String[] args)
 	{
-		HCS.test1();
+		HCS.testHexToCart();
 		double g,h;
 		g = -9889.3;
 		h = -614.36;
-		test2(g,h);
+		testCartToHex(g,h);
+		testDistance();
 	}
 	
 }
