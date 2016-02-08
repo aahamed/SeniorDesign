@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 2, 2016
+ * Last Edit: Feb 7, 2016
  * Description: TODO
  */
 
@@ -11,6 +11,7 @@ public class MST_calc
 {
 	private List<List<Integer>> w_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> X_matrix = new ArrayList<List<Integer>>();
+	private List<List<Integer>> D_matrix;
 
 	public MST_calc(String input, int m)
 	{
@@ -28,6 +29,8 @@ public class MST_calc
 				w_matrix.get(y).set(x, distance);
 			}
 		}
+
+		D_matrix = dm.getD_matrix();
 	}
 
 	private void initXandw(int size)
@@ -49,35 +52,18 @@ public class MST_calc
 		}
 	}
 
-	public void printX()
-	{
-		int entries = X_matrix.size();
-
-		for (int x = 0; x < entries; x++)
-		{
-			for (int y = 0; y < entries; y++)
-			{
-				System.out.print(X_matrix.get(x).get(y));
-				if (y < (entries - 1))
-					System.out.print(", ");
-			}
-			System.out.println();
-		}
-	}
-
 	public void printw()
 	{
-		int entries = w_matrix.size();
+		List_ops.print_matrix(w_matrix);
+	}
 
-		for (int x = 0; x < entries; x++)
-		{
-			for (int y = 0; y < entries; y++)
-			{
-				System.out.print(w_matrix.get(x).get(y));
-				if (y < (entries - 1))
-					System.out.print(", ");
-			}
-			System.out.println();
-		}
+	public void printX()
+	{
+		List_ops.print_matrix(X_matrix);
+	}
+
+	public void printD()
+	{
+		List_ops.print_matrix(D_matrix);
 	}
 }

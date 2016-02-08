@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 1, 2016
+ * Last Edit: Feb 7, 2016
  * Description: Adjusts Mercator data set in relation to the center of mass.
  */
 
@@ -19,7 +19,7 @@ public class Initial_setup
 			mm.MATLAB_TEST();
 
 		int entries = mm.getSize();
-		Coordinate<Double> mm_com = mm.getCOM();
+		Coordinate<Double> mm_com = mm.getMMCOM();
 
 		for (int c = 0; c < entries; c++)
 		{
@@ -48,21 +48,11 @@ public class Initial_setup
 
 	public void printNorm()
 	{
-		int entries = normalized.size();
-
-		for (int c = 0; c < entries; c++)
-		{
-			System.out.println(normalized.get(c));
-		}
+		List_ops.print_coordlist_double(normalized);
 	}
 
 	public void printNorm_HCS()
 	{
-		int entries = normalized_HCS.size();
-
-		for (int c = 0; c < entries; c++)
-		{
-			System.out.println(normalized_HCS.get(c));
-		}
+		List_ops.print_coordlist_int(normalized_HCS);
 	}
 }
