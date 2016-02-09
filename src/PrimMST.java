@@ -31,7 +31,7 @@ public class PrimMST
  
     // A utility function to print the constructed PrimMST stored in
     // parent[]
-    private static void printMST(int parent[], int n, int graph[][])
+    public static void printMST(int parent[], int n, int graph[][])
     {
         System.out.println("Edge   Weight");
         for (int i = 1; i < V; i++)

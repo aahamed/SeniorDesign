@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 7, 2016
- * Description: TODO
+ * Last Edit: Feb 9, 2016
+ * Description: Common operations for the data structures found in... TODO
  */
 
 import java.util.List;
@@ -20,6 +20,23 @@ public class List_ops
 		}
 
 		return new Coordinate<Double>(total_x/entries, total_y/entries);
+	}
+
+	// Currently only used for making w_matirx into graph for Prim
+	public static int[][] ll2array(List<List<Integer>> a)
+	{
+		int entries = a.size();
+		int[][] output = new int[entries][entries];
+
+		for (int x = 0; x < entries; x++)
+		{
+			for (int y = 0; y < entries; y++)
+			{
+				output[x][y] = a.get(x).get(y);
+			}
+		}
+
+		return output;
 	}
 
 	// Currently only used for normalized_HCS

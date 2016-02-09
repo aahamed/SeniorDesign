@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 7, 2016
+ * Last Edit: Feb 9, 2016
  * Description: Class for testing.
  */
 
@@ -26,11 +26,9 @@ public class TEST
 			System.out.println("Using \"" + input_filename + "\" as the input file.");
 
 		MST_calc mc = new MST_calc(input_filename, override);
-		System.out.println(">> Testing: Printing X matrix");
-		mc.printX();
-		System.out.println(">> Testing: Printing w matrix");
-		mc.printw();
-		System.out.println(">> Testing: Printing D matrix");
-		mc.printD();
+		// System.out.println(">> Testing: Printing X matrix");
+		// mc.printX();
+		// System.out.println(">> Testing: Printing w matrix");
+		// mc.printw();
 	}
 }
