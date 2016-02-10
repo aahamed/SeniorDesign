@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 8, 2016
+ * Last Edit: Feb 10, 2016
  * Description: Port of kruskal.m, reduced down to what is actually used by the algorithm.
  */
 
@@ -12,38 +12,74 @@ public class Reduced_Kruskal
 	// private int w_st;
 	// private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	// private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
-	// TODO, might need to make an object to return the three structures above
+	// TODO, might need to make an object to return the three structures above together
 
 	public static void MST(List<List<Integer>> a, List<List<Integer>> b)
 	{
 		boolean isUndirGraph = true;
-		int[][] ne = X2ne(a);
+		int[][] X_ne = List_ops.ll2array(a);
+		int[][] w_ne = List_ops.ll2array(b);
+
+		// TODO, do conditional statements before X2ne method is called.
+		X_ne = X2ne(a, isUndirGraph);
+
+		if ((b.size() * b.get(0).size()) != b.size())
+		{
+			// TODO, must make any(any(A - A')) method
+			if (isUndirGraph)
+			{
+				System.out.println("Testing just single condition. This should ultimately be false.");
+				// System.out.println("ERROR: Weight matrix must be symmetric.");
+			}
+			w_ne = w2ne(b, X_ne);
+		}
 	}
 
-	private static int[][] X2ne(List<List<Integer>> a)
+	private static int[][] X2ne(List<List<Integer>> a, boolean b)
 	{
 		int[][] output;
-		int entries = a.size();
+		int entries = a.size(), v_entries;
 		int total = 0, cnt = 1, uppercnt = 1;
 		List<Integer> v = new ArrayList<Integer>();
 		List<Coordinate<Integer>> edge = new ArrayList<Coordinate<Integer>>();
 
-		for (int x = 0; x < entries; x++)
+		if (b)
 		{
-			for (int y = (x + 1); y < entries; y++)
+			for (int x = 0; x < entries; x++)
 			{
-				total += a.get(x).get(y);
+				for (int y = (x + 1); y < entries; y++)
+				{
+					total += a.get(x).get(y);
+				}
 			}
+			output = new int[total][2];
 		}
-
-		output = new int[total][2];
+		else
+		{
+			// TODO if undirected graph
+			output = new int[1][2]; // Temporary to avoid errors
+		}
 
 		for (int i = 1; i < entries; i++)
 		{
 			for (int j = 0; j < entries; j++)
 			{
-				if ((a.get(i - 1).get(j) != 0) && ((j + 1) > i))
-					v.add(j+1);
+				if (a.get(i - 1).get(j) != 0)
+					v.add(j + 1);
+			}
+
+			if (b)
+			{
+				v_entries = v.size();
+				for (int n = 0; n < v_entries; n++)
+				{
+					if (v.get(n) <= i)
+					{
+						v.remove(n);
+						v_entries--;
+						n--;
+					}
+				}
 			}
 
 			for (int k = 0; k < v.size(); k++)
@@ -52,7 +88,6 @@ public class Reduced_Kruskal
 			}
 
 			uppercnt = cnt + edge.size() - 1;
-
 			for (int l = cnt; l <= uppercnt; l++)
 			{
 				output[l - 1][0] = edge.get(l - cnt).getX();
@@ -67,11 +102,35 @@ public class Reduced_Kruskal
 		return output;
 	}
 
-	public void w2ne(List<List<Integer>> a, List<List<Integer>> b)
+	private static int[][] w2ne(List<List<Integer>> a, int[][] b)
 	{
-		// Takes in w, ne
-		// Returns w
-		// Modifies tmp, cnt, w
+		int entries = b.length;
+		int[][] output = new int[entries][1];
+		int cnt = 1;
+
+		for (int x = 0; x < entries; x++)
+		{
+			output[cnt - 1][0] = a.get(b[x][0] - 1).get(b[x][1] - 1);
+			cnt++;
+		}
+
+		return output;
+	}
+
+	private static void printmatrix(int[][] a)
+	{
+		for (int x = 0; x < a.length; x++)
+		{
+			System.out.print("Row " + (x + 1) + ": ");
+
+			for (int y = 0; y < a[0].length; y++)
+			{
+				System.out.print(a[x][y] + ", ");
+			}
+
+			System.out.println();
+		}
+		System.out.println();
 	}
 
 	public void makeset(int a)

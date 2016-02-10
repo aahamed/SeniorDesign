@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 7, 2016
+ * Last Edit: Feb 10, 2016
  * Description: TODO
  */
 
@@ -35,6 +35,7 @@ public class MST_calc
 
 		int[][] graph = List_ops.ll2array(w_matrix);
 		int[] parent = PrimMST.primMST(graph);
+		Reduced_Kruskal.MST(X_matrix, w_matrix);
 
 		PrimMST.printMST(parent, parent.length, graph);
 
