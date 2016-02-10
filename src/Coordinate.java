@@ -34,6 +34,16 @@ public class Coordinate <T>
 		this.y = value;
 	}
 	
+	public static Coordinate<Integer> add(Coordinate<Integer> p, Coordinate<Integer> q)
+	{
+		return new Coordinate<Integer>(p.getX() + q.getX(), p.getY() + q.getY());
+	}
+	
+	public static Coordinate<Double> minus(Coordinate<Double> p, Coordinate<Double> q)
+	{
+		return new Coordinate<Double>(p.getX() - q.getX(), p.getY() - q.getY());
+	}
+	
 	public String toString()
 	{
 		return "(" + x + ", " + y  + ")";
@@ -55,9 +65,37 @@ public class Coordinate <T>
 		System.out.println(c);
 	}
 	
+	private static void testIntAdd()
+	{
+		System.out.println("ADD TEST");
+		int x1 = 4;
+		int y1 = 5;
+		int x2 = 3;
+		int y2 = 3;
+		Coordinate<Integer> p = new Coordinate<Integer>(x1, y1);
+		Coordinate<Integer> q = new Coordinate<Integer>(x2, y2);
+		Coordinate<Integer> result = Coordinate.add(p, q);
+		System.out.println("P: " + p + " Q: " + q + " res = " + result);
+	}
+	
+	private static void testDoubMinus()
+	{
+		System.out.println("MINUS TEST");
+		double x1 = 4;
+		double y1 = 5;
+		double x2 = 3;
+		double y2 = 3;
+		Coordinate<Double> p = new Coordinate<Double>(x1, y1);
+		Coordinate<Double> q = new Coordinate<Double>(x2, y2);
+		Coordinate<Double> result = Coordinate.minus(p, q);
+		System.out.println("P: " + p + " Q: " + q + " res = " + result);
+	}
+	
 	public static void main(String[] args)
 	{
 		Coordinate.test1();
 		Coordinate.test2();
+		Coordinate.testIntAdd();
+		Coordinate.testDoubMinus();
 	}
 }

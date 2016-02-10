@@ -48,6 +48,12 @@ Connect:
 testConnect:
 	java $(CP) Connect
 
+Coord:
+	javac $(CP) $(ODIR) $(SRC)Coordinate.java
+
+testCoord:
+	java $(CP) Coordinate	
+
 echo_osname: 
 	echo $(OSNAME)
 
