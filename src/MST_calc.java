@@ -9,9 +9,6 @@ import java.util.List;
 
 public class MST_calc
 {
-	private List<List<Integer>> w_matrix = new ArrayList<List<Integer>>();
-	private List<List<Integer>> X_matrix = new ArrayList<List<Integer>>();
-
 	private int w_st = 0;
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
@@ -20,24 +17,15 @@ public class MST_calc
 	{
 		Distance_matrix dm = new Distance_matrix(input, m);
 		int entries = dm.getSize();
-		int distance;
 		initMatrices(entries);
 
-		for (int x = 0; x < entries; x++)
-		{
-			for (int y = (x + 1); y < entries; y++)
-			{
-				distance = dm.getSP0_entry(x, y);
-				w_matrix.get(x).set(y, distance);
-				w_matrix.get(y).set(x, distance);
-			}
-		}
-
-		int[][] graph = List_ops.ll2array(w_matrix);
+		// PrimMST option
+		int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
 		int[] parent = PrimMST.primMST(graph);
-		Reduced_Kruskal.MST(X_matrix, w_matrix);
-
 		PrimMST.printMST(parent, parent.length, graph);
+
+		// KruskalMST option
+		Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
 
 		for (int c = 1; c < entries; c++)
 		{
@@ -56,23 +44,16 @@ public class MST_calc
 	{
 		for (int x = 0 ; x < size; x++)
 		{
-			X_matrix.add(new ArrayList<Integer>());
-			w_matrix.add(new ArrayList<Integer>());
 			X_st.add(new ArrayList<Integer>());
 
 			for (int y = 0; y < size; y++)
 			{
-				if (x != y)
-					X_matrix.get(x).add(1);
-				else
-					X_matrix.get(x).add(0);
-
-				w_matrix.get(x).add(0);
 				X_st.get(x).add(0);
 			}
 		}
 	}
 
+	/*
 	public void printw()
 	{
 		List_ops.print_matrix(w_matrix);
@@ -82,4 +63,5 @@ public class MST_calc
 	{
 		List_ops.print_matrix(X_matrix);
 	}
+	*/
 }

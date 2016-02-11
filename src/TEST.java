@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 9, 2016
+ * Last Edit: Feb 10, 2016
  * Description: Class for testing.
  */
 
@@ -19,16 +19,12 @@ public class TEST
 		if (input_filename.equals("MATLAB"))
 		{
 			override = 1;
-			input_filename = "./src/input/in.txt"; // To avoid IO issues
+			input_filename = "./src/input/in.txt"; // To avoid IO issues, temporary fix
 			System.out.println("Using MATLAB testbench.");
 		}
 		else
 			System.out.println("Using \"" + input_filename + "\" as the input file.");
 
 		MST_calc mc = new MST_calc(input_filename, override);
-		// System.out.println(">> Testing: Printing X matrix");
-		// mc.printX();
-		// System.out.println(">> Testing: Printing w matrix");
-		// mc.printw();
 	}
 }

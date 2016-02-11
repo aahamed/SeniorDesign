@@ -9,11 +9,6 @@ import java.util.List;
 
 public class Reduced_Kruskal
 {
-	// private int w_st;
-	// private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
-	// private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
-	// TODO, might need to make an object to return the three structures above together
-
 	public static void MST(List<List<Integer>> a, List<List<Integer>> b)
 	{
 		boolean isUndirGraph = true;
@@ -21,18 +16,57 @@ public class Reduced_Kruskal
 		int[][] w_ne = List_ops.ll2array(b);
 
 		// TODO, do conditional statements before X2ne method is called.
+		if (AnyAny(a))
+			isUndirGraph = false;
 		X_ne = X2ne(a, isUndirGraph);
 
 		if ((b.size() * b.get(0).size()) != b.size())
 		{
-			// TODO, must make any(any(A - A')) method
-			if (isUndirGraph)
+			if (isUndirGraph && AnyAny(b))
 			{
-				System.out.println("Testing just single condition. This should ultimately be false.");
-				// System.out.println("ERROR: Weight matrix must be symmetric.");
+				System.out.println("ERROR: Weight matrix must be symmetric.");
 			}
 			w_ne = w2ne(b, X_ne);
 		}
+
+		int N = Max(X_ne);
+		int Ne = X_ne.length;
+		int[][] lidx = new int[Ne][1];
+	}
+
+	private static boolean AnyAny(List<List<Integer>> a)
+	{
+		boolean output = false;
+		int entries = a.size();
+
+		for (int x = 0; x < entries; x++)
+		{
+			for (int y = 0; y < entries; y++)
+			{
+				if ((a.get(x).get(y) - a.get(y).get(x)) != 0)
+					output = true;
+			}
+		}
+
+		return output;
+	}
+
+	private static int Max(int[][] a)
+	{
+		int output = 0;
+		int x_entries = a.length;
+		int y_entries = a[0].length;
+
+		for (int x = 0; x < x_entries; x++)
+		{
+			for (int y = 0; y < y_entries; y++)
+			{
+				if (a[x][y] > output)
+					output = a[x][y];
+			}
+		}
+
+		return output;
 	}
 
 	private static int[][] X2ne(List<List<Integer>> a, boolean b)

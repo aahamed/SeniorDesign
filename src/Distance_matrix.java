@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit; Feb 9, 2016
+ * Last Edit; Feb 10, 2016
  * Description: Gets normalized data set and calculates two distance matrices to be interpreted by the MST algorithm.
  */
 
@@ -11,6 +11,8 @@ public class Distance_matrix
 {
 	private List<List<Integer>> D_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> SP0_matrix = new ArrayList<List<Integer>>();
+	private List<List<Integer>> X_matrix = new ArrayList<List<Integer>>();
+	private List<List<Integer>> w_matrix = new ArrayList<List<Integer>>();
 
 	public Distance_matrix(String input, int m)
 	{
@@ -27,6 +29,8 @@ public class Distance_matrix
 				distance = HCS_distance(is.getLoc_HCS(x), is.getLoc_HCS(y));
 				D_matrix.get(x).set(y, distance);
 				SP0_matrix.get(x).set(y, distance);
+				w_matrix.get(x).set(y, distance);
+				w_matrix.get(y).set(x, distance);
 			}
 		}
 	}
@@ -46,11 +50,18 @@ public class Distance_matrix
 		{
 			D_matrix.add(new ArrayList<Integer>());
 			SP0_matrix.add(new ArrayList<Integer>());
+			X_matrix.add(new ArrayList<Integer>());
+			w_matrix.add(new ArrayList<Integer>());
 
 			for (int y = 0; y < size; y++)
 			{
 				D_matrix.get(x).add(GlobalConstants.TRANS_RANGE);
 				SP0_matrix.get(x).add(0);
+				if (x != y)
+					X_matrix.get(x).add(1);
+				else
+					X_matrix.get(x).add(0);
+				w_matrix.get(x).add(0);
 			}
 		}
 	}
@@ -70,18 +81,53 @@ public class Distance_matrix
 		return SP0_matrix.get(a).get(b);
 	}
 
-	public List<List<Integer>> getD_matrix()
+	public List<List<Integer>> getMatrix(String a)
 	{
-		return D_matrix;
+		switch (a)
+		{
+			case "D":
+				return D_matrix;
+			case "SP0":
+				return SP0_matrix;
+			case "X":
+				return X_matrix;
+			case "w":
+				return w_matrix;
+			default:
+				System.out.println("ERROR: Matrix not found.");
+				return new ArrayList<List<Integer>>();
+		}
 	}
 
 	public void printD()
 	{
+		System.out.println("D is:");
 		List_ops.print_matrix(D_matrix);
 	}
 
 	public void printSP0()
 	{
+		System.out.println("SP0 is:");
 		List_ops.print_matrix(SP0_matrix);
+	}
+
+	public void printX()
+	{
+		System.out.println("X is:");
+		List_ops.print_matrix(X_matrix);
+	}
+
+	public void printw()
+	{
+		System.out.println("w is:");
+		List_ops.print_matrix(w_matrix);
+	}
+
+	public void printall()
+	{
+		printD();
+		printSP0();
+		printX();
+		printw();
 	}
 }
