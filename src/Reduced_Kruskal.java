@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 10, 2016
+ * Last Edit: Feb 11, 2016
  * Description: Port of kruskal.m, reduced down to what is actually used by the algorithm.
  */
 
@@ -14,6 +14,8 @@ public class Reduced_Kruskal
 		boolean isUndirGraph = true;
 		int[][] X_ne = List_ops.ll2array(a);
 		int[][] w_ne = List_ops.ll2array(b);
+		List<Integer> repr = new ArrayList<Integer>();
+		List<Integer> rnk = new ArrayList<Integer>();
 
 		// TODO, do conditional statements before X2ne method is called.
 		if (AnyAny(a))
@@ -32,6 +34,8 @@ public class Reduced_Kruskal
 		int N = Max(X_ne);
 		int Ne = X_ne.length;
 		int[][] lidx = new int[Ne][1];
+
+		makeset(N, repr, rnk);
 	}
 
 	private static boolean AnyAny(List<List<Integer>> a)
@@ -167,24 +171,45 @@ public class Reduced_Kruskal
 		System.out.println();
 	}
 
-	public void makeset(int a)
+	private static void makeset(int a, List<Integer> b, List<Integer> c)
 	{
-		// Takes in N
-		// Returns repr, rnk
-		// Modifies repr, rnk
+		for (int x = 0; x < a; x++)
+		{
+			b.add(x + 1);
+			c.add(0);
+		}
 	}
 
-	public void find()
+	private static int fnd(int a, List<Integer> b)
 	{
-		// Takes in i, repr
-		// Returns o
-		// Modifies o
+		int i = a;
+
+		while (i != b.get(i))
+		{
+			i = b.get(i);
+		}
+
+		return i;
 	}
 
-	public void union()
+	private static void union(int a, int b, List<Integer> c, List<Integer> d)
 	{
-		// Takes in i, j, repr, rnk
-		// Returns repr, rnk
-		// Modifies r_i, r_j, repr, rnk
+		int r_i = fnd(a, c);
+		int r_j = fnd(b, c);
+		int temp = 0;
+
+		if (d.get(r_i) > d.get(r_j))
+		{
+			d.set(r_j, r_i);
+		}
+		else
+		{
+			d.set(r_i, r_j);
+			if (d.get(r_i) == d.get(r_j))
+			{
+				temp = d.get(r_j);
+				d.set(r_j, (temp + 1));
+			}
+		}
 	}
 }
