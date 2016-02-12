@@ -73,6 +73,24 @@ public class Reduced_Kruskal
 		return output;
 	}
 
+	private static int Min(int[][] a)
+	{
+		int output = Integer.MAX_VALUE;
+		int x_entries = a.length;
+		int y_entries = a[0].length;
+
+		for (int x = 0; x < x_entries; x++)
+		{
+			for (int y = 0; y < y_entries; y++)
+			{
+				if (a[x][y] < output)
+					output = a[x][y];
+			}
+		}
+
+		return output;
+	}
+
 	private static int[][] X2ne(List<List<Integer>> a, boolean b)
 	{
 		int[][] output;
