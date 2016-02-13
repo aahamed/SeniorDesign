@@ -101,25 +101,25 @@ public class Distance_matrix
 
 	public void printD()
 	{
-		System.out.println("D is:");
+		System.out.println(">> D is:");
 		List_ops.print_matrix(D_matrix);
 	}
 
 	public void printSP0()
 	{
-		System.out.println("SP0 is:");
+		System.out.println(">> SP0 is:");
 		List_ops.print_matrix(SP0_matrix);
 	}
 
 	public void printX()
 	{
-		System.out.println("X is:");
+		System.out.println(">> X is:");
 		List_ops.print_matrix(X_matrix);
 	}
 
 	public void printw()
 	{
-		System.out.println("w is:");
+		System.out.println(">> w is:");
 		List_ops.print_matrix(w_matrix);
 	}
 

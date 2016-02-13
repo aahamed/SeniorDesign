@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 9, 2016
+ * Last Edit: Feb 12, 2016
  * Description: Common operations for the data structures found in... TODO
  */
 
@@ -39,7 +39,6 @@ public class List_ops
 		return output;
 	}
 
-	// Currently only used for normalized_HCS
 	public static void print_coordlist_int(List<Coordinate<Integer>> a)
 	{
 		int entries = a.size();

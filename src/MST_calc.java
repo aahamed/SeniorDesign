@@ -19,13 +19,12 @@ public class MST_calc
 		int entries = dm.getSize();
 		initMatrices(entries);
 
+		// KruskalMST option
+		Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
+
 		// PrimMST option
 		int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
 		int[] parent = PrimMST.primMST(graph);
-		PrimMST.printMST(parent, parent.length, graph);
-
-		// KruskalMST option
-		Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
 
 		for (int c = 1; c < entries; c++)
 		{
@@ -33,11 +32,12 @@ public class MST_calc
 			X_st.get(c).set(parent[c], 1);
 			w_st += graph[parent[c]][c];
 		}
+		for (int d = 1; d < parent.length; d++)
+		{
+			ST.add(new Coordinate<Integer>((parent[d] + 1), (d + 1)));
+		}
 
-		System.out.println();
-		System.out.println(">> Printing W_st: " + w_st);
-		System.out.println(">> Printing X_st: ");
-		List_ops.print_matrix(X_st);
+		printall();
 	}
 
 	private void initMatrices(int size)
@@ -53,15 +53,14 @@ public class MST_calc
 		}
 	}
 
-	/*
-	public void printw()
+	public void printall()
 	{
-		List_ops.print_matrix(w_matrix);
+		System.out.println();
+		System.out.println(">> w_st is:");
+		System.out.println(w_st);
+		System.out.println(">> ST is:");
+		List_ops.print_coordlist_int(ST);
+		System.out.println(">> X_st is:");
+		List_ops.print_matrix(X_st);
 	}
-
-	public void printX()
-	{
-		List_ops.print_matrix(X_matrix);
-	}
-	*/
 }
