@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit; Feb 10, 2016
- * Description: Gets normalized data set and calculates two distance matrices to be interpreted by the MST algorithm.
+ * Last Edit; Feb 12, 2016
+ * Description: Gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class Distance_matrix
 	private List<List<Integer>> X_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> w_matrix = new ArrayList<List<Integer>>();
 
-	public Distance_matrix(String input, int m)
+	public Distance_matrix(String input, boolean m)
 	{
 		Initial_setup is = new Initial_setup(input, m);
 

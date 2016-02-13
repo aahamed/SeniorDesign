@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 10, 2016
+ * Last Edit: Feb 12, 2016
  * Description: TODO
  */
 
@@ -13,9 +13,9 @@ public class MST_calc
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
 
-	public MST_calc(String input, int m)
+	public MST_calc(String input, boolean matlab, boolean mst)
 	{
-		Distance_matrix dm = new Distance_matrix(input, m);
+		Distance_matrix dm = new Distance_matrix(input, matlab);
 		int entries = dm.getSize();
 		initMatrices(entries);
 
