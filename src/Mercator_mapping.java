@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 12, 2016
+ * Last Edit: Feb 13, 2016
  * Description: Maps latitude and longitude values to a Mercator projection, a 2D Cartesian plane.
  */
 
@@ -10,9 +10,9 @@ import java.util.List;
 public class Mercator_mapping
 {
 	private List<Coordinate<Double>> mercmap = new ArrayList<Coordinate<Double>>();
-	private static final double WGS84_A = 6378137.0;
-	private static final double WGS84_B = 6356752.314245;
-	private static final double WGS84_F = 1.0/298.257223563;
+	private final double WGS84_A = 6378137.0;
+	private final double WGS84_B = 6356752.314245;
+	private final double WGS84_F = 1.0/298.257223563;
 
 	public Mercator_mapping(String input)
 	{
@@ -92,14 +92,4 @@ public class Mercator_mapping
 			mercmap.add(new Coordinate<Double>(x_r[c], y_r[c]));
 		}
 	}
-
-	/*
-	public Coordinate<Double> getConverted(Coordinate<Double> a)
-	{
-		double new_mX = lon2mercX(a.getY());
-		double new_mY = lat2mercY(a.getX());
-
-		return new Coordinate<Double>(new_mX, new_mY);
-	}
-	*/
 }

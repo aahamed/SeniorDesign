@@ -12,32 +12,40 @@ public class MST_calc
 	private int w_st = 0;
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+	private MST_triplet mstinfo;
 
 	public MST_calc(String input, boolean matlab, boolean mst)
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
-		int entries = dm.getSize();
-		initMatrices(entries);
 
-		// KruskalMST option
-		Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
-
-		// PrimMST option
-		int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
-		int[] parent = PrimMST.primMST(graph);
-
-		for (int c = 1; c < entries; c++)
+		// If mst = true, then use Prim
+		if (mst)
 		{
-			X_st.get(parent[c]).set(c, 1);
-			X_st.get(c).set(parent[c], 1);
-			w_st += graph[parent[c]][c];
-		}
-		for (int d = 1; d < parent.length; d++)
-		{
-			ST.add(new Coordinate<Integer>((parent[d] + 1), (d + 1)));
-		}
+			int entries = dm.getSize();
+			initMatrices(entries);
 
-		// printall();
+			int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
+			int[] parent = PrimMST.primMST(graph);
+
+			for (int c = 1; c < entries; c++)
+			{
+				X_st.get(parent[c]).set(c, 1);
+				X_st.get(c).set(parent[c], 1);
+				w_st += graph[parent[c]][c];
+			}
+
+			for (int d = 1; d < parent.length; d++)
+			{
+				ST.add(new Coordinate<Integer>((parent[d] + 1), (d + 1)));
+			}
+
+			mstinfo = new MST_triplet(w_st, ST, X_st);
+			printAll();
+		}
+		else
+		{
+			Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
+		}
 	}
 
 	private void initMatrices(int size)
@@ -53,7 +61,7 @@ public class MST_calc
 		}
 	}
 
-	public void printall()
+	public void printAll()
 	{
 		System.out.println(">> w_st is:");
 		System.out.println(w_st);

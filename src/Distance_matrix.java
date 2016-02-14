@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit; Feb 12, 2016
+ * Last Edit; Feb 13, 2016
  * Description: Gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
@@ -71,16 +71,6 @@ public class Distance_matrix
 		return D_matrix.size();
 	}
 
-	public int getD_entry(int a, int b)
-	{
-		return D_matrix.get(a).get(b);
-	}
-
-	public int getSP0_entry(int a, int b)
-	{
-		return SP0_matrix.get(a).get(b);
-	}
-
 	public List<List<Integer>> getMatrix(String a)
 	{
 		switch (a)
@@ -123,7 +113,7 @@ public class Distance_matrix
 		List_ops.print_matrix(w_matrix);
 	}
 
-	public void printall()
+	public void printAll()
 	{
 		printD();
 		printSP0();
