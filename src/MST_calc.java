@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 12, 2016
+ * Last Edit: Feb 13, 2016
  * Description: TODO
  */
 
@@ -37,7 +37,7 @@ public class MST_calc
 			ST.add(new Coordinate<Integer>((parent[d] + 1), (d + 1)));
 		}
 
-		printall();
+		// printall();
 	}
 
 	private void initMatrices(int size)
@@ -55,7 +55,6 @@ public class MST_calc
 
 	public void printall()
 	{
-		System.out.println();
 		System.out.println(">> w_st is:");
 		System.out.println(w_st);
 		System.out.println(">> ST is:");

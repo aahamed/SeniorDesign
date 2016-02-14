@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 11, 2016
+ * Last Edit: Feb 13, 2016
  * Description: Port of kruskal.m, reduced down to what is actually used by the algorithm.
  */
 
@@ -14,14 +14,24 @@ public class Reduced_Kruskal
 		boolean isUndirGraph = true;
 		int[][] X_ne = List_ops.ll2array(a);
 		int[][] w_ne = List_ops.ll2array(b);
-		List<Integer> repr = new ArrayList<Integer>();
-		List<Integer> rnk = new ArrayList<Integer>();
 
-		// TODO, do conditional statements before X2ne method is called.
-		if (AnyAny(a))
-			isUndirGraph = false;
-		X_ne = X2ne(a, isUndirGraph);
+		int w_st = 0;
+		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
+		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
 
+		// "Convert logical adjacent matrix to neighbors' matrix"
+		if (true)
+		{
+			if (AnyAny(a))
+				isUndirGraph = false;
+			X_ne = X2ne(a, isUndirGraph);
+		}
+		else
+		{
+			// TODO: If input 'a' is already a neighbors' matrix
+		}
+
+		// "Convert weight matrix from adjacent to neighbors' form"
 		if ((b.size() * b.get(0).size()) != b.size())
 		{
 			if (isUndirGraph && AnyAny(b))
@@ -31,64 +41,80 @@ public class Reduced_Kruskal
 			w_ne = w2ne(b, X_ne);
 		}
 
-		int N = Max(X_ne);
-		int Ne = X_ne.length;
-		int[][] lidx = new int[Ne][1];
+		int N = Max(X_ne); // "Number of vertices"
+		int Ne = X_ne.length; // "Number of edges"
+		int[][] lidx = new int[Ne][1]; // "Logical edge index, 1 for the edges that will be in the MST"
 
+		// "Sort edges w.r.t. weight"
+		int[][] idx = Sort(w_ne);
+		X_ne = SortI(X_ne, idx);
+
+		// "Initialize: assign each node to itself"
+		List<Integer> repr = new ArrayList<Integer>();
+		List<Integer> rnk = new ArrayList<Integer>();
 		makeset(N, repr, rnk);
-	}
 
-	private static boolean AnyAny(List<List<Integer>> a)
-	{
-		boolean output = false;
-		int entries = a.size();
-
-		for (int x = 0; x < entries; x++)
+		// "Run Kruskal's algorithm"
+		int i, j;
+		for (int k = 0; k < Ne; k++)
 		{
-			for (int y = 0; y < entries; y++)
+			i = X_ne[k][0];
+			j = X_ne[k][1];
+			if (fnd(i, repr) != fnd(j,repr))
 			{
-				if ((a.get(x).get(y) - a.get(y).get(x)) != 0)
-					output = true;
+				lidx[k][0] = 1;
+				union(i, j, repr, rnk);
 			}
 		}
 
-		return output;
-	}
-
-	private static int Max(int[][] a)
-	{
-		int output = 0;
-		int x_entries = a.length;
-		int y_entries = a[0].length;
-
-		for (int x = 0; x < x_entries; x++)
+		// "Form the minimum spanning tree"
+		List<Integer> treeidx = new ArrayList<Integer>();
+		for (int l = 0; l < Ne; l++)
 		{
-			for (int y = 0; y < y_entries; y++)
+			if (lidx[l][0] == 1)
 			{
-				if (a[x][y] > output)
-					output = a[x][y];
+				treeidx.add(l + 1);
 			}
 		}
-
-		return output;
-	}
-
-	private static int Min(int[][] a)
-	{
-		int output = Integer.MAX_VALUE;
-		int x_entries = a.length;
-		int y_entries = a[0].length;
-
-		for (int x = 0; x < x_entries; x++)
+		for (int m = 0; m < treeidx.size(); m++)
 		{
-			for (int y = 0; y < y_entries; y++)
-			{
-				if (a[x][y] < output)
-					output = a[x][y];
-			}
+			i = X_ne[(treeidx.get(m) - 1)][0];
+			j = X_ne[(treeidx.get(m) - 1)][1];
+			ST.add(new Coordinate<Integer>(i, j));
 		}
 
-		return output;
+		System.out.println(">> ST is:");
+		List_ops.print_coordlist_int(ST);
+
+		// "Generate adjacency matrix of the minimum spanning tree"
+		for (int x = 0; x < N; x++)
+		{
+			X_st.add(new ArrayList<Integer>());
+
+			for (int y = 0; y < N; y++)
+			{
+				X_st.get(x).add(0);
+			}
+		}
+		for (int p = 0; p < ST.size(); p++)
+		{
+			i = ST.get(p).getX() - 1;
+			j = ST.get(p).getY() - 1;
+			X_st.get(i).set(j, 1);
+			X_st.get(j).set(i, 1);
+		}
+
+		System.out.println(">> X_st is: ");
+		List_ops.print_matrix(X_st);
+
+		// "Evaluate the total weight of the minimum spanning tree"
+		for (int q = 0; q < treeidx.size(); q++)
+		{
+			w_st += w_ne[treeidx.get(q) - 1][0];
+		}
+
+		System.out.println(">> w_st is: ");
+		System.out.println(w_st);
 	}
 
 	private static int[][] X2ne(List<List<Integer>> a, boolean b)
@@ -112,7 +138,7 @@ public class Reduced_Kruskal
 		}
 		else
 		{
-			// TODO if undirected graph
+			// TODO: If undirected graph
 			output = new int[1][2]; // Temporary to avoid errors
 		}
 
@@ -173,7 +199,137 @@ public class Reduced_Kruskal
 		return output;
 	}
 
-	private static void printmatrix(int[][] a)
+	private static void makeset(int a, List<Integer> b, List<Integer> c)
+	{
+		for (int x = 0; x < a; x++)
+		{
+			b.add(x + 1);
+			c.add(0);
+		}
+	}
+
+	private static int fnd(int a, List<Integer> b)
+	{
+		int i = a;
+
+		while (i != b.get(i - 1))
+		{
+			i = b.get(i - 1);
+		}
+
+		return i;
+	}
+
+	private static void union(int a, int b, List<Integer> c, List<Integer> d)
+	{
+		int r_i = fnd(a, c);
+		int r_j = fnd(b, c);
+		int temp = 0;
+
+		if (d.get(r_i - 1) > d.get(r_j - 1))
+		{
+			c.set((r_j - 1), r_i);
+		}
+		else
+		{
+			c.set((r_i - 1), r_j);
+			if (d.get(r_i - 1) == d.get(r_j - 1))
+			{
+				temp = d.get(r_j - 1);
+				d.set(r_j - 1, (temp + 1));
+			}
+		}
+	}
+
+	private static boolean AnyAny(List<List<Integer>> a)
+	{
+		boolean output = false;
+		int entries = a.size();
+
+		for (int x = 0; x < entries; x++)
+		{
+			for (int y = 0; y < entries; y++)
+			{
+				if ((a.get(x).get(y) - a.get(y).get(x)) != 0)
+					output = true;
+			}
+		}
+
+		return output;
+	}
+
+	private static int Max(int[][] a)
+	{
+		int output = 0;
+		int x_entries = a.length;
+		int y_entries = a[0].length;
+
+		for (int x = 0; x < x_entries; x++)
+		{
+			for (int y = 0; y < y_entries; y++)
+			{
+				if (a[x][y] > output)
+					output = a[x][y];
+			}
+		}
+
+		return output;
+	}
+
+	private static int[][] Sort(int[][] a)
+	{
+		int entries = a.length;
+		int[][] output = new int[entries][1];
+		List<Coordinate<Integer>> data = new ArrayList<Coordinate<Integer>>();
+		int startScan, minIndex;
+		Coordinate<Integer> minValue;
+
+		for (int x = 0; x < entries; x++)
+		{
+			data.add(new Coordinate<Integer>((x + 1), a[x][0]));
+		}
+
+		for (startScan = 0; startScan < (entries - 1); startScan++)
+		{
+			minIndex = startScan;
+			minValue = data.get(startScan);
+			for (int index = startScan + 1; index < entries; index++)
+			{
+				if (data.get(index).getY() < minValue.getY())
+				{
+					minValue = data.get(index);
+					minIndex = index;
+				}
+			}
+			data.set(minIndex, data.get(startScan));
+			data.set(startScan, minValue);
+		}
+
+		for (int y = 0; y < entries; y++)
+		{
+			a[y][0] = data.get(y).getY();
+			output[y][0] = data.get(y).getX();
+		}
+
+		data.clear();
+		return output;
+	}
+
+	private static int[][] SortI(int[][] a, int[][] b)
+	{
+		int entries = a.length;
+		int[][] output = new int[entries][2];
+
+		for (int x = 0; x < entries; x++)
+		{
+			output[x][0] = a[b[x][0] - 1][0];
+			output[x][1] = a[b[x][0] - 1][1];
+		}
+
+		return output;
+	}
+
+	private static void printMatrix(int[][] a)
 	{
 		for (int x = 0; x < a.length; x++)
 		{
@@ -189,45 +345,12 @@ public class Reduced_Kruskal
 		System.out.println();
 	}
 
-	private static void makeset(int a, List<Integer> b, List<Integer> c)
+	private static void printList(List<Integer> a)
 	{
-		for (int x = 0; x < a; x++)
+		for (int x = 0; x < a.size(); x++)
 		{
-			b.add(x + 1);
-			c.add(0);
+			System.out.print(a.get(x) + ", ");
 		}
-	}
-
-	private static int fnd(int a, List<Integer> b)
-	{
-		int i = a;
-
-		while (i != b.get(i))
-		{
-			i = b.get(i);
-		}
-
-		return i;
-	}
-
-	private static void union(int a, int b, List<Integer> c, List<Integer> d)
-	{
-		int r_i = fnd(a, c);
-		int r_j = fnd(b, c);
-		int temp = 0;
-
-		if (d.get(r_i) > d.get(r_j))
-		{
-			d.set(r_j, r_i);
-		}
-		else
-		{
-			d.set(r_i, r_j);
-			if (d.get(r_i) == d.get(r_j))
-			{
-				temp = d.get(r_j);
-				d.set(r_j, (temp + 1));
-			}
-		}
+		System.out.println();
 	}
 }
