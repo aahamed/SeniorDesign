@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 13, 2016
+ * Last Edit: Feb 14, 2016
  * Description: Port of kruskal.m, reduced down to what is actually used by the algorithm.
  */
 
@@ -9,15 +9,16 @@ import java.util.List;
 
 public class Reduced_Kruskal
 {
-	public static void MST(List<List<Integer>> a, List<List<Integer>> b)
+	public static MST_triplet MST(List<List<Integer>> a, List<List<Integer>> b)
 	{
-		boolean isUndirGraph = true;
-		int[][] X_ne = List_ops.ll2array(a);
-		int[][] w_ne = List_ops.ll2array(b);
-
+		MST_triplet output;
 		int w_st = 0;
 		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+
+		boolean isUndirGraph = true;
+		int[][] X_ne = List_ops.ll2array(a);
+		int[][] w_ne = List_ops.ll2array(b);
 
 		// "Convert logical adjacent matrix to neighbors' matrix"
 		if (true)
@@ -83,9 +84,6 @@ public class Reduced_Kruskal
 			ST.add(new Coordinate<Integer>(i, j));
 		}
 
-		System.out.println(">> ST is:");
-		List_ops.print_coordlist_int(ST);
-
 		// "Generate adjacency matrix of the minimum spanning tree"
 		for (int x = 0; x < N; x++)
 		{
@@ -104,17 +102,14 @@ public class Reduced_Kruskal
 			X_st.get(j).set(i, 1);
 		}
 
-		System.out.println(">> X_st is: ");
-		List_ops.print_matrix(X_st);
-
 		// "Evaluate the total weight of the minimum spanning tree"
 		for (int q = 0; q < treeidx.size(); q++)
 		{
 			w_st += w_ne[treeidx.get(q) - 1][0];
 		}
 
-		System.out.println(">> w_st is: ");
-		System.out.println(w_st);
+		output = new MST_triplet(w_st, ST, X_st);
+		return output;
 	}
 
 	private static int[][] X2ne(List<List<Integer>> a, boolean b)

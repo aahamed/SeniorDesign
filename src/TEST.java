@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 13, 2016
+ * Last Edit: Feb 14, 2016
  * Description: Class for testing.
  */
 
@@ -10,6 +10,7 @@ public class TEST
 	{
 		String input_filename;
 		boolean q_matlab = false;
+		// True means Prim, false means Kruskal
 		boolean q_mst = false;
 
 		if (args.length > 0)
@@ -27,5 +28,6 @@ public class TEST
 			System.out.println("Using \"" + input_filename + "\" as the input file.");
 
 		MST_calc mc = new MST_calc(input_filename, q_matlab, q_mst);
+		mc.printAll();
 	}
 }

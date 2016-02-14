@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 13, 2016
+ * Last Edit: Feb 14, 2016
  * Description: TODO
  */
 
@@ -9,16 +9,17 @@ import java.util.List;
 
 public class MST_calc
 {
-	private int w_st = 0;
+	private MST_triplet mstinfo;
+	private boolean choice;
+	private int w_st;
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
-	private MST_triplet mstinfo;
 
 	public MST_calc(String input, boolean matlab, boolean mst)
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
+		choice = mst;
 
-		// If mst = true, then use Prim
 		if (mst)
 		{
 			int entries = dm.getSize();
@@ -40,11 +41,13 @@ public class MST_calc
 			}
 
 			mstinfo = new MST_triplet(w_st, ST, X_st);
-			printAll();
 		}
 		else
 		{
-			Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
+			mstinfo = Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
+			w_st = mstinfo.getwst();
+			ST = mstinfo.getST();
+			X_st = mstinfo.getXst();
 		}
 	}
 
@@ -63,6 +66,10 @@ public class MST_calc
 
 	public void printAll()
 	{
+		if (choice)
+			System.out.println("Using Prim for MST calculation.");
+		else
+			System.out.println("Using Kruskal for MST calculation.");
 		System.out.println(">> w_st is:");
 		System.out.println(w_st);
 		System.out.println(">> ST is:");
