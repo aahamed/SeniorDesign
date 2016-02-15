@@ -9,9 +9,9 @@ import java.util.List;
 
 public class Reduced_Kruskal
 {
-	public static MST_triplet MST(List<List<Integer>> a, List<List<Integer>> b)
+	public static MST MST(List<List<Integer>> a, List<List<Integer>> b)
 	{
-		MST_triplet output;
+		MST output;
 		int w_st = 0;
 		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
@@ -21,7 +21,9 @@ public class Reduced_Kruskal
 		int[][] w_ne = List_ops.ll2array(b);
 
 		// "Convert logical adjacent matrix to neighbors' matrix"
-		if (true)
+		boolean cond1 = a.size() == a.get(0).size();
+		boolean cond2 = (Sum(a, 0) + Sum(a, 1)) == (a.size() * a.get(0).size());
+		if (cond1 && cond2)
 		{
 			if (AnyAny(a))
 				isUndirGraph = false;
@@ -37,7 +39,7 @@ public class Reduced_Kruskal
 		{
 			if (isUndirGraph && AnyAny(b))
 			{
-				System.out.println("ERROR: Weight matrix must be symmetric.");
+				System.out.println("ERROR: Weight matrix must be symmetric if it is an undirected graph.");
 			}
 			w_ne = w2ne(b, X_ne);
 		}
@@ -108,7 +110,7 @@ public class Reduced_Kruskal
 			w_st += w_ne[treeidx.get(q) - 1][0];
 		}
 
-		output = new MST_triplet(w_st, ST, X_st);
+		output = new MST(w_st, ST, X_st);
 		return output;
 	}
 
@@ -234,6 +236,24 @@ public class Reduced_Kruskal
 				d.set(r_j - 1, (temp + 1));
 			}
 		}
+	}
+
+	private static int Sum(List<List<Integer>> a, int b)
+	{
+		int output = 0;
+		int x_entries = a.size();
+		int y_entries = a.get(0).size();
+
+		for (int x = 0; x < x_entries; x++)
+		{
+			for (int y = 0; y < y_entries; y++)
+			{
+				if (a.get(x).get(y) == b)
+					output++;
+			}
+		}
+
+		return output;
 	}
 
 	private static boolean AnyAny(List<List<Integer>> a)

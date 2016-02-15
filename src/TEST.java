@@ -11,7 +11,7 @@ public class TEST
 		String input_filename;
 		boolean q_matlab = false;
 		// True means Prim, false means Kruskal
-		boolean q_mst = false;
+		boolean q_mstalgo = false;
 
 		if (args.length > 0)
 			input_filename = args[0];
@@ -27,7 +27,7 @@ public class TEST
 		else
 			System.out.println("Using \"" + input_filename + "\" as the input file.");
 
-		MST_calc mc = new MST_calc(input_filename, q_matlab, q_mst);
+		MST_calc mc = new MST_calc(input_filename, q_matlab, q_mstalgo);
 		mc.printAll();
 	}
 }

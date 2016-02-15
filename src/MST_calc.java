@@ -9,21 +9,21 @@ import java.util.List;
 
 public class MST_calc
 {
-	private MST_triplet mstinfo;
-	private boolean choice;
+	private MST mstinfo;
 	private int w_st;
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+	private boolean choice;
 
-	public MST_calc(String input, boolean matlab, boolean mst)
+	public MST_calc(String input, boolean matlab, boolean mstalgo)
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
-		choice = mst;
+		choice = mstalgo;
 
-		if (mst)
+		if (mstalgo)
 		{
 			int entries = dm.getSize();
-			initMatrices(entries);
+			initXst(entries);
 
 			int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
 			int[] parent = PrimMST.primMST(graph);
@@ -40,7 +40,7 @@ public class MST_calc
 				ST.add(new Coordinate<Integer>((parent[d] + 1), (d + 1)));
 			}
 
-			mstinfo = new MST_triplet(w_st, ST, X_st);
+			mstinfo = new MST(w_st, ST, X_st);
 		}
 		else
 		{
@@ -51,7 +51,7 @@ public class MST_calc
 		}
 	}
 
-	private void initMatrices(int size)
+	private void initXst(int size)
 	{
 		for (int x = 0 ; x < size; x++)
 		{
@@ -70,11 +70,6 @@ public class MST_calc
 			System.out.println("Using Prim for MST calculation.");
 		else
 			System.out.println("Using Kruskal for MST calculation.");
-		System.out.println(">> w_st is:");
-		System.out.println(w_st);
-		System.out.println(">> ST is:");
-		List_ops.print_coordlist_int(ST);
-		System.out.println(">> X_st is:");
-		List_ops.print_matrix(X_st);
+		mstinfo.printAll();
 	}
 }
