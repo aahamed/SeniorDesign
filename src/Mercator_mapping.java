@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 13, 2016
+ * Last Edit: Feb 15, 2016
  * Description: Maps latitude and longitude values to a Mercator projection, a 2D Cartesian plane.
  */
 
@@ -14,19 +14,33 @@ public class Mercator_mapping
 	private final double WGS84_B = 6356752.314245;
 	private final double WGS84_F = 1.0/298.257223563;
 
-	public Mercator_mapping(String input)
+	public Mercator_mapping(String input, boolean m)
 	{
-		Parse_data ll = new Parse_data(input);
+		Parse_data ll = new Parse_data(input, m);
 
 		int entries = ll.getSize();
 		double mX, mY;
 
-		for (int c = 0; c < entries; c++)
+		if (m)
 		{
-			mX = lon2mercX(ll.getLon(c));
-			mY = lat2mercY(ll.getLat(c));
+			for (int c = 0; c < entries; c++)
+			{
+				mX = ll.getLat(c);
+				mY = ll.getLon(c);
 
-			mercmap.add(new Coordinate<Double>(mX, mY));
+				mercmap.add(new Coordinate<Double>(mX, mY));
+			}
+
+		}
+		else
+		{
+			for (int c = 0; c < entries; c++)
+			{
+				mX = lon2mercX(ll.getLon(c));
+				mY = lat2mercY(ll.getLat(c));
+
+				mercmap.add(new Coordinate<Double>(mX, mY));
+			}
 		}
 	}
 
@@ -79,17 +93,5 @@ public class Mercator_mapping
 	public void printMM()
 	{
 		List_ops.print_coordlist_double(mercmap);
-	}
-
-	public void MATLAB_TEST()
-	{
-		mercmap.clear();
-		double[] x_r = {24441.71059, 27173.75811, 3809.604489, 27401.27568, 18970.77739, 2926.21215, 8354.946566, 16406.44558, 28725.20506, 28946.65606};
-		double[] y_r = {4728.39245, 29117.78345, 28715.00845, 14561.26946, 24008.41407, 4256.590159, 12652.83848, 27472.06576, 23766.21989, 28784.77279};
-
-		for (int c = 0; c < 10; c++)
-		{
-			mercmap.add(new Coordinate<Double>(x_r[c], y_r[c]));
-		}
 	}
 }

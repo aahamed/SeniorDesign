@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 14, 2016
+ * Last Edit: Feb 15, 2016
  * Description: TODO
  */
 
@@ -13,12 +13,10 @@ public class MST_calc
 	private int w_st;
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
-	private boolean choice;
 
 	public MST_calc(String input, boolean matlab, boolean mstalgo)
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
-		choice = mstalgo;
 
 		if (mstalgo)
 		{
@@ -45,9 +43,6 @@ public class MST_calc
 		else
 		{
 			mstinfo = Reduced_Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
-			w_st = mstinfo.getwst();
-			ST = mstinfo.getST();
-			X_st = mstinfo.getXst();
 		}
 	}
 
@@ -64,12 +59,13 @@ public class MST_calc
 		}
 	}
 
+	private MST getMST()
+	{
+		return mstinfo;
+	}
+
 	public void printAll()
 	{
-		if (choice)
-			System.out.println("Using Prim for MST calculation.");
-		else
-			System.out.println("Using Kruskal for MST calculation.");
 		mstinfo.printAll();
 	}
 }

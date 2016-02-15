@@ -8,24 +8,36 @@ public class TEST
 {
 	public static void main (String[] args)
 	{
-		String input_filename;
+		String input_filename = "./src/input/in.txt";
 		boolean q_matlab = false;
-		// True means Prim, false means Kruskal
 		boolean q_mstalgo = false;
 
 		if (args.length > 0)
-			input_filename = args[0];
-		else
-			input_filename = "./src/input/in.txt";
-
-		if (input_filename.equals("MATLAB"))
 		{
-			q_matlab = true;
-			input_filename = "./src/input/in.txt"; // To avoid IO issues, temporary fix
-			System.out.println("Using MATLAB testbench.");
+			for (int i = 0; i < args.length; i++)
+			{
+				if (args[i].equals("-m"))
+					q_matlab = true;
+				if (args[i].equals("-g"))
+					q_matlab = false;
+				if (args[i].equals("-p"))
+					q_mstalgo = true;
+				if (args[i].equals("-k"))
+					q_mstalgo = false;
+				if (args[i].equals("-i"))
+					input_filename = args[i + 1];
+			}
 		}
+
+		if (q_matlab)
+			System.out.println("Using MATLAB generated values from \"" + input_filename + "\".");
 		else
-			System.out.println("Using \"" + input_filename + "\" as the input file.");
+			System.out.println("Using GPS coordinates from \"" + input_filename + "\".");
+
+		if (q_mstalgo)
+			System.out.println("Using Prim's algorithm for calculating the MST.");
+		else
+			System.out.println("Using Kruskal's algorithm for calculating the MST.");
 
 		MST_calc mc = new MST_calc(input_filename, q_matlab, q_mstalgo);
 		mc.printAll();

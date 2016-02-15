@@ -23,7 +23,7 @@ test:
 	java $(CP) TEST
 
 stest:
-	java $(CP) TEST ./src/input/in_small.txt
+	java $(CP) TEST -i ./src/input/in_small.txt -g -p
 
 mtest:
-	java $(CP) TEST MATLAB
+	java $(CP) TEST -m -i ./src/input/min.txt

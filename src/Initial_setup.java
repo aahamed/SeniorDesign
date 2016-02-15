@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 13, 2016
+ * Last Edit: Feb 15, 2016
  * Description: Adjusts Mercator data set in relation to the center of mass of the data points, and also converts the data points to HCS coordinates.
  */
 
@@ -14,9 +14,7 @@ public class Initial_setup
 
 	public Initial_setup(String input, boolean m)
 	{
-		Mercator_mapping mm = new Mercator_mapping(input);
-		if (m)
-			mm.MATLAB_TEST();
+		Mercator_mapping mm = new Mercator_mapping(input, m);
 
 		int entries = mm.getSize();
 		double normX, normY;
