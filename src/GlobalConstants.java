@@ -9,7 +9,7 @@ GlobalConstants.R
 
 public class GlobalConstants
 {
-	public static int n; // Initial number of clusters
+	public static int n = 10; // Initial number of clusters
 	public static final int TRANS_RANGE = 500000; //transmission range
 	private static final int NL = 7;
 	public static final int SN_R = 5; // SN transmission range

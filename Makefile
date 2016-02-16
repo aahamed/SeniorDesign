@@ -20,10 +20,10 @@ testFindAN:
 	java $(CP) FindAN
 
 test:
-	java $(CP) TEST
+	java $(CP) PCG
 
 stest:
-	java $(CP) TEST -i ./src/input/in_small.txt -g -p
+	java $(CP) PCG -i ./src/input/in_small.txt -g -p
 
 mtest:
-	java $(CP) TEST -m -i ./src/input/min.txt
+	java $(CP) PCG -m -i ./src/input/min.txt
