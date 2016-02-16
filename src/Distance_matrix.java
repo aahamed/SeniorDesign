@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit; Feb 13, 2016
+ * Last Edit; Feb 15, 2016
  * Description: Gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
@@ -13,10 +13,12 @@ public class Distance_matrix
 	private List<List<Integer>> SP0_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> X_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> w_matrix = new ArrayList<List<Integer>>();
+	private List<Coordinate<Integer>> HCS_list;
 
 	public Distance_matrix(String input, boolean m)
 	{
 		Initial_setup is = new Initial_setup(input, m);
+		HCS_list = is.getHCS();
 
 		int entries = is.getSize();
 		int distance;
@@ -87,6 +89,11 @@ public class Distance_matrix
 				System.out.println("ERROR: Matrix not found.");
 				return new ArrayList<List<Integer>>();
 		}
+	}
+
+	public List<Coordinate<Integer>> getHCS()
+	{
+		return HCS_list;
 	}
 
 	public void printD()

@@ -13,10 +13,14 @@ public class MST_calc
 	private int w_st;
 	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+	private List<List<Integer>> D_matrix;
+	private List<Coordinate<Integer>> HCS_list;
 
 	public MST_calc(String input, boolean matlab, boolean mstalgo)
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
+		D_matrix = dm.getMatrix("D");
+		HCS_list = dm.getHCS();
 
 		if (mstalgo)
 		{
@@ -59,9 +63,29 @@ public class MST_calc
 		}
 	}
 
-	private MST getMST()
+	public MST getMST()
 	{
 		return mstinfo;
+	}
+
+	public List<List<Integer>> getDM()
+	{
+		return D_matrix;
+	}
+
+	public int[][] getDMarray()
+	{
+		return List_ops.ll2array(D_matrix);
+	}
+
+	public List<Coordinate<Integer>> getHCS()
+	{
+		return HCS_list;
+	}
+
+	public int[][] getHCSarray()
+	{
+		return List_ops.lc2array(HCS_list);
 	}
 
 	public void printAll()

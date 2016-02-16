@@ -4,6 +4,9 @@
  * Description: Class for testing.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TEST
 {
 	public static void main (String[] args)
@@ -41,5 +44,8 @@ public class TEST
 
 		MST_calc mc = new MST_calc(input_filename, q_matlab, q_mstalgo);
 		mc.printAll();
+		List<List<Integer>> D1 = mc.getDM();
+		System.out.println(">> D1 is:");
+		List_ops.print_matrix(D1);
 	}
 }

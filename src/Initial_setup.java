@@ -45,6 +45,11 @@ public class Initial_setup
 		return normalized_HCS.get(a);
 	}
 
+	public List<Coordinate<Integer>> getHCS()
+	{
+		return normalized_HCS;
+	}
+
 	public void printNorm()
 	{
 		System.out.println(">> Normalized points (x, y) are:");
