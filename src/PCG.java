@@ -45,6 +45,7 @@ public class PCG
 		MST_calc mc = new MST_calc(input_filename, q_matlab, q_mstalgo);
 
 		MST Tree = mc.getMST();
+		Tree.printAll();
 		List<List<Integer>> D1 = mc.getDM();
 		List<Coordinate<Integer>> UV = mc.getHCS();
 
