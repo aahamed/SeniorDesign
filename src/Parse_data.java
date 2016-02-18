@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 18, 2016
+ * Last Edit: Jan 28, 2016
  * Description: Class for parsing and converting GPS information from a list of strings into latitude and longitude format. Also calculates center of mass.
  */
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Parse_data
 {
-	private List<List<Double>> lat_lon = new ArrayList<List<Double>>();
+	private List<Coordinate<Double>> lat_lon = new ArrayList<Coordinate<Double>>();
 	private int deg1, min1, deg2, min2;
 	private double sec1, sec2, lat, lon;
 	private char dir1, dir2;
@@ -36,11 +36,8 @@ public class Parse_data
 			dir2 = line.next().charAt(0);
 
 			line.close();
-
 			gps_to_ll();
-			lat_lon.add(new ArrayList<Double>());
-			lat_lon.get(c).add(lat);
-			lat_lon.get(c).add(lon);
+			lat_lon.add(new Coordinate<Double>(lat, lon));
 		}
 	}
 
@@ -60,26 +57,37 @@ public class Parse_data
 		return lat_lon.size();
 	}
 
-	public double getLocation(int a, int b)
+	public double getLat(int a)
 	{
-		return lat_lon.get(a).get(b);
+		return lat_lon.get(a).getX();
 	}
 
-	public double[] getCOM()
+	public double getLon(int a)
+	{
+		return lat_lon.get(a).getY();
+	}
+
+	public void printll()
+	{
+		int entries = lat_lon.size();
+
+		for (int c = 0; c < entries; c++)
+		{
+			System.out.println(lat_lon.get(c));
+		}
+	}
+
+	public Coordinate<Double> getCOM()
 	{
 		int entries = lat_lon.size();
 		double total_x = 0.0, total_y = 0.0;
-		double[] point = new double[2];
 
-		for (int x = 0; x < entries; x++)
+		for (int c = 0; c < entries; c++)
 		{
-			total_x += lat_lon.get(x).get(0);
-			total_y += lat_lon.get(x).get(1);
+			total_x += lat_lon.get(c).getX();
+			total_y += lat_lon.get(c).getY();
 		}
 
-		point[0] = total_x / entries;
-		point[1] = total_y / entries;
-
-		return point;
+		return new Coordinate<Double>(total_x/entries, total_y/entries);
 	}
 }
