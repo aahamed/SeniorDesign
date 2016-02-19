@@ -31,7 +31,7 @@ public class PrimMST
  
     // A utility function to print the constructed PrimMST stored in
     // parent[]
-    private static void printMST(int parent[], int n, int graph[][])
+    public static void printMST(int parent[], int n, int graph[][])
     {
         System.out.println("Edge   Weight");
         for (int i = 1; i < V; i++)
@@ -41,6 +41,7 @@ public class PrimMST
  
     // Function to construct and print PrimMST for a graph represented
     //  using adjacency matrix representation
+	// returns an array of parent pointers. if array[i] = null then i is the root of MST
     public static int[] primMST(int graph[][])
     {
         // Array to store constructed PrimMST

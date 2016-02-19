@@ -7,6 +7,7 @@ LIB=./lib/*
 CP=-cp '$(BIN);$(LIB)'
 ODIR=-d $(BIN)
 OSNAME = $(OS)
+XLINT = -Xlint:unchecked
 
 # Determine OS
 ifeq '$(OS)' 'Windows_N'
@@ -52,7 +53,13 @@ Coord:
 	javac $(CP) $(ODIR) $(SRC)Coordinate.java
 
 testCoord:
-	java $(CP) Coordinate	
+	java $(CP) Coordinate
+
+InitMax:
+	javac $(CP) $(ODIR) $(SRC)InitMax.java
+
+testInitMax:
+	java $(CP) InitMax
 
 echo_osname: 
 	echo $(OSNAME)
