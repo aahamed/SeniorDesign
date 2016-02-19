@@ -111,8 +111,7 @@ public class InitMax
 		return mst;
 	}
 	
-	
-	public static void main(String[] args)
+	public static void test1()
 	{
 		List<Coordinate<Double>> listOfCoords = new ArrayList<Coordinate<Double>>();
 		listOfCoords.add(new Coordinate<Double>(1.0, 3.0));
@@ -121,6 +120,11 @@ public class InitMax
 		Coordinate<Double> com = new Coordinate<Double>(0.0, 0.0);
 		int[][] oldDistMat = new int[][]{{2, 2}, {2, 2}};
 		int[] mst = InitMax.initMax(listOfCoords, com, oldDistMat);
+	}
+	
+	public static void main(String[] args)
+	{
+		InitMax.test1();
 	}
 	
 }
