@@ -11,7 +11,6 @@ public class Initial_setup
 {
 	private List<Coordinate<Double>> normalized = new ArrayList<Coordinate<Double>>();
 	private List<Coordinate<Integer>> normalized_HCS = new ArrayList<Coordinate<Integer>>();
-
 	public Initial_setup(String input, boolean m)
 	{
 		Mercator_mapping mm = new Mercator_mapping(input, m);

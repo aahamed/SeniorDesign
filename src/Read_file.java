@@ -1,7 +1,12 @@
 /*
  * Author: Josue Galeas
+<<<<<<< HEAD
  * Last Edit: Feb 19, 2016
  * Description: Class for reading lines from a text file and storing each line into an ArrayList of strings.
+=======
+ * Last Edit: Jan 27, 2016
+ * Description: Class for reading GPS coordinates from a text file and storing each line into an ArrayList of strings.
+>>>>>>> ezana
  */
 
 import java.io.BufferedReader;

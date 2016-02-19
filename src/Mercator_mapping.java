@@ -17,7 +17,6 @@ public class Mercator_mapping
 	public Mercator_mapping(String input, boolean m)
 	{
 		Parse_data ll = new Parse_data(input, m);
-
 		int entries = ll.getSize();
 		double mX, mY;
 
@@ -66,7 +65,7 @@ public class Mercator_mapping
 		con = Math.pow(((1.0 - con) / (1.0 + con)), com);
 		double ts = Math.tan(0.5 * ((Math.PI * 0.5) - phi)) / con;
 		double y = 0 - WGS84_A * Math.log(ts);
-
+		
 		return y;
     }
 

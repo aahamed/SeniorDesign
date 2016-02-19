@@ -1,8 +1,12 @@
+
 /*
-* Author: Aadil Ahamed
+* Author: Aadil Ahamed, Ezana Woldegebriel
 * Date: 1/27/16
 * Description: Class to package the output of FindAN.findANm()
 */
+
+import java.util.Arrays;
+
 public class FindANOut
 {
 	private double[][] result;
@@ -20,9 +24,10 @@ public class FindANOut
 	}
 
 	public Coordinate<Integer> getResultC(){
-		int[] temp = new int[this.result[0].length];
-		for(int n=0;n<this.result[0].length;n++)
-			temp[n] = (int)this.result[0][n];
+		int[] temp = new int[this.result.length];
+		temp[0] = (int)this.result[0][0];
+		temp[1] = (int)this.result[1][0];
+		//System.out.print(Arrays.toString(temp));
 		return new Coordinate<Integer>(temp[0],temp[1]);
 	}
 	

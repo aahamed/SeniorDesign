@@ -31,7 +31,6 @@ public class Parse_data
 
 				mat1 = Double.parseDouble(line.next());
 				mat2 = Double.parseDouble(line.next());
-
 				line.close();
 				lat_lon.add(new Coordinate<Double>(mat1, mat2));
 			}
