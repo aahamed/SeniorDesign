@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 13, 2016
+ * Last Edit: Feb 19, 2016
  * Description: Class for reading lines from a text file and storing each line into an ArrayList of strings.
  */
 
@@ -37,7 +37,8 @@ public class Read_file
 		}
 		catch (IOException x)
 		{
-			System.err.format("ERROR: IOException - %s%n", x);
+			System.err.format("ERROR: Could not find the input file. [%s]\n", x);
+			System.exit(0);
 		}
 	}
 
