@@ -4,7 +4,7 @@
 BIN=./bin/
 SRC=./src/
 LIB=./lib/*
-CP=-cp '$(BIN):$(LIB)'
+CP=-cp '$(BIN);$(LIB)'
 ODIR=-d $(BIN)
 OSNAME = $(OS)
 XLINT = -Xlint:unchecked
@@ -15,12 +15,12 @@ ifeq '$(OS)' 'Windows_N'
 	OSNAME=$(OS)
 	CP=-cp '$(BIN);$(LIB)'
 else
-	# get OS name 
+	# get OS name
 	OSNAME=$(shell uname)
 	# set variables according to OS
 
 	#Mac OSX - change as needed
-	ifeq '$(OSNAME)' 'OSX'
+	ifeq '$(OSNAME)' 'Darwin'
 		CP=-cp '$(BIN):$(LIB)'
 	endif
 endif
@@ -64,7 +64,7 @@ InitMax:
 testInitMax:
 	java $(CP) InitMax
 
-echo_osname: 
+echo_osname:
 	echo $(OSNAME)
 
 echo_cp:
