@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Jan 27, 2016
- * Description: Class for reading GPS coordinates from a text file and storing each line into an ArrayList of strings.
+ * Last Edit: Feb 19, 2016
+ * Description: Class for reading lines from a text file and storing each line into an ArrayList of strings.
  */
 
 import java.io.BufferedReader;
@@ -37,7 +37,8 @@ public class Read_file
 		}
 		catch (IOException x)
 		{
-			System.err.format("IOException: %s%n", x);
+			System.err.format("ERROR: Could not find the input file. [%s]\n", x);
+			System.exit(0);
 		}
 	}
 
@@ -51,7 +52,7 @@ public class Read_file
 		return file_data.get(x);
 	}
 
-	public void printfd()
+	public void printFD()
 	{
 		int entries = file_data.size();
 
