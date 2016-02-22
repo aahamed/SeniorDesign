@@ -35,31 +35,43 @@ all:
 clean:
 	rm -rf $(BIN)*.class
 
-FindAN:
-	javac $(CP) $(ODIR) $(SRC)FindAN.java
+GlobalConstants:
+	javac $(CP) $(ODIR) $(SRC)GlobalConstants.java
 
-testFindAN:
-	java $(CP) FindAN
-
-HCS:
+HCS: Coordinate GlobalConstants
 	javac $(CP) $(ODIR) $(SRC)HCS.java
 
 testHCS:
 	java $(CP) HCS
 
-Connect:
-	javac $(CP) $(ODIR) $(SRC)Connect.java
-
-testConnect:
-	java $(CP) Connect
-
-Coord:
+Coordinate:
 	javac $(CP) $(ODIR) $(SRC)Coordinate.java
 
 testCoord:
 	java $(CP) Coordinate
 
-InitMax:
+ConnectOut:
+	javac $(CP) $(ODIR) $(SRC)ConnectOut.java
+
+Connect: ConnectOut HCS GlobalConstants Coordinate 
+	javac $(CP) $(ODIR) $(SRC)Connect.java
+
+testConnect:
+	java $(CP) Connect
+
+FindANOut:
+	javac $(CP) $(ODIR) $(SRC)FindANOut.java
+
+FindAN: Coordinate FindANOut
+	javac $(CP) $(ODIR) $(SRC)FindAN.java
+
+testFindAN:
+	java $(CP) FindAN
+
+PrimMST:
+	javac $(CP) $(ODIR) $(SRC)PrimMST.java
+
+InitMax: Coordinate GlobalConstants HCS PrimMST
 	javac $(CP) $(ODIR) $(SRC)InitMax.java
 
 testInitMax:
@@ -85,3 +97,9 @@ testJunit:
 
 runTestJunit:
 	java $(CP) TestRunner
+
+testCoordinate: Coordinate
+	javac $(CP) $(ODIR) $(TEST)TestCoordinate.java $(TEST)TestCoordinateRunner.java
+
+runTestCoordinate:
+	java $(CP) TestCoordinateRunner
