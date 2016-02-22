@@ -4,6 +4,7 @@
 BIN=./bin/
 SRC=./src/
 LIB=./lib/*
+TEST=./test/
 CP=-cp '$(BIN);$(LIB)'
 ODIR=-d $(BIN)
 OSNAME = $(OS)
@@ -78,3 +79,9 @@ stest:
 
 mtest:
 	java $(CP) PCG -m -i ./src/input/min.txt
+
+testJunit:
+	javac $(CP) $(ODIR) $(TEST)TestJunit.java $(TEST)TestRunner.java
+
+runTestJunit:
+	java $(CP) TestRunner

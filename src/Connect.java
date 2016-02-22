@@ -11,7 +11,12 @@ public class Connect
 	public static final char CONNECT_O_FLAG = 'o';
 	public Connect(){}
 	
-	
+	/*
+	*	calculateNum: Not sure what this does
+	*   @param theta angle - of what?
+	*   @param cart_distance - of what?
+	*	@return num
+	*/
 	private static double calculateNum(double theta, double cart_distance, char flag)
 	{
 		final double PI = Math.PI;
