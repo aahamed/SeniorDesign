@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit; Feb 15, 2016
+ * Last Edit; Feb 21, 2016
  * Description: Gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
@@ -86,7 +86,8 @@ public class Distance_matrix
 			case "w":
 				return w_matrix;
 			default:
-				System.out.println("ERROR: Matrix not found.");
+				System.err.format("ERROR: Matrix \"" + a + "\" does not exist.");
+				System.exit(0);
 				return new ArrayList<List<Integer>>();
 		}
 	}

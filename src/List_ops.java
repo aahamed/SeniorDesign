@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 14, 2016
- * Description: Common operations for the data structures found in... TODO
+ * Last Edit: Feb 21, 2016
+ * Description: Common operations for the data structures involving Lists.
  */
 
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ public class List_ops
 
 		if (a[0].length != 2)
 		{
-			System.out.println("ERROR: Input array does not have exactly 2 columns.");
-			System.out.println("ERROR: You should use List_ops.array2ll instead.");
+			System.err.format("ERROR: Input array does not have exactly 2 columns. Use List_ops.array2ll instead.");
+			System.exit(0);
 			return output;
 		}
 
