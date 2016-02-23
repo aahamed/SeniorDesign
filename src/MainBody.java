@@ -1,5 +1,5 @@
 /*
- * Author: TODO: Everyone
+ * Author: Josue Galeas, TODO: and everyone else who edits this
  * Last Edit: Feb 21, 2016
  * Description: Main body of the algorithm.
  */
@@ -149,14 +149,17 @@ public class MainBody
 	public static void main (String[] args)
 	{
 		options(args);
+
+		// Step 1: Find out the distance matrix
+		// Calculating Minimal Spanning Tree
 		MSTCalc mc = new MSTCalc(input_filename, q_matlab, q_mstalgo);
 
-		MSTOut Tree = mc.getMST();
+		// Pre-connective Graph
 		List<List<Integer>> D1 = mc.getDM();
 		List<Coordinate<Integer>> UV = mc.getHCS();
-
 		int[] rcv;
 		Coordinate<Integer> p, q;
+		Coordinate<Double> cen1, cen2;
 		int px, py, qx, qy;
 		int pointer;
 
@@ -171,17 +174,75 @@ public class MainBody
 			q = new Coordinate<Integer>(qx, qy);
 
 			pointer = Connect.connect(p, q, 'c').getPointer();
+
 			if (pointer != 0)
 			{
-				// TODO: This will never happen in our situation but I'll do it anyway.
+				// Is a statement of checking connectivity
+				// Draw a cluster
+				px = UV.get(rcv[0] - 1).getX();
+				py = UV.get(rcv[0] - 1).getY();
+				qx = UV.get(rcv[1] - 1).getX();
+				qy = UV.get(rcv[1] - 1).getY();
+				p = new Coordinate<Integer>(px, qx);
+				q = new Coordinate<Integer>(py, qy);
+				cen1 = HCS.hexToCart(p);
+				cen2 = HCS.hexToCart(q);
+				// Mark whomever has been connected !!!
+				D1.get(rcv[0]).set(rcv[1], GlobalConstants.TRANS_RANGE);
 			}
 		}
 
+		// Place ANs to achieve connection
+		MSTOut Tree = mc.getMST();
 		List<List<Integer>> D2 = mc.getDM();
-		rcv = maxMST(mc.getMST().getST(), D2);
-		System.out.println("Row is: " + rcv[0]);
-		System.out.println("Col is: " + rcv[1]);
-		System.out.println("Value is: " + rcv[2]);
+		boolean exit = false;
+		int Nsign = 0;
+		ConnectOut temp = null;
 
+		while (!exit)
+		{
+			Nsign = 1;
+			// Seach through the Spanning Tree to pick up the shortest edge
+			rcv = maxMST(Tree.getST(), D2);
+			if (rcv[2] <= GlobalConstants.H)
+				break;
+			// Prepare for Placement
+			px = UV.get(rcv[0] - 1).getX();
+			py = UV.get(rcv[0] - 1).getY();
+			qx = UV.get(rcv[1] - 1).getX();
+			qy = UV.get(rcv[1] - 1).getY();
+			p = new Coordinate<Integer>(px, py);
+			q = new Coordinate<Integer>(qx, qy);
+			temp = Connect.connect(p, q, 'a');
+
+			// Check Necessity
+			if (temp.getPointer() != 0)
+			{
+				if (temp.getTheta() < (Math.PI/6 - temp.getTheta()))
+					break;
+				else
+				{
+					Nsign = 0; // Already connected
+					D2.get(rcv[0]).set(rcv[1], GlobalConstants.H);
+				}
+				px = UV.get(rcv[0] - 1).getX();
+				py = UV.get(rcv[0] - 1).getY();
+				qx = UV.get(rcv[1] - 1).getX();
+				qy = UV.get(rcv[1] - 1).getY();
+				p = new Coordinate<Integer>(px, qx);
+				q = new Coordinate<Integer>(py, qy);
+				cen1 = HCS.hexToCart(p);
+				cen2 = HCS.hexToCart(q);
+			}
+		}
+
+		if (Nsign != 0)
+		{
+			if (temp.getNum() <= 2.01)
+			{
+				// Connected Those that is feasible with only 1 ANs
+				// TODO: Return when connect1 is finished.
+			}
+		}
 	}
 }
