@@ -65,10 +65,10 @@ InitMax:
 testInitMax:
 	java $(CP) InitMax
 
-MainBody:
+Main:
 	javac $(CP) $(ODIR) $(SRC)MainBody.java
 
-testMainBody:
+testMain:
 	java $(CP) MainBody -m -i ./src/input/min.txt
 
 echo_osname:

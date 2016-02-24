@@ -6,6 +6,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import Jama.Matrix;
 
 public class MainBody
 {
@@ -13,7 +14,7 @@ public class MainBody
 	private static boolean q_matlab;
 	private static boolean q_mstalgo;
 
-	public static int[] minE(List<List<Integer>> a)
+	private static int[] minE(List<List<Integer>> a)
 	{
 		int[] output = new int[3];
 		int x_entries = a.size();
@@ -41,7 +42,7 @@ public class MainBody
 		return output;
 	}
 
-	public static int[] maxMST(List<Coordinate<Integer>> a, List<List<Integer>> b)
+	private static int[] maxMST(List<Coordinate<Integer>> a, List<List<Integer>> b)
 	{
 		int[] output = new int[3];
 		int len = a.size();
@@ -64,6 +65,18 @@ public class MainBody
 		output[0] = row + 1;
 		output[1] = col + 1;
 		output[2] = maxv;
+
+		return output;
+	}
+
+	private static double[][] hcoord2array(Coordinate<Integer> a)
+	{
+		double[][] output = new double[2][2];
+
+		output[0][0] = a.getX();
+		output[0][1] = a.getY();
+		output[1][0] = 0.0;
+		output[1][1] = 0.0;
 
 		return output;
 	}
@@ -188,7 +201,7 @@ public class MainBody
 				cen1 = HCS.hexToCart(p);
 				cen2 = HCS.hexToCart(q);
 				// Mark whomever has been connected !!!
-				D1.get(rcv[0]).set(rcv[1], GlobalConstants.TRANS_RANGE);
+				D1.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.TRANS_RANGE);
 			}
 		}
 
@@ -196,8 +209,11 @@ public class MainBody
 		MSTOut Tree = mc.getMST();
 		List<List<Integer>> D2 = mc.getDM();
 		boolean exit = false;
-		int Nsign = 0;
-		ConnectOut temp = null;
+		int Nsign;
+		ConnectOut temp;
+		Matrix p1;
+		Matrix q1;
+		Locate LL;
 
 		while (!exit)
 		{
@@ -223,7 +239,7 @@ public class MainBody
 				else
 				{
 					Nsign = 0; // Already connected
-					D2.get(rcv[0]).set(rcv[1], GlobalConstants.H);
+					D2.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.H);
 				}
 				px = UV.get(rcv[0] - 1).getX();
 				py = UV.get(rcv[0] - 1).getY();
@@ -234,14 +250,26 @@ public class MainBody
 				cen1 = HCS.hexToCart(p);
 				cen2 = HCS.hexToCart(q);
 			}
-		}
 
-		if (Nsign != 0)
-		{
-			if (temp.getNum() <= 2.01)
+			if (Nsign != 0)
 			{
-				// Connected Those that is feasible with only 1 ANs
-				// TODO: Return when connect1 is finished.
+				if (temp.getNum() <= 2.01)
+				{
+					// Connected Those that is feasible with only 1 ANs
+					// TODO: Return when connect1 is finished.
+					p1 = new Matrix(hcoord2array(p));
+					q1 = new Matrix(hcoord2array(q));
+					LL = new Locate(p1, q1, GlobalConstants.H);
+					// LC = new LocateC(p1, q1, GlobalConstants.H); // TODO: When LocateC is done
+				}
+				else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01)
+				{
+					// TODO
+				}
+				else
+				{
+					// TODO
+				}
 			}
 		}
 	}
