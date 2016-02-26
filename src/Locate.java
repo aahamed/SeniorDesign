@@ -30,7 +30,7 @@ public class Locate {
 		i = new double[][]{{1,0},{0,0}};
 		j = new double[][]{{0,1},{0,0}};
 		k = new double[][]{{-1,1},{0,0}};
-		d = new double[][]{{(double) (q.get(0, 0)-p.get(0, 0)),(double) (q.get(0, 1)-p.get(0, 1))},{0,0}};
+		d = new double[][]{{(q.get(0, 0)-p.get(0, 0)),(q.get(0, 1)-p.get(0, 1))},{0,0}};
 		System.out.println(d[0][0]+" " +d[0][1]);
 		i1 = new Matrix(i);
 		j1 = new Matrix(j);

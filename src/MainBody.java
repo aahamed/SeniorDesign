@@ -136,6 +136,8 @@ public class MainBody
 			}
 			if (!check3)
 			{
+				// TODO: Might be an issue when specifying -m -i, but with no filename
+				// Since there is no filename, it will default to the GPS coordinates which is bad
 				input_filename = "./src/input/in.txt";
 				System.out.println("Defaulting to input file: " + input_filename);
 			}
@@ -256,7 +258,7 @@ public class MainBody
 				if (temp.getNum() <= 2.01)
 				{
 					// Connected Those that is feasible with only 1 ANs
-					// TODO: Return when connect1 is finished.
+					// TODO: Return when Locate1 is finished.
 					p1 = new Matrix(hcoord2array(p));
 					q1 = new Matrix(hcoord2array(q));
 					LL = new Locate(p1, q1, GlobalConstants.H);
