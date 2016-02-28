@@ -56,8 +56,8 @@ ConnectOut:
 Connect: ConnectOut HCS GlobalConstants Coordinate 
 	javac $(CP) $(ODIR) $(SRC)Connect.java
 
-testConnect:
-	java $(CP) Connect
+#testConnect:
+#	java $(CP) Connect
 
 FindANOut:
 	javac $(CP) $(ODIR) $(SRC)FindANOut.java
@@ -103,3 +103,9 @@ testCoordinate: Coordinate
 
 runTestCoordinate:
 	java $(CP) TestCoordinateRunner
+
+testConnect: Connect
+	javac $(CP) $(ODIR) $(TEST)TestConnect.java $(TEST)TestConnectRunner.java
+
+runTestConnect:
+	java $(CP) TestConnectRunner

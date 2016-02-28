@@ -1,3 +1,8 @@
+/*
+* Author: Aadil Ahamed
+* Description: Unit Test Suite for Coordinate.java
+*/
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 

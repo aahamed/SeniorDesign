@@ -4,12 +4,14 @@
 * Description: Class to package the output of Connect.connect()
 * TODO: Describe all fields in this class -> need to ask Kai / read paper
 */
+
 public class ConnectOut
 {
 	private double num;
 	private double theta;
 	private int pointer;
 	private int[] direction;
+    
 	
 	public ConnectOut(double num, double theta, int pointer, int[] direction)
 	{
