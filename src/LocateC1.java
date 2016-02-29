@@ -1,13 +1,13 @@
 /*
 * Author: Ezana Woldegebriel
-* Description: Port of locate.m
+* Description: Port of locateC1.m
 */
 
 import java.util.Arrays;
 
 import Jama.Matrix;
 
-public class Locate {
+public class LocateC1 {
 	double[][] i;
 	double[][] j,k,d;
 	Matrix i1;
@@ -15,18 +15,19 @@ public class Locate {
 	Matrix k1;
 	Matrix d1;
 	LocateOut out = new LocateOut();
+	boolean c1return=false,c2return=false,c3return=false,c4return=false;
 	
 	public static void main(String[] args) {
-        double[][] p1 = {{-317,-245},{0,0}};
-        double[][] q1 = {{-318,-118},{0,0}};
+        double[][] p1 = {{1014,-550},{0,0}};
+        double[][] q1 = {{898,-434},{0,0}};
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
         int H = 91;
-        Locate l = new Locate(p,q,H);
+        LocateC1 l = new LocateC1(p,q,H);
         System.out.println("Coordinate: "+l.out.getAN().getX()+" , "+l.out.getAN().getY());
     }
-
-	public Locate(Matrix p, Matrix q, int H){
+	
+	public LocateC1(Matrix p, Matrix q, int H){
 		i = new double[][]{{1,0},{0,0}};
 		j = new double[][]{{0,1},{0,0}};
 		k = new double[][]{{-1,1},{0,0}};
@@ -45,10 +46,16 @@ public class Locate {
 		if(this.d[0][0] > 0 && this.d[0][1]>=0){
 			//C2: 
 			case1C2(p,q,H);
+			if(c1return)
+				return;
 			//C3: Try {Z+X-} This is special in Quandrant 1, we have to employ <FindAN2>
 			case1C3(p,q,H);
+			if(c1return)
+				return;
 			//C1: Try p{X+} and q{Y-}
 			case1C1(p,q,H);
+			if(c1return)
+				return;
 		}
 	}
 	
@@ -67,16 +74,26 @@ public class Locate {
 		if(this.d[0][0] <= 0 && this.d[0][1]>0){
 			//%% C1: Try p{Z+}, q{X-}
 			case3C1(p,q,H);
+			if(c3return)
+				return;
 			//%% C3 : {X-Y-}
 			case3C3(p,q,H);
+			if(c3return)
+				return;
 			//%% C5:  Try {Y-Z-}
 			case3C5(p,q,H);
+			if(c3return)
+				return;
 			//%% C2: {Z+Y-}
 	        //   % This one we can't leave margin
 			case3C2(p,q,H);
+			if(c3return)
+				return;
 			//%% C4: {X-Z-};
 	        //% This one we are unable to leave margin
 			case3C4(p,q,H);
+			if(c3return)
+				return;
 		}
 	}
 	
@@ -85,18 +102,20 @@ public class Locate {
 			Matrix c = p;
 			p=q;
 			q=c;
+			d = new double[][]{{(double) (q.get(0, 0)-p.get(0, 0)),(double) (q.get(0, 1)-p.get(0, 1))},{0,0}};
+			System.out.println(d[0][0]+" " +d[0][1]);
 			case1(p,q,H);
 			case2(p,q,H);
 			case3(p,q,H);
-			case4(p,q,H);
+			//case4(p,q,H);
 		}
 	}
 	
 	private void case1C2(Matrix p, Matrix q, int H){
 		Coordinate<Integer> I = new Coordinate<Integer>(0, 0);
 		Matrix J,K;
-		J = p.plus(j1.times((double)-H));
-		K = q.plus(k1.times((double)-H));
+		J = q.plus(j1.times((double)-H));
+		K = p.plus(k1.times((double)-H));
 		
 		int jtemp1 = (int)J.get(0, 0);
 		int jtemp2 = (int)J.get(0, 1);
@@ -115,7 +134,7 @@ public class Locate {
 		Coordinate<Integer> q1 = new Coordinate<Integer>(qtemp1,qtemp2);
 		
 		
-		double Ind[][] = {{0,1,1},{0,0,0}};
+		double Ind[][] = {{0,-1,-1},{0,0,0}};
 		int[] Ind1 = new int[Ind[0].length];
 		for(int n=0;n<Ind[0].length;n++)
 			Ind1[n] = (int)Ind[0][n];
@@ -134,21 +153,24 @@ public class Locate {
 				int distance1 = HCS.distance(f.getResultC(), p1);
 				int distance2 = HCS.distance(f.getResultC(), q1);
 				if((distance1 >= GlobalConstants.H + 4*GlobalConstants.NL)&&(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL)){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*J1.getX()+
-																			2*K1.getX(),f.getResultC().getY()+2*J1.getY()+2*K1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)j1.get(0,0)+
+																			2*(int)k1.get(0,0),f.getResultC().getY()+2*(int)j1.get(0,1)+2*(int)k1.get(0,1));
 					out.setAN(tempcoord);
+					c1return=true;
 					return;
 				}
 				if(distance1 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*K1.getX(),f.getResultC().getY()
-																			+2*K1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)k1.get(0,0),f.getResultC().getY()
+																			+2*(int)k1.get(0,1));
 					out.setAN(tempcoord);
+					c1return=true;
 					return;
 				}
 				if(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*J1.getX(),f.getResultC().getY()
-																			+2*J1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)j1.get(0,0),f.getResultC().getY()
+																			+2*(int)j1.get(0,1));
 					out.setAN(tempcoord);
+					c1return=true;
 					return;
 				}
 			}
@@ -199,18 +221,21 @@ public class Locate {
 				int distance2 = HCS.distance(f.getResultC(), q1);
 				
 				if((distance1 >= GlobalConstants.H + 4*GlobalConstants.NL)&&(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL)){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*K1.getX()+2*I1.getX(),f.getResultC().getY()+(-2)*K1.getY()+2*I1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*(int)k1.get(0,0)+2*(int)i1.get(0,0),f.getResultC().getY()+(-2)*(int)k1.get(0,1)+2*(int)i1.get(0,1));
 					out.setAN(tempcoord);
+					c1return=true;
 					return;
 				}
 				if(distance1 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*K1.getX(),f.getResultC().getY()+(-2)*K1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*(int)k1.get(0,0),f.getResultC().getY()+(-2)*(int)k1.get(0,1));
 					out.setAN(tempcoord);
+					c1return=true;
 					return;
 				}
 				if(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*I1.getX(),f.getResultC().getY()+2*I1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)i1.get(0,0),f.getResultC().getY()+2*(int)i1.get(0,1));
 					out.setAN(tempcoord);
+					c1return=true;
 					return;
 				}
 			}
@@ -257,11 +282,13 @@ public class Locate {
 			if((cout1.getPointer()!=0)&&(cout2.getPointer()!=0)){
 				out.setAN(f.getResultC());
 				out.setexFlag(1);
+				c1return=true;
 				return;
 			}
 			else{
 				out.setexFlag(0);
 				//AN = [];
+				c1return=true;
 				return;
 			}
 		}
@@ -315,18 +342,21 @@ public class Locate {
 				int distance2 = HCS.distance(f.getResultC(), q1);
 				
 				if((distance1 >= GlobalConstants.H + 4*GlobalConstants.NL)&&(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL)){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*K1.getX()+2*I1.getX(),f.getResultC().getY()+(-2)*K1.getY()+2*I1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*(int)k1.get(0,0)+2*((int)i1.get(0,0)),f.getResultC().getY()+(-2)*(int)k1.get(0,1)+2*(int)i1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 				if(distance1 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*K1.getX(),f.getResultC().getY()+(-2)*K1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(-2)*(int)k1.get(0,0),f.getResultC().getY()+(-2)*(int)k1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 				if(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*I1.getX(),f.getResultC().getY()+2*I1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*((int)i1.get(0,0)),f.getResultC().getY()+2*(int)i1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 			}
@@ -378,18 +408,21 @@ public class Locate {
 				int distance2 = HCS.distance(f.getResultC(), q1);
 				
 				if((distance1 >= GlobalConstants.H + 4*GlobalConstants.NL)&&(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL)){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(2)*I1.getX()+2*J1.getX(),f.getResultC().getY()+(2)*I1.getY()+2*J1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(2)*(int)i1.get(0,0)+2*(int)j1.get(0,0),f.getResultC().getY()+(2)*(int)i1.get(0,1)+2*(int)j1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 				if(distance1 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(2)*I1.getX(),f.getResultC().getY()+(2)*I1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+(2)*(int)i1.get(0,0),f.getResultC().getY()+(2)*(int)i1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 				if(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*J1.getX(),f.getResultC().getY()+2*J1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)j1.get(0,0),f.getResultC().getY()+2*(int)j1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 			}
@@ -439,21 +472,24 @@ public class Locate {
 				int distance1 = HCS.distance(f.getResultC(), p1);
 				int distance2 = HCS.distance(f.getResultC(), q1);
 				if((distance1 >= GlobalConstants.H + 4*GlobalConstants.NL)&&(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL)){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*J1.getX()+
-																			2*K1.getX(),f.getResultC().getY()+2*J1.getY()+2*K1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)j1.get(0,0)+
+																			2*(int)k1.get(0,0),f.getResultC().getY()+2*(int)j1.get(0,1)+2*(int)k1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 				if(distance1 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*J1.getX(),f.getResultC().getY()
-																			+2*J1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)j1.get(0,0),f.getResultC().getY()
+																			+2*(int)j1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 				if(distance2 >= GlobalConstants.H + 4*GlobalConstants.NL){
-					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*K1.getX(),f.getResultC().getY()
-																			+2*K1.getY());
+					Coordinate<Integer> tempcoord = new Coordinate<Integer>(f.getResultC().getX()+2*(int)k1.get(0,0),f.getResultC().getY()
+																			+2*(int)k1.get(0,1));
 					out.setAN(tempcoord);
+					c3return=true;
 					return;
 				}
 			}
@@ -499,6 +535,7 @@ public class Locate {
 			if((cout1.getPointer()!=0)&&(cout2.getPointer()!=0)){
 				out.setAN(f.getResultC());
 				out.setexFlag(1);
+				c3return=true;
 				return;
 			}
 		}
@@ -528,7 +565,7 @@ public class Locate {
 		Coordinate<Integer> q1 = new Coordinate<Integer>(qtemp1,qtemp2);
 		
 		
-		double Ind[][] = {{1,0,-1},{0,0,0}};
+		double Ind[][] = {{-1,0,-1},{0,0,0}};
 		int[] Ind1 = new int[Ind[0].length];
 		for(int n=0;n<Ind[0].length;n++)
 			Ind1[n] = (int)Ind[0][n];
@@ -544,11 +581,13 @@ public class Locate {
 			if((cout1.getPointer()!=0)&&(cout2.getPointer()!=0)){
 				out.setAN(f.getResultC());
 				out.setexFlag(1);
+				c3return=true;
 				return;
 			}
 			else{
 				out.setexFlag(0);
 				//AN = [];
+				c3return=true;
 				return;
 			}
 		}
@@ -558,5 +597,5 @@ public class Locate {
 		}
 
 	}
-
+	
 }
