@@ -49,7 +49,24 @@ public class Coordinate <T>
 		return "(" + x + ", " + y  + ")";
 	}
 	
-	public static void test1()
+	
+	public boolean equals(Coordinate c)
+	{
+		if(c == null)
+		{
+			return false;
+		}
+		else if(c.x != this.x || c.y != this.y)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	private static void test1()
 	{
 		float x = 1.5f;
 		float y = 3.3f;
@@ -57,7 +74,7 @@ public class Coordinate <T>
 		System.out.println(c);
 	}
 	
-	public static void test2()
+	private static void test2()
 	{
 		int x = 1;
 		int y = 3;
@@ -65,37 +82,11 @@ public class Coordinate <T>
 		System.out.println(c);
 	}
 	
-	private static void testIntAdd()
-	{
-		System.out.println("ADD TEST");
-		int x1 = 4;
-		int y1 = 5;
-		int x2 = 3;
-		int y2 = 3;
-		Coordinate<Integer> p = new Coordinate<Integer>(x1, y1);
-		Coordinate<Integer> q = new Coordinate<Integer>(x2, y2);
-		Coordinate<Integer> result = Coordinate.add(p, q);
-		System.out.println("P: " + p + " Q: " + q + " res = " + result);
-	}
-	
-	private static void testDoubMinus()
-	{
-		System.out.println("MINUS TEST");
-		double x1 = 4;
-		double y1 = 5;
-		double x2 = 3;
-		double y2 = 3;
-		Coordinate<Double> p = new Coordinate<Double>(x1, y1);
-		Coordinate<Double> q = new Coordinate<Double>(x2, y2);
-		Coordinate<Double> result = Coordinate.minus(p, q);
-		System.out.println("P: " + p + " Q: " + q + " res = " + result);
-	}
 	
 	public static void main(String[] args)
 	{
 		Coordinate.test1();
 		Coordinate.test2();
-		Coordinate.testIntAdd();
-		Coordinate.testDoubMinus();
 	}
+	
 }

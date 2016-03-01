@@ -11,7 +11,12 @@ public class Connect
 	public static final char CONNECT_O_FLAG = 'o';
 	public Connect(){}
 	
-	
+	/*
+	*	calculateNum: Not sure what this does
+	*   @param theta angle - of what?
+	*   @param cart_distance - of what?
+	*	@return num
+	*/
 	private static double calculateNum(double theta, double cart_distance, char flag)
 	{
 		final double PI = Math.PI;
@@ -66,7 +71,7 @@ public class Connect
 		//cart_vector[0] =  a.getX() - b.getX();
 		//cart_vector[1] = a.getY() - b.getY();
 		double cart_distance = Math.sqrt(Math.pow(a.getX() - b.getX(), 2) + Math.pow(a.getY() - b.getY(), 2)); // calculate cartesian distance
-		int[] pq_vector = new int[2];
+		double[] pq_vector = new double[2];
 		pq_vector[0] = q.getX() - p.getX();		//represents x component of vector PQ
 		pq_vector[1] = q.getY() - p.getY();		//represents y component of vector PQ
 		double theta, num;
@@ -82,7 +87,7 @@ public class Connect
 			pointer = Connect.calculatePtr(num);
 		}
 		//CASE 2: Theta w.r.t x+ axis is in 2nd or 4th quadrant
-		else if(pq_vector[0] * pq_vector [1] > 0)
+		else if(pq_vector[0] * pq_vector [1] < 0)
 		{
 			// Case 1: w.r.t y+ axis
 			if(Math.abs(pq_vector[0]) <= Math.abs(pq_vector[1]))
@@ -118,40 +123,19 @@ public class Connect
 	private static void test1()
 	{
 		
-		Coordinate<Integer> p1 = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> q1 = new Coordinate<Integer>(1, 1);
-		System.out.println(Connect.connect(p1, q1, Connect.CONNECT_FLAG)); // case1 1st quadrant theta<30
-
-		Coordinate<Integer> p5 = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> q5 = new Coordinate<Integer>(10, 1);
-		System.out.println(Connect.connect(p5, q5, Connect.CONNECT_FLAG)); // case1 1rd quadrant theta>30
-
-
-
-
-		Coordinate<Integer> p2 = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> q2 = new Coordinate<Integer>(-10, 1);
-		System.out.println(Connect.connect(p2, q2, Connect.CONNECT_FLAG)); // case1 3rd quadrant theta<30
-
-
-
-
-		Coordinate<Integer> p3 = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> q3 = new Coordinate<Integer>(-1, 10);
-		System.out.println(Connect.connect(p3, q3, Connect.CONNECT_FLAG)); // case1 3rd quadrant theta>30
-
-
-
-
-		Coordinate<Integer> p4 = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> q4 = new Coordinate<Integer>(10, 0);
-		System.out.println(Connect.connect(p4, q4, Connect.CONNECT_FLAG)); // x*y=0    x!=0
-
 		Coordinate<Integer> p6 = new Coordinate<Integer>(0, 0);
 		Coordinate<Integer> q6 = new Coordinate<Integer>(0, 10);
 		System.out.println(Connect.connect(p6, q6, Connect.CONNECT_FLAG)); // x*y=0   x=0
 		
-
+		Coordinate<Integer> p7 = new Coordinate<Integer>(-524, 382);
+		Coordinate<Integer> q7 = new Coordinate<Integer>(-585, 502);
+		System.out.println(Connect.connect(p7, q7, Connect.CONNECT_C_FLAG)); // x*y=0   x=0
+        
+        Coordinate<Integer> p8 = new Coordinate<Integer>(-10, -10);
+		Coordinate<Integer> q8 = new Coordinate<Integer>(100, 10);
+		int exp = 0;
+        int res = Connect.connect(p8, q8, Connect.CONNECT_C_FLAG).getPointer();
+		System.out.println("res: " + res + " exp:" + exp); // x*y=0   x=0
 	}
 	
 	public static void main(String[] args)

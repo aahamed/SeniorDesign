@@ -248,7 +248,7 @@ public class FindAN
 		}
 		else if(Arrays.equals(indicator, FindAN.CASE11))
 		{
-			return FindAN.case11(J, I);
+			return FindAN.case11(I, J);
 		}
 		else if(Arrays.equals(indicator, FindAN.CASE12))
 		{
@@ -276,10 +276,26 @@ public class FindAN
 	*/
 	private static void testCase1()
 	{
-		int[] indicator = {-1, 1, 0};
+		/*int[] indicator = {-1, 1, 0};
 		Coordinate<Integer> I = new Coordinate<Integer>(0, -1);
 		Coordinate<Integer> J = new Coordinate<Integer>(1, 0);
 		Coordinate<Integer> K = new Coordinate<Integer>(0, 0);
+		FindANOut res = FindAN.findANm(I, J, K, indicator);
+		System.out.println("flag: " + res.getFlag());
+		print2DArray(res.getResult());
+		
+		int[] indicator = {-1, -1, 0};
+		Coordinate<Integer> I = new Coordinate<Integer>(185,492);
+		Coordinate<Integer> J = new Coordinate<Integer>(148,530);
+		Coordinate<Integer> K = new Coordinate<Integer>(0, 0);
+		FindANOut res = FindAN.findANm(I, J, K, indicator);
+		System.out.println("flag: " + res.getFlag());
+		print2DArray(res.getResult());*/
+		
+		int[] indicator = {0,-1,-1};
+		Coordinate<Integer> I = new Coordinate<Integer>(0,0);
+		Coordinate<Integer> J = new Coordinate<Integer>(253,221);
+		Coordinate<Integer> K = new Coordinate<Integer>(198, 221);
 		FindANOut res = FindAN.findANm(I, J, K, indicator);
 		System.out.println("flag: " + res.getFlag());
 		print2DArray(res.getResult());

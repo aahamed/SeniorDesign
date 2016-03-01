@@ -3,7 +3,7 @@
 * Description: Class to package the output of locate
 */
 public class LocateOut {
-	Coordinate<Integer> AN;
+	private Coordinate<Integer> AN,AN2;
 	int exflag;
 	
 	public LocateOut(){}
@@ -14,6 +14,14 @@ public class LocateOut {
 	
 	public void setAN(Coordinate<Integer> a){
 		this.AN = a;
+	}
+	
+	public Coordinate<Integer> getAN2(){
+		return this.AN2;
+	}
+	
+	public void setAN2(Coordinate<Integer> a){
+		this.AN2 = a;
 	}
 	
 	public int getexFlag(){
