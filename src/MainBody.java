@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas, TODO: and everyone else who edits this
- * Last Edit: Feb 21, 2016
+ * Last Edit: Mar 1, 2016
  * Description: Main body of the algorithm.
  */
 
@@ -13,6 +13,9 @@ public class MainBody
 	private static String input_filename;
 	private static boolean q_matlab;
 	private static boolean q_mstalgo;
+
+	private static List<Coordinate<Double>> CenList1 = new ArrayList<Coordinate<Double>>();
+	private static List<Coordinate<Double>> CenList2 = new ArrayList<Coordinate<Double>>();
 
 	private static int[] minE(List<List<Integer>> a)
 	{
@@ -89,6 +92,8 @@ public class MainBody
 		{
 			for (int i = 0; i < a.length; i++)
 			{
+				if (a[i].equals("--help"))
+					helpMenu();
 				if (a[i].equals("-m"))
 				{
 					q_matlab = true;
@@ -136,19 +141,12 @@ public class MainBody
 			}
 			if (!check3)
 			{
-				// TODO: Might be an issue when specifying -m -i, but with no filename
-				// Since there is no filename, it will default to the GPS coordinates which is bad
-				input_filename = "./src/input/in.txt";
-				System.out.println("Defaulting to input file: " + input_filename);
+				System.err.format("ERROR: No input filename was specified.\n");
+				System.exit(0);
 			}
 		}
-		else if (a.length == 0)
-		{
-			System.out.println("No flags were specified, using default preferences.");
-			input_filename = "./src/input/in.txt";
-			q_matlab = false;
-			q_mstalgo = false;
-		}
+		else
+			helpMenu();
 
 		if (q_matlab)
 			System.out.println("Using MATLAB generated values from \"" + input_filename + "\".");
@@ -161,7 +159,24 @@ public class MainBody
 			System.out.println("Using Kruskal's algorithm for calculating the MST.");
 	}
 
-	public static void main (String[] args)
+	private static void helpMenu()
+	{
+		System.out.println("Usage: java MainBody [--help] [<args>] [-i <path>]");
+		System.out.println();
+		System.out.println("Input file:");
+		System.out.println("    -i followed by the path to input text file");
+		System.out.println();
+		System.out.println("Type of input data:");
+		System.out.println("    -g for GPS coordinates (Default)");
+		System.out.println("    -m for MATLAB generated coordinates");
+		System.out.println();
+		System.out.println("MST algorithm to be used:");
+		System.out.println("    -k for Kruskal's algorithm (Default)");
+		System.out.println("    -p for Prim's algorithm");
+		System.exit(0);
+	}
+
+	public static void main(String[] args)
 	{
 		options(args);
 
@@ -202,6 +217,11 @@ public class MainBody
 				q = new Coordinate<Integer>(py, qy);
 				cen1 = HCS.hexToCart(p);
 				cen2 = HCS.hexToCart(q);
+
+				// TODO: Temporary List to hold all these 'cen' coordinates
+				CenList1.add(cen1);
+				CenList2.add(cen2);
+
 				// Mark whomever has been connected !!!
 				D1.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.TRANS_RANGE);
 			}
@@ -216,6 +236,7 @@ public class MainBody
 		Matrix p1;
 		Matrix q1;
 		Locate LL;
+		Locate LC;
 
 		while (!exit)
 		{
@@ -251,6 +272,11 @@ public class MainBody
 				q = new Coordinate<Integer>(py, qy);
 				cen1 = HCS.hexToCart(p);
 				cen2 = HCS.hexToCart(q);
+
+				// TODO: Temporary List to hold all these 'cen' coordinates
+				CenList1.add(cen1);
+				CenList2.add(cen2);
+
 			}
 
 			if (Nsign != 0)
@@ -273,6 +299,8 @@ public class MainBody
 					// TODO
 				}
 			}
+
+			exit = true;
 		}
 	}
 }

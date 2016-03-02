@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 21, 2016
+ * Last Edit: Mar 1, 2016
  * Description: Object that will contain the three data structures that the MST algorithm produces.
  */
 
@@ -10,8 +10,8 @@ import java.util.List;
 public class MSTOut
 {
 	private int w_st;
-	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
-	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+	private List<Coordinate<Integer>> ST;
+	private List<List<Integer>> X_st;
 
 	public MSTOut(int a, List<Coordinate<Integer>> b, List<List<Integer>> c)
 	{

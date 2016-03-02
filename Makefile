@@ -69,7 +69,7 @@ Main:
 	javac $(CP) $(ODIR) $(SRC)MainBody.java
 
 testMain:
-	java $(CP) MainBody -m -i ./src/input/min.txt
+	java $(CP) MainBody -m -k -i ./src/input/min.txt
 
 echo_osname:
 	echo $(OSNAME)

@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 15, 2016
+ * Last Edit: Mar 1, 2016
  * Description: Adjusts Mercator data set in relation to the center of mass of the data points, and also converts the data points to HCS coordinates.
  */
 
@@ -11,6 +11,7 @@ public class Initial_setup
 {
 	private List<Coordinate<Double>> normalized = new ArrayList<Coordinate<Double>>();
 	private List<Coordinate<Integer>> normalized_HCS = new ArrayList<Coordinate<Integer>>();
+
 	public Initial_setup(String input, boolean m)
 	{
 		Mercator_mapping mm = new Mercator_mapping(input, m);
@@ -44,7 +45,7 @@ public class Initial_setup
 		return normalized_HCS.get(a);
 	}
 
-	public List<Coordinate<Integer>> getHCS()
+	public List<Coordinate<Integer>> getHCSlist()
 	{
 		return normalized_HCS;
 	}

@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 21, 2016
+ * Last Edit: Mar 1, 2016
  * Description: Class which uses an MST algorithm and generates the corresponding data structures.
  */
 
@@ -21,12 +21,21 @@ public class MSTCalc
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
 		D_matrix = dm.getMatrix("D");
-		HCS_list = dm.getHCS();
+		HCS_list = dm.getHCSlist();
 
 		if (mstalgo)
 		{
 			int entries = dm.getSize();
-			initXst(entries);
+
+			for (int x = 0 ; x < entries; x++)
+			{
+				X_st.add(new ArrayList<Integer>());
+
+				for (int y = 0; y < entries; y++)
+				{
+					X_st.get(x).add(0);
+				}
+			}
 
 			int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
 			int[] parent = PrimMST.primMST(graph);
@@ -47,19 +56,6 @@ public class MSTCalc
 		}
 		else
 			mstinfo = Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
-	}
-
-	private void initXst(int size)
-	{
-		for (int x = 0 ; x < size; x++)
-		{
-			X_st.add(new ArrayList<Integer>());
-
-			for (int y = 0; y < size; y++)
-			{
-				X_st.get(x).add(0);
-			}
-		}
 	}
 
 	public MSTOut getMST()
