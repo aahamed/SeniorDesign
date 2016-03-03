@@ -1,17 +1,17 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 14, 2016
- * Description: Port of kruskal.m, reduced down to what is actually used by the algorithm.
+ * Last Edit: Feb 21, 2016
+ * Description: Port of kruskal.m, generates the MST from the distance matrix.
  */
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reduced_Kruskal
+public class Kruskal
 {
-	public static MST MST(List<List<Integer>> a, List<List<Integer>> b)
+	public static MSTOut MST(List<List<Integer>> a, List<List<Integer>> b)
 	{
-		MST output;
+		MSTOut output;
 		int w_st = 0;
 		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
@@ -39,7 +39,8 @@ public class Reduced_Kruskal
 		{
 			if (isUndirGraph && AnyAny(b))
 			{
-				System.out.println("ERROR: Weight matrix must be symmetric if it is an undirected graph.");
+				System.err.format("ERROR: Weight matrix must be symmetric if it is an undirected graph.");
+				System.exit(0);
 			}
 			w_ne = w2ne(b, X_ne);
 		}
@@ -110,7 +111,7 @@ public class Reduced_Kruskal
 			w_st += w_ne[treeidx.get(q) - 1][0];
 		}
 
-		output = new MST(w_st, ST, X_st);
+		output = new MSTOut(w_st, ST, X_st);
 		return output;
 	}
 

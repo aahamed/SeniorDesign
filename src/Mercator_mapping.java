@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 15, 2016
+ * Last Edit: Feb 21, 2016
  * Description: Maps latitude and longitude values to a Mercator projection, a 2D Cartesian plane.
  */
 
@@ -65,9 +65,9 @@ public class Mercator_mapping
 		con = Math.pow(((1.0 - con) / (1.0 + con)), com);
 		double ts = Math.tan(0.5 * ((Math.PI * 0.5) - phi)) / con;
 		double y = 0 - WGS84_A * Math.log(ts);
-		
+
 		return y;
-    }
+	}
 
 	public int getSize()
 	{

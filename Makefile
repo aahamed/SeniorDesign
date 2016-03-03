@@ -11,6 +11,7 @@ OSNAME = $(OS)
 XLINT = -Xlint:unchecked
 
 # Determine OS
+
 ifeq '$(OS)' 'Windows_N'
 	# set variables for windows
 	OSNAME=$(OS)
@@ -20,7 +21,7 @@ else
 	OSNAME=$(shell uname)
 	# set variables according to OS
 
-	#Mac OSX - change as needed
+	# Mac OS X
 	ifeq '$(OSNAME)' 'Darwin'
 		CP=-cp '$(BIN):$(LIB)'
 	endif
@@ -77,20 +78,17 @@ InitMax: Coordinate GlobalConstants HCS PrimMST
 testInitMax:
 	java $(CP) InitMax
 
+Main:
+	javac $(CP) $(ODIR) $(SRC)MainBody.java
+
+testMain:
+	java $(CP) MainBody -m -k -i ./src/input/min.txt
+
 echo_osname:
 	echo $(OSNAME)
 
 echo_cp:
 	echo $(CP)
-
-test:
-	java $(CP) PCG
-
-stest:
-	java $(CP) PCG -i ./src/input/in_small.txt -g -p
-
-mtest:
-	java $(CP) PCG -m -i ./src/input/min.txt
 
 testJunit:
 	javac $(CP) $(ODIR) $(TEST)TestJunit.java $(TEST)TestRunner.java
