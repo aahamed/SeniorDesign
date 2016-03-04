@@ -84,7 +84,12 @@ public class Mercator_mapping
 		return mercmap.get(a).getY();
 	}
 
-	public Coordinate<Double> getMMCOM()
+	public List<Coordinate<Double>> getMMlist()
+	{
+		return mercmap;
+	}
+
+	public Coordinate<Double> getMMcom()
 	{
 		return List_ops.getCOM(mercmap);
 	}

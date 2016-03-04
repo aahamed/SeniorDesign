@@ -50,7 +50,7 @@ public class Coordinate <T>
 	}
 	
 	
-	public boolean equals(Coordinate c)
+	public boolean equals(Coordinate<T> c)
 	{
 		if(c == null)
 		{

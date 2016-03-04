@@ -102,7 +102,7 @@ public class LocateC1 {
 			Matrix c = p;
 			p=q;
 			q=c;
-			d = new double[][]{{(double) (q.get(0, 0)-p.get(0, 0)),(double) (q.get(0, 1)-p.get(0, 1))},{0,0}};
+			d = new double[][]{{(q.get(0, 0)-p.get(0, 0)), (q.get(0, 1)-p.get(0, 1))},{0,0}};
 			System.out.println(d[0][0]+" " +d[0][1]);
 			case1(p,q,H);
 			case2(p,q,H);

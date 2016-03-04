@@ -11,21 +11,27 @@ public class MSTCalc
 {
 	private MSTOut mstinfo;
 	private List<List<Integer>> D_matrix;
-	private List<Coordinate<Integer>> HCS_list;
-
-	private int w_st;
-	private List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
-	private List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+	private List<Coordinate<Integer>> HCSlist;
+	private Coordinate<Double> MMcom;
+	private List<Coordinate<Double>> MMlist;
 
 	public MSTCalc(String input, boolean matlab, boolean mstalgo)
 	{
 		Distance_matrix dm = new Distance_matrix(input, matlab);
 		D_matrix = dm.getMatrix("D");
-		HCS_list = dm.getHCSlist();
+		HCSlist = dm.getHCSlist();
+		MMcom = dm.getMMcom();
+		MMlist = dm.getMMlist();
+
+		int w_st = 0;
+		List<Coordinate<Integer>> ST;
+		List<List<Integer>> X_st;
 
 		if (mstalgo)
 		{
 			int entries = dm.getSize();
+			ST = new ArrayList<Coordinate<Integer>>();
+			X_st = new ArrayList<List<Integer>>();
 
 			for (int x = 0 ; x < entries; x++)
 			{
@@ -75,12 +81,22 @@ public class MSTCalc
 
 	public List<Coordinate<Integer>> getHCS()
 	{
-		return HCS_list;
+		return HCSlist;
 	}
 
 	public int[][] getHCSArray()
 	{
-		return List_ops.lc2array(HCS_list);
+		return List_ops.lc2array(HCSlist);
+	}
+
+	public Coordinate<Double> getMMcom()
+	{
+		return MMcom;
+	}
+
+	public List<Coordinate<Double>> getMMlist()
+	{
+		return MMlist;
 	}
 
 	public void printMST()
@@ -97,7 +113,7 @@ public class MSTCalc
 	public void printHCS()
 	{
 		System.out.println(">> HCS normalized points (u, v) are:");
-		List_ops.print_coordlist_int(HCS_list);
+		List_ops.print_coordlist_int(HCSlist);
 	}
 
 	public void printAll()

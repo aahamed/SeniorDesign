@@ -16,6 +16,7 @@ public class MainBody
 
 	private static List<Coordinate<Double>> CenList1 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> CenList2 = new ArrayList<Coordinate<Double>>();
+	private static List<Coordinate<Double>> C1C2List = new ArrayList<Coordinate<Double>>();
 
 	private static int[] minE(List<List<Integer>> a)
 	{
@@ -72,6 +73,18 @@ public class MainBody
 		return output;
 	}
 
+	private static int[] getUVs(List<Coordinate<Integer>> a, int[] b)
+	{
+		int[] output = new int[4];
+
+		output[0] = a.get(b[0] - 1).getX(); // pu
+		output[1] = a.get(b[0] - 1).getY(); // pv
+		output[2] = a.get(b[1] - 1).getX(); // qu
+		output[3] = a.get(b[1] - 1).getY(); // qv
+
+		return output;
+	}
+
 	private static double[][] hcoord2array(Coordinate<Integer> a)
 	{
 		double[][] output = new double[2][2];
@@ -82,6 +95,25 @@ public class MainBody
 		output[1][1] = 0.0;
 
 		return output;
+	}
+
+	private static void reshapeDmatrix(List<List<Integer>> a, int[] b)
+	{
+		int entries = a.size();
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			if ((i == (b[0] - 1)) || (i == (b[1] - 1)))
+				a.get(i).add(GlobalConstants.H);
+			else
+				a.get(i).add(0);
+		}
+		for (int j = 0; j < (entries + 1); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		a.add(temp);
 	}
 
 	private static void options(String[] a)
@@ -123,7 +155,7 @@ public class MainBody
 					}
 					catch (ArrayIndexOutOfBoundsException x)
 					{
-						System.err.format("ERROR: No input filename was specified. [%s]\n", x);
+						System.err.format("ERROR: No input filename was specified. Use --help for usage details. [%s]\n", x);
 						System.exit(0);
 					}
 				}
@@ -141,7 +173,7 @@ public class MainBody
 			}
 			if (!check3)
 			{
-				System.err.format("ERROR: No input filename was specified.\n");
+				System.err.format("ERROR: No input filename was specified. Use --help for usage details.\n");
 				System.exit(0);
 			}
 		}
@@ -187,21 +219,17 @@ public class MainBody
 		// Pre-connective Graph
 		List<List<Integer>> D1 = mc.getDM();
 		List<Coordinate<Integer>> UV = mc.getHCS();
-		int[] rcv;
+		int[] rcv, pq;
 		Coordinate<Integer> p, q;
 		Coordinate<Double> cen1, cen2;
-		int px, py, qx, qy;
 		int pointer;
 
 		for (int i = 1; i <= (GlobalConstants.n * (GlobalConstants.n - 1) / 2); i++)
 		{
 			rcv = minE(D1);
-			px = UV.get(rcv[0] - 1).getX();
-			py = UV.get(rcv[0] - 1).getY();
-			qx = UV.get(rcv[1] - 1).getX();
-			qy = UV.get(rcv[1] - 1).getY();
-			p = new Coordinate<Integer>(px, py);
-			q = new Coordinate<Integer>(qx, qy);
+			pq = getUVs(UV, rcv);
+			p = new Coordinate<Integer>(pq[0], pq[1]);
+			q = new Coordinate<Integer>(pq[2], pq[3]);
 
 			pointer = Connect.connect(p, q, 'c').getPointer();
 
@@ -209,12 +237,9 @@ public class MainBody
 			{
 				// Is a statement of checking connectivity
 				// Draw a cluster
-				px = UV.get(rcv[0] - 1).getX();
-				py = UV.get(rcv[0] - 1).getY();
-				qx = UV.get(rcv[1] - 1).getX();
-				qy = UV.get(rcv[1] - 1).getY();
-				p = new Coordinate<Integer>(px, qx);
-				q = new Coordinate<Integer>(py, qy);
+				pq = getUVs(UV, rcv);
+				p = new Coordinate<Integer>(pq[0], pq[2]);
+				q = new Coordinate<Integer>(pq[1], pq[3]);
 				cen1 = HCS.hexToCart(p);
 				cen2 = HCS.hexToCart(q);
 
@@ -229,14 +254,21 @@ public class MainBody
 
 		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();
+		Tree.printAll();
 		List<List<Integer>> D2 = mc.getDM();
+		Coordinate<Double> XcYc = mc.getMMcom();
+		List<Coordinate<Double>> XrYr = mc.getMMlist();
 		boolean exit = false;
 		int Nsign;
 		ConnectOut temp;
-		Matrix p1;
-		Matrix q1;
-		Locate LL;
-		Locate LC;
+		Matrix p1, q1;
+		Locate1 L1;
+		LocateC1 LC1;
+		Coordinate<Integer> O = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> AN;
+		Coordinate<Double> C12;
+		double xAN, yAN;
+		List<Integer> new_row;
 
 		while (!exit)
 		{
@@ -246,12 +278,9 @@ public class MainBody
 			if (rcv[2] <= GlobalConstants.H)
 				break;
 			// Prepare for Placement
-			px = UV.get(rcv[0] - 1).getX();
-			py = UV.get(rcv[0] - 1).getY();
-			qx = UV.get(rcv[1] - 1).getX();
-			qy = UV.get(rcv[1] - 1).getY();
-			p = new Coordinate<Integer>(px, py);
-			q = new Coordinate<Integer>(qx, qy);
+			pq = getUVs(UV, rcv);
+			p = new Coordinate<Integer>(pq[0], pq[1]);
+			q = new Coordinate<Integer>(pq[2], pq[3]);
 			temp = Connect.connect(p, q, 'a');
 
 			// Check Necessity
@@ -264,19 +293,16 @@ public class MainBody
 					Nsign = 0; // Already connected
 					D2.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.H);
 				}
-				px = UV.get(rcv[0] - 1).getX();
-				py = UV.get(rcv[0] - 1).getY();
-				qx = UV.get(rcv[1] - 1).getX();
-				qy = UV.get(rcv[1] - 1).getY();
-				p = new Coordinate<Integer>(px, qx);
-				q = new Coordinate<Integer>(py, qy);
+				pq = getUVs(UV, rcv);
+				p = new Coordinate<Integer>(pq[0], pq[2]);
+				q = new Coordinate<Integer>(pq[1], pq[3]);
 				cen1 = HCS.hexToCart(p);
 				cen2 = HCS.hexToCart(q);
 
 				// TODO: Temporary List to hold all these 'cen' coordinates
 				CenList1.add(cen1);
 				CenList2.add(cen2);
-
+				// TODO: Graph functions go here
 			}
 
 			if (Nsign != 0)
@@ -284,11 +310,49 @@ public class MainBody
 				if (temp.getNum() <= 2.01)
 				{
 					// Connected Those that is feasible with only 1 ANs
-					// TODO: Return when Locate1 is finished.
 					p1 = new Matrix(hcoord2array(p));
 					q1 = new Matrix(hcoord2array(q));
-					LL = new Locate(p1, q1, GlobalConstants.H);
-					// LC = new LocateC(p1, q1, GlobalConstants.H); // TODO: When LocateC is done
+					L1 = new Locate1(p1, q1, GlobalConstants.H);
+					LC1 = new LocateC1(p1, q1, GlobalConstants.H);
+
+					if ((L1.out.getexFlag() != 0) && (LC1.out.getexFlag() != 0))
+					{
+						if ((HCS.distance(L1.out.getAN(), O)) > (HCS.distance(LC1.out.getAN(), O)))
+							AN = LC1.out.getAN();
+						else
+							AN = L1.out.getAN();
+
+						// If AN is found, draw it out
+						C12 = HCS.hexToCart(AN);
+						// TODO: Temporary List to hold all these 'C1, C2' coordinates
+						C1C2List.add(C12);
+
+						// As AN is found, two clusters that are connected are drew out
+						// Draw a cluster
+						pq = getUVs(UV, rcv);
+						p = new Coordinate<Integer>(pq[0], pq[2]);
+						q = new Coordinate<Integer>(pq[1], pq[3]);
+						cen1 = HCS.hexToCart(p);
+						cen2 = HCS.hexToCart(q);
+
+						// TODO: Temporary List to hold all these 'cen' coordinates
+						CenList1.add(cen1);
+						CenList2.add(cen2);
+						// TODO: Graph functions go here
+
+						// Add AN to sets
+						xAN = C12.getX() + XcYc.getX();
+						yAN = C12.getY() + XcYc.getY();
+						XrYr.add(new Coordinate<Double>(xAN, yAN));
+						GlobalConstants.n++;
+
+						// After an AN is placed, Recalculate the Spanning Tree
+						// First reset certain element in D2 and then calculate
+						// the spanning Tree. Meanwhile, the dimension of D2
+						// needs to be RESHAPED
+						reshapeDmatrix(D2, rcv);
+						// TODO: InitiateMax, then set D to D2 and iterate
+					}
 				}
 				else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01)
 				{

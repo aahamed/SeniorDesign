@@ -11,19 +11,22 @@ public class Initial_setup
 {
 	private List<Coordinate<Double>> normalized = new ArrayList<Coordinate<Double>>();
 	private List<Coordinate<Integer>> normalized_HCS = new ArrayList<Coordinate<Integer>>();
+	private Coordinate<Double> MMcom;
+	private List<Coordinate<Double>> MMlist;
 
 	public Initial_setup(String input, boolean m)
 	{
 		Mercator_mapping mm = new Mercator_mapping(input, m);
+		MMcom = mm.getMMcom();
+		MMlist = mm.getMMlist();
 
 		int entries = mm.getSize();
 		double normX, normY;
-		Coordinate<Double> mm_com = mm.getMMCOM();
 
 		for (int c = 0; c < entries; c++)
 		{
-			normX = mm.getmX(c) - mm_com.getX();
-			normY = mm.getmY(c) - mm_com.getY();
+			normX = mm.getmX(c) - MMcom.getX();
+			normY = mm.getmY(c) - MMcom.getY();
 
 			normalized.add(new Coordinate<Double>(normX, normY));
 			normalized_HCS.add(HCS.cartToHex(normalized.get(c)));
@@ -48,6 +51,16 @@ public class Initial_setup
 	public List<Coordinate<Integer>> getHCSlist()
 	{
 		return normalized_HCS;
+	}
+
+	public Coordinate<Double> getMMcom()
+	{
+		return MMcom;
+	}
+
+	public List<Coordinate<Double>> getMMlist()
+	{
+		return MMlist;
 	}
 
 	public void printNorm()

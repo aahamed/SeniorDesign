@@ -37,7 +37,7 @@ public class Read_file
 		}
 		catch (IOException x)
 		{
-			System.err.format("ERROR: Could not find the input file. [%s]\n", x);
+			System.err.format("ERROR: Could not find the input file. Use --help for usage details. [%s]\n", x);
 			System.exit(0);
 		}
 	}

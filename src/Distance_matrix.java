@@ -13,12 +13,16 @@ public class Distance_matrix
 	private List<List<Integer>> SP0_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> X_matrix = new ArrayList<List<Integer>>();
 	private List<List<Integer>> w_matrix = new ArrayList<List<Integer>>();
-	private List<Coordinate<Integer>> HCS_list;
+	private List<Coordinate<Integer>> HCSlist;
+	private Coordinate<Double> MMcom;
+	private List<Coordinate<Double>> MMlist;
 
 	public Distance_matrix(String input, boolean m)
 	{
 		Initial_setup is = new Initial_setup(input, m);
-		HCS_list = is.getHCSlist();
+		HCSlist = is.getHCSlist();
+		MMcom = is.getMMcom();
+		MMlist = is.getMMlist();
 
 		int entries = is.getSize();
 		int distance;
@@ -94,7 +98,17 @@ public class Distance_matrix
 
 	public List<Coordinate<Integer>> getHCSlist()
 	{
-		return HCS_list;
+		return HCSlist;
+	}
+
+	public Coordinate<Double> getMMcom()
+	{
+		return MMcom;
+	}
+
+	public List<Coordinate<Double>> getMMlist()
+	{
+		return MMlist;
 	}
 
 	public void printD()
