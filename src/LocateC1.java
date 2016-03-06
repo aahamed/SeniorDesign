@@ -18,7 +18,7 @@ public class LocateC1 {
 	boolean c1return=false,c2return=false,c3return=false,c4return=false;
 	
 	public static void main(String[] args) {
-        double[][] p1 = {{20,20},{0,0}};
+        double[][] p1 = {{20,50},{0,0}};
         double[][] q1 = {{0,0},{0,0}};
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
@@ -172,6 +172,7 @@ public class LocateC1 {
 					c1return=true;
 					return;
 				}
+				c1return = true;
 			}
 		}
 
@@ -181,7 +182,7 @@ public class LocateC1 {
 		Coordinate<Integer> J = new Coordinate<Integer>(0, 0);
 		Matrix I,K;
 		I = q.plus(i1.times((double)-H));
-		K = p.plus(k1.times((double)-H));
+		K = p.plus(k1.times((double)H));
 		
 		int itemp1 = (int)I.get(0, 0);
 		int itemp2 = (int)I.get(0, 1);
@@ -237,6 +238,7 @@ public class LocateC1 {
 					c1return=true;
 					return;
 				}
+				c1return=true;
 			}
 		}
 
@@ -358,6 +360,7 @@ public class LocateC1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -424,6 +427,7 @@ public class LocateC1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -491,6 +495,7 @@ public class LocateC1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -586,8 +591,8 @@ public class LocateC1 {
 			else{
 				out.setexFlag(0);
 				//AN = [];
-				c3return=true;
-				return;
+				//c3return=true;
+				//return;
 			}
 		}
 		else{

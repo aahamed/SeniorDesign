@@ -173,6 +173,7 @@ public class Locate1 {
 					c1return=true;
 					return;
 				}
+				c1return=true;
 			}
 		}
 
@@ -238,6 +239,7 @@ public class Locate1 {
 					c1return=true;
 					return;
 				}
+				c1return=true;
 			}
 		}
 
@@ -363,6 +365,7 @@ public class Locate1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -429,6 +432,7 @@ public class Locate1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -496,6 +500,7 @@ public class Locate1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -591,8 +596,8 @@ public class Locate1 {
 			else{
 				out.setexFlag(0);
 				//AN = [];
-				c3return=true;
-				return;
+				//c3return=true;
+				//return;
 			}
 		}
 		else{
