@@ -18,8 +18,8 @@ public class LocateC1 {
 	boolean c1return=false,c2return=false,c3return=false,c4return=false;
 	
 	public static void main(String[] args) {
-        double[][] p1 = {{1014,-550},{0,0}};
-        double[][] q1 = {{898,-434},{0,0}};
+        double[][] p1 = {{20,20},{0,0}};
+        double[][] q1 = {{0,0},{0,0}};
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
         int H = 91;
@@ -66,7 +66,9 @@ public class LocateC1 {
 			Matrix c = p;
 			p = q;
 			q = c;
-			case1(p,q,H);
+			LocateC1 l2 = new LocateC1(p,q,H);
+			out.setAN(l2.out.getAN());
+			out.setexFlag(l2.out.getexFlag());
 		}
 	}
 	
@@ -102,12 +104,9 @@ public class LocateC1 {
 			Matrix c = p;
 			p=q;
 			q=c;
-			d = new double[][]{{(double) (q.get(0, 0)-p.get(0, 0)),(double) (q.get(0, 1)-p.get(0, 1))},{0,0}};
-			System.out.println(d[0][0]+" " +d[0][1]);
-			case1(p,q,H);
-			case2(p,q,H);
-			case3(p,q,H);
-			//case4(p,q,H);
+			LocateC1 l2 = new LocateC1(p,q,H);
+			out.setAN(l2.out.getAN());
+			out.setexFlag(l2.out.getexFlag());
 		}
 	}
 	
