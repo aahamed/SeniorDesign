@@ -25,6 +25,11 @@ public class ConnectOut
 	{
 		return num;
 	}
+
+	public void setNum(double a)
+	{
+		this.num = a;
+	}
 	
 	public double getTheta()
 	{
@@ -34,6 +39,11 @@ public class ConnectOut
 	public int getPointer()
 	{
 		return pointer;
+	}
+
+	public void setPointer(int a)
+	{
+		this.pointer = a;
 	}
 	
 	public int[] getDirection()

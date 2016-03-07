@@ -23,42 +23,13 @@ public class MSTCalc
 		MMcom = dm.getMMcom();
 		MMlist = dm.getMMlist();
 
-		int w_st = 0;
-		List<Coordinate<Integer>> ST;
-		List<List<Integer>> X_st;
-
 		if (mstalgo)
 		{
 			int entries = dm.getSize();
-			ST = new ArrayList<Coordinate<Integer>>();
-			X_st = new ArrayList<List<Integer>>();
-
-			for (int x = 0 ; x < entries; x++)
-			{
-				X_st.add(new ArrayList<Integer>());
-
-				for (int y = 0; y < entries; y++)
-				{
-					X_st.get(x).add(0);
-				}
-			}
-
 			int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
 			int[] parent = PrimMST.primMST(graph);
 
-			for (int c = 1; c < entries; c++)
-			{
-				X_st.get(parent[c]).set(c, 1);
-				X_st.get(c).set(parent[c], 1);
-				w_st += graph[parent[c]][c];
-			}
-
-			for (int d = 1; d < parent.length; d++)
-			{
-				ST.add(new Coordinate<Integer>((parent[d] + 1), (d + 1)));
-			}
-
-			mstinfo = new MSTOut(w_st, ST, X_st);
+			mstinfo = primMapper(parent, graph, entries);
 		}
 		else
 			mstinfo = Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
@@ -67,6 +38,40 @@ public class MSTCalc
 	public MSTOut getMST()
 	{
 		return mstinfo;
+	}
+
+	public MSTOut primMapper(int[] a, int[][] b, int c)
+	{
+		MSTOut output;
+		int w_st = 0;
+		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
+		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
+
+		for (int x = 0 ; x < c; x++)
+		{
+			X_st.add(new ArrayList<Integer>());
+
+			for (int y = 0; y < c; y++)
+			{
+				X_st.get(x).add(0);
+			}
+		}
+
+		for (int i = 1; i < a.length; i++)
+		{
+			X_st.get(a[i]).set(i, 1);
+			X_st.get(i).set(a[i], 1);
+			w_st += b[a[i]][i];
+		}
+
+		for (int d = 1; d < a.length; d++)
+		{
+			ST.add(new Coordinate<Integer>((a[d] + 1), (d + 1)));
+		}
+
+		output = new MSTOut(w_st, ST, X_st);
+
+		return output;
 	}
 
 	public List<List<Integer>> getDM()

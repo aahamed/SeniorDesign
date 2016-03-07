@@ -29,7 +29,7 @@ public class InitMax
 	* @param com COM coordinate
 	* @return List of HCS coordinates
 	*/
-	private static List<Coordinate<Integer>> convertToHCS(List<Coordinate<Double>> listOfCoords, Coordinate<Double> com)
+	public static List<Coordinate<Integer>> convertToHCS(List<Coordinate<Double>> listOfCoords, Coordinate<Double> com)
 	{
 		List<Coordinate<Integer>> HCSCoords = new ArrayList<Coordinate<Integer>>();
 		for(Coordinate<Double> c: listOfCoords)
@@ -44,7 +44,7 @@ public class InitMax
 	* @param HCSCoords List of all coordinates in HCS
 	* @return Distance Matrix
 	*/
-	private static int[][] computeDistMatrix(List<Coordinate<Integer>> HCSCoords)
+	public static int[][] computeDistMatrix(List<Coordinate<Integer>> HCSCoords)
 	{
 		int DIM = HCSCoords.size();
 		int[][] distMat = new int[DIM][DIM];
@@ -72,7 +72,7 @@ public class InitMax
 	*@param newMat new distance matrix
 	*@return new distance matrix
 	*/
-	private static int[][] mergeDistMat(int[][] oldMat, int[][] newMat)
+	public static int[][] mergeDistMat(int[][] oldMat, int[][] newMat)
 	{
 		for(int i = 0; i < oldMat.length; i++)
 		{

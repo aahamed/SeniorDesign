@@ -1,6 +1,6 @@
 /*
- * Author: Josue Galeas, TODO: and everyone else who edits this
- * Last Edit: Mar 1, 2016
+ * Author: Josue Galeas
+ * Last Edit: Mar 6, 2016
  * Description: Main body of the algorithm.
  */
 
@@ -77,10 +77,10 @@ public class MainBody
 	{
 		int[] output = new int[4];
 
-		output[0] = a.get(b[0] - 1).getX(); // pu
-		output[1] = a.get(b[0] - 1).getY(); // pv
-		output[2] = a.get(b[1] - 1).getX(); // qu
-		output[3] = a.get(b[1] - 1).getY(); // qv
+		output[0] = a.get(b[0] - 1).getX(); // u(row)
+		output[1] = a.get(b[0] - 1).getY(); // v(row)
+		output[2] = a.get(b[1] - 1).getX(); // u(col)
+		output[3] = a.get(b[1] - 1).getY(); // v(col)
 
 		return output;
 	}
@@ -100,11 +100,13 @@ public class MainBody
 	private static void reshapeDmatrix(List<List<Integer>> a, int[] b)
 	{
 		int entries = a.size();
+		int row = b[0] - 1;
+		int col = b[1] - 1;
 		List<Integer> temp = new ArrayList<Integer>();
 
 		for (int i = 0; i < entries; i++)
 		{
-			if ((i == (b[0] - 1)) || (i == (b[1] - 1)))
+			if ((i == row) || (i == col))
 				a.get(i).add(GlobalConstants.H);
 			else
 				a.get(i).add(0);
@@ -113,6 +115,70 @@ public class MainBody
 		{
 			temp.add(GlobalConstants.TRANS_RANGE);
 		}
+		a.add(temp);
+	}
+
+	private static void reshapeDmatrix2(List<List<Integer>> a, int[] b)
+	{
+		int entries = a.size();
+		int row = b[0] - 1;
+		int col = b[1] - 1;
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			if ((i == row) || (i == col))
+			{
+				a.get(i).add(GlobalConstants.H);
+				a.get(i).add(GlobalConstants.H);
+			}
+			else
+			{
+				a.get(i).add(0);
+				a.get(i).add(0);
+			}
+		}
+		for (int j = 0; j < (entries + 2); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		a.add(temp);
+		a.add(temp);
+	}
+
+	private static void reshapeDmatrix3(List<List<Integer>> a)
+	{
+		int entries = a.size();
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			a.get(i).add(1);
+			a.get(i).add(1);
+		}
+		for (int j = 0; j < (entries + 2); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		a.add(temp);
+		a.add(temp);
+	}
+
+	private static void reshapeDmatrix4(List<List<Integer>> a)
+	{
+		int entries = a.size();
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			a.get(i).add(0);
+		}
+		for (int j = 0; j < (entries + 1); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		a.get(entries - 1).set(entries, GlobalConstants.H);
+		a.get(entries - 2).set(entries, GlobalConstants.H);
 		a.add(temp);
 	}
 
@@ -217,7 +283,8 @@ public class MainBody
 		MSTCalc mc = new MSTCalc(input_filename, q_matlab, q_mstalgo);
 
 		// Pre-connective Graph
-		List<List<Integer>> D1 = mc.getDM();
+		List<List<Integer>> D1 = mc.getDM(); // TODO: This is a reference, not a copy, might cause issues
+		GlobalConstants.n = D1.size();
 		List<Coordinate<Integer>> UV = mc.getHCS();
 		int[] rcv, pq;
 		Coordinate<Integer> p, q;
@@ -244,8 +311,9 @@ public class MainBody
 				cen2 = HCS.hexToCart(q);
 
 				// TODO: Temporary List to hold all these 'cen' coordinates
-				CenList1.add(cen1);
-				CenList2.add(cen2);
+				CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
+				CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
+				// TODO: Graph functions go here
 
 				// Mark whomever has been connected !!!
 				D1.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.TRANS_RANGE);
@@ -254,21 +322,27 @@ public class MainBody
 
 		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();
-		Tree.printAll();
+		Tree.printAll(); // TODO: For debugging
 		List<List<Integer>> D2 = mc.getDM();
-		Coordinate<Double> XcYc = mc.getMMcom();
-		List<Coordinate<Double>> XrYr = mc.getMMlist();
+		Coordinate<Double> XYc = mc.getMMcom();
+		List<Coordinate<Double>> XYr = mc.getMMlist();
 		boolean exit = false;
+		// Pointer if-statement
 		int Nsign;
 		ConnectOut temp;
+		// Big Nsign if-statement
 		Matrix p1, q1;
 		Locate1 L1;
 		LocateC1 LC1;
-		Coordinate<Integer> O = new Coordinate<Integer>(0, 0);
-		Coordinate<Integer> AN;
-		Coordinate<Double> C12;
-		double xAN, yAN;
-		List<Integer> new_row;
+		LocateM2 LM2;
+		LocateMM2 LMM2;
+		boolean cond1, cond2;
+		int dist1, dist2;
+		int base, base_t;
+		Coordinate<Integer> AN, AN2, O = new Coordinate<Integer>(0, 0);
+		Coordinate<Double> C12, C12_2, T_AN1, T_AN2;
+		double xAN, yAN, num;
+		int[][] SUPER_TEMP, MORE_TEMP, EXTRA_TEMP; // TODO: Temporary fix for InitMax
 
 		while (!exit)
 		{
@@ -281,7 +355,7 @@ public class MainBody
 			pq = getUVs(UV, rcv);
 			p = new Coordinate<Integer>(pq[0], pq[1]);
 			q = new Coordinate<Integer>(pq[2], pq[3]);
-			temp = Connect.connect(p, q, 'a');
+			temp = Connect.connect(p, q, 'a'); // TODO: Maybe rename this to something better?
 
 			// Check Necessity
 			if (temp.getPointer() != 0)
@@ -291,6 +365,7 @@ public class MainBody
 				else
 				{
 					Nsign = 0; // Already connected
+					// Set ST(i) = [row, col] to be a large number so the next iteration won't pick it up again
 					D2.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.H);
 				}
 				pq = getUVs(UV, rcv);
@@ -300,8 +375,8 @@ public class MainBody
 				cen2 = HCS.hexToCart(q);
 
 				// TODO: Temporary List to hold all these 'cen' coordinates
-				CenList1.add(cen1);
-				CenList2.add(cen2);
+				CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
+				CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
 				// TODO: Graph functions go here
 			}
 
@@ -314,10 +389,14 @@ public class MainBody
 					q1 = new Matrix(hcoord2array(q));
 					L1 = new Locate1(p1, q1, GlobalConstants.H);
 					LC1 = new LocateC1(p1, q1, GlobalConstants.H);
+					cond1 = L1.out.getexFlag() != 0;
+					cond2 = LC1.out.getexFlag() != 0;
 
-					if ((L1.out.getexFlag() != 0) && (LC1.out.getexFlag() != 0))
+					if (cond1 && cond2)
 					{
-						if ((HCS.distance(L1.out.getAN(), O)) > (HCS.distance(LC1.out.getAN(), O)))
+						dist1 = HCS.distance(L1.out.getAN(), O);
+						dist2 = HCS.distance(LC1.out.getAN(), O);
+						if (dist1 > dist2)
 							AN = LC1.out.getAN();
 						else
 							AN = L1.out.getAN();
@@ -326,6 +405,7 @@ public class MainBody
 						C12 = HCS.hexToCart(AN);
 						// TODO: Temporary List to hold all these 'C1, C2' coordinates
 						C1C2List.add(C12);
+						// TODO: Graph functions go here
 
 						// As AN is found, two clusters that are connected are drew out
 						// Draw a cluster
@@ -334,16 +414,15 @@ public class MainBody
 						q = new Coordinate<Integer>(pq[1], pq[3]);
 						cen1 = HCS.hexToCart(p);
 						cen2 = HCS.hexToCart(q);
-
 						// TODO: Temporary List to hold all these 'cen' coordinates
-						CenList1.add(cen1);
-						CenList2.add(cen2);
+						CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
+						CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
 						// TODO: Graph functions go here
 
 						// Add AN to sets
-						xAN = C12.getX() + XcYc.getX();
-						yAN = C12.getY() + XcYc.getY();
-						XrYr.add(new Coordinate<Double>(xAN, yAN));
+						xAN = C12.getX() + XYc.getX();
+						yAN = C12.getY() + XYc.getY();
+						XYr.add(new Coordinate<Double>(xAN, yAN));
 						GlobalConstants.n++;
 
 						// After an AN is placed, Recalculate the Spanning Tree
@@ -351,20 +430,220 @@ public class MainBody
 						// the spanning Tree. Meanwhile, the dimension of D2
 						// needs to be RESHAPED
 						reshapeDmatrix(D2, rcv);
-						// TODO: InitiateMax, then set D to D2 and iterate
+						// TODO: TEMPORARY WORK-AROUND
+						UV = InitMax.convertToHCS(XYr, XYc);
+						SUPER_TEMP = List_ops.ll2array(D2);
+						MORE_TEMP = InitMax.computeDistMatrix(UV);
+						EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
+						D2 = List_ops.array2ll(EXTRA_TEMP);
 					}
 				}
 				else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01)
 				{
-					// TODO
+					// & abs(theta - pi/6) > 0.013
+					// the last one comes when it seems to be ok but not
+					p1 = new Matrix(hcoord2array(p));
+					q1 = new Matrix(hcoord2array(q));
+					LMM2 = new LocateMM2(p1, q1, GlobalConstants.H);
+
+					AN = LMM2.out.getAN();
+					AN2 = LMM2.out.getAN2();
+
+					// Draw newly placed ANs
+					C12 = HCS.hexToCart(new Coordinate<Integer>(AN.getX(), AN2.getX()));
+					C12_2 = HCS.hexToCart(new Coordinate<Integer>(AN.getY(), AN2.getY()));
+					// TODO: Temporary List to hold all these 'C1, C2' coordinates
+					C1C2List.add(new Coordinate<Double>(C12.getX(), C12_2.getX()));
+					C1C2List.add(new Coordinate<Double>(C12.getY(), C12_2.getY()));
+					// TODO: Graph functions go here
+
+					// Draw head and tail nodes
+					pq = getUVs(UV, rcv);
+					p = new Coordinate<Integer>(pq[0], pq[1]);
+					q = new Coordinate<Integer>(pq[2], pq[3]);
+					cen1 = HCS.hexToCart(p);
+					cen2 = HCS.hexToCart(q);
+					// TODO: Temporary List to hold all these 'cen' coordinates
+					CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
+					CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
+					// TODO: Graph functions go here
+
+					T_AN1 = HCS.hexToCart(AN);
+					xAN = T_AN1.getX() + XYc.getX();
+					yAN = T_AN1.getY() + XYc.getY();
+					XYr.add(new Coordinate<Double>(xAN, yAN));
+					GlobalConstants.n++;
+
+					T_AN2 = HCS.hexToCart(AN2);
+					xAN = T_AN2.getX() + XYc.getX();
+					yAN = T_AN2.getY() + XYc.getY();
+					XYr.add(new Coordinate<Double>(xAN, yAN));
+					GlobalConstants.n++;
+
+					// Update information in distance matrix
+					reshapeDmatrix2(D2, rcv);
+					D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
+					// TODO: TEMPORARY WORK-AROUND
+					UV = InitMax.convertToHCS(XYr, XYc);
+					SUPER_TEMP = List_ops.ll2array(D2);
+					MORE_TEMP = InitMax.computeDistMatrix(UV);
+					EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
+					D2 = List_ops.array2ll(EXTRA_TEMP);
 				}
 				else
 				{
-					// TODO
+					base = GlobalConstants.n;
+					temp.setNum(3.1); // This comes when 2 is actually not able to cover !!
+
+					while (temp.getNum() > 3.01 && temp.getPointer() == 0)
+					{
+						p1 = new Matrix(hcoord2array(p));
+						q1 = new Matrix(hcoord2array(q));
+						LM2 = new LocateM2(p1, q1, GlobalConstants.H, temp.getTheta());
+
+						AN = LM2.out.getAN();
+						AN2 = LM2.out.getAN2();
+
+						C12 = HCS.hexToCart(new Coordinate<Integer>(AN.getX(), AN2.getX()));
+						C12_2 = HCS.hexToCart(new Coordinate<Integer>(AN.getY(), AN2.getY()));
+						// TODO: Temporary List to hold all these 'C1, C2' coordinates
+						C1C2List.add(new Coordinate<Double>(C12.getX(), C12_2.getX()));
+						C1C2List.add(new Coordinate<Double>(C12.getY(), C12_2.getY()));
+						// TODO: Graph functions go here
+
+						// Draw red hex on p & q
+						pq = getUVs(UV, rcv);
+						p = new Coordinate<Integer>(pq[0], pq[1]);
+						q = new Coordinate<Integer>(pq[2], pq[3]);
+						cen1 = HCS.hexToCart(p);
+						cen2 = HCS.hexToCart(q);
+						// TODO: Temporary List to hold all these 'cen' coordinates
+						CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
+						CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
+						// TODO: Graph functions go here
+
+						// Add AN1 and AN2 to the set
+						xAN = C12.getX() + XYc.getX();
+						yAN = C12_2.getX() + XYc.getY();
+						XYr.add(new Coordinate<Double>(xAN, yAN));
+						GlobalConstants.n++;
+
+						xAN = C12.getY() + XYc.getX();
+						yAN = C12_2.getY() + XYc.getY();
+						XYr.add(new Coordinate<Double>(xAN, yAN));
+						GlobalConstants.n++;
+
+						reshapeDmatrix3(D2);
+
+						p = AN;
+						q = AN2;
+						// If pointer == 1, while loop is broken
+						temp = Connect.connect(p, q, 'a');
+
+						// Considering the case if we need 1 or 2
+						if (temp.getNum() <= 2.01 && temp.getPointer() == 0)
+						{
+							p1 = new Matrix(hcoord2array(p));
+							q1 = new Matrix(hcoord2array(q));
+							L1 = new Locate1(p1, q1, GlobalConstants.H);
+							LC1 = new LocateC1(p1, q1, GlobalConstants.H);
+							cond1 = L1.out.getexFlag() != 0;
+							cond2 = LC1.out.getexFlag() != 0;
+
+							if (cond1 && cond2)
+							{
+								dist1 = HCS.distance(L1.out.getAN(), O);
+								dist2 = HCS.distance(LC1.out.getAN(), O);
+								if (dist1 > dist2)
+									AN = LC1.out.getAN();
+								else
+									AN = L1.out.getAN();
+
+								// If AN is found, draw it out
+								C12 = HCS.hexToCart(AN);
+								// TODO: Temporary List to hold all these 'C1, C2' coordinates
+								C1C2List.add(C12);
+								// TODO: Graph functions go here
+
+								// Add AN to sets
+								xAN = C12.getX() + XYc.getX();
+								yAN = C12.getY() + XYc.getY();
+								XYr.add(new Coordinate<Double>(xAN, yAN));
+								GlobalConstants.n++;
+
+								// Update Distance Matrix
+								reshapeDmatrix4(D2);
+								temp.setPointer(1);
+							}
+						}
+						else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01 && temp.getPointer() == 0)
+						{
+							// & abs(theta - pi/6) > 0.013
+							// the last one comes when it seems to be ok but not
+							p1 = new Matrix(hcoord2array(p));
+							q1 = new Matrix(hcoord2array(q));
+							LMM2 = new LocateMM2(p1, q1, GlobalConstants.H);
+
+							AN = LMM2.out.getAN();
+							AN2 = LMM2.out.getAN2();
+
+							// Draw newly placed ANs
+							C12 = HCS.hexToCart(new Coordinate<Integer>(AN.getX(), AN2.getX()));
+							C12_2 = HCS.hexToCart(new Coordinate<Integer>(AN.getY(), AN2.getY()));
+							// TODO: Temporary List to hold all these 'C1, C2' coordinates
+							C1C2List.add(new Coordinate<Double>(C12.getX(), C12_2.getX()));
+							C1C2List.add(new Coordinate<Double>(C12.getY(), C12_2.getY()));
+							// TODO: Graph functions go here
+
+							// Draw head and tail nodes
+							pq = getUVs(UV, rcv);
+							p = new Coordinate<Integer>(pq[0], pq[1]);
+							q = new Coordinate<Integer>(pq[2], pq[3]);
+							cen1 = HCS.hexToCart(p);
+							cen2 = HCS.hexToCart(q);
+							// TODO: Temporary List to hold all these 'cen' coordinates
+							CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
+							CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
+							// TODO: Graph functions go here
+
+							T_AN1 = HCS.hexToCart(AN);
+							xAN = T_AN1.getX() + XYc.getX();
+							yAN = T_AN1.getY() + XYc.getY();
+							XYr.add(new Coordinate<Double>(xAN, yAN));
+							GlobalConstants.n++;
+
+							T_AN2 = HCS.hexToCart(AN2);
+							xAN = T_AN2.getX() + XYc.getX();
+							yAN = T_AN2.getY() + XYc.getY();
+							XYr.add(new Coordinate<Double>(xAN, yAN));
+							GlobalConstants.n++;
+
+							// Update information in distance matrix
+							reshapeDmatrix3(D2);
+							D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
+							temp.setPointer(1);
+						}
+
+						if ((GlobalConstants.n - base) > 3)
+						{
+							base_t = GlobalConstants.n - 3;
+
+							D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);
+							D2.get(base_t).set((base_t + 2), GlobalConstants.H);
+						}
+					}
+
+					// After placement, change the Max Value to be 0 --> R/r
+					D2.get(rcv[0] - 1).set(base, GlobalConstants.H);
+					D2.get(rcv[1] - 1).set((base + 1), GlobalConstants.H);
+					// TODO: TEMPORARY WORK-AROUND
+					UV = InitMax.convertToHCS(XYr, XYc);
+					SUPER_TEMP = List_ops.ll2array(D2);
+					MORE_TEMP = InitMax.computeDistMatrix(UV);
+					EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
+					D2 = List_ops.array2ll(EXTRA_TEMP);
 				}
 			}
-
-			exit = true;
 		}
 	}
 }
