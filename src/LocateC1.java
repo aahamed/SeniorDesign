@@ -18,8 +18,8 @@ public class LocateC1 {
 	boolean c1return=false,c2return=false,c3return=false,c4return=false;
 	
 	public static void main(String[] args) {
-        double[][] p1 = {{20,50},{0,0}};
-        double[][] q1 = {{0,0},{0,0}};
+        double[][] p1 = {{234,-795},{0,0}};
+        double[][] q1 = {{56,-663},{0,0}};
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
         int H = 91;
@@ -32,7 +32,7 @@ public class LocateC1 {
 		j = new double[][]{{0,1},{0,0}};
 		k = new double[][]{{-1,1},{0,0}};
 		d = new double[][]{{(q.get(0, 0)-p.get(0, 0)),(q.get(0, 1)-p.get(0, 1))},{0,0}};
-		System.out.println(d[0][0]+" " +d[0][1]);
+		//System.out.println(d[0][0]+" " +d[0][1]);
 		i1 = new Matrix(i);
 		j1 = new Matrix(j);
 		k1 = new Matrix(k);
