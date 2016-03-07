@@ -36,7 +36,7 @@ all:
 clean:
 	rm -rf $(BIN)*.class
 
-GlobalConstants:
+GlobalConstants: $(SRC)GlobalConstants.java
 	javac $(CP) $(ODIR) $(SRC)GlobalConstants.java
 
 HCS: Coordinate GlobalConstants
@@ -45,13 +45,13 @@ HCS: Coordinate GlobalConstants
 testHCS:
 	java $(CP) HCS
 
-Coordinate:
+Coordinate: $(SRC)Coordinate.java
 	javac $(CP) $(ODIR) $(SRC)Coordinate.java
 
 testCoord:
 	java $(CP) Coordinate
 
-ConnectOut:
+ConnectOut: $(SRC)ConnectOut.java
 	javac $(CP) $(ODIR) $(SRC)ConnectOut.java
 
 Connect: ConnectOut HCS GlobalConstants Coordinate 
@@ -60,25 +60,25 @@ Connect: ConnectOut HCS GlobalConstants Coordinate
 #testConnect:
 #	java $(CP) Connect
 
-FindANOut:
+FindANOut: $(SRC)FindANOut.java
 	javac $(CP) $(ODIR) $(SRC)FindANOut.java
 
 FindAN: Coordinate FindANOut
 	javac $(CP) $(ODIR) $(SRC)FindAN.java
 
-testFindAN:
-	java $(CP) FindAN
+#testFindAN:
+#	java $(CP) FindAN
 
-PrimMST:
+PrimMST: $(SRC)PrimMST.java
 	javac $(CP) $(ODIR) $(SRC)PrimMST.java
 
 InitMax: Coordinate GlobalConstants HCS PrimMST
 	javac $(CP) $(ODIR) $(SRC)InitMax.java
 
-testInitMax:
+testInitMax: 
 	java $(CP) InitMax
 
-Main:
+Main: $(SRC)MainBody.java
 	javac $(CP) $(ODIR) $(SRC)MainBody.java
 
 testMain:
@@ -90,20 +90,26 @@ echo_osname:
 echo_cp:
 	echo $(CP)
 
-testJunit:
+testJunit: $(TEST)TestJunit.java $(TEST)TestRunner.java
 	javac $(CP) $(ODIR) $(TEST)TestJunit.java $(TEST)TestRunner.java
 
 runTestJunit:
 	java $(CP) TestRunner
 
-testCoordinate: Coordinate
+testCoordinate: Coordinate $(TEST)TestCoordinate.java $(TEST)TestCoordinateRunner.java
 	javac $(CP) $(ODIR) $(TEST)TestCoordinate.java $(TEST)TestCoordinateRunner.java
 
 runTestCoordinate:
 	java $(CP) TestCoordinateRunner
 
-testConnect: Connect
+testConnect: Connect $(TEST)TestConnect.java $(TEST)TestConnectRunner.java
 	javac $(CP) $(ODIR) $(TEST)TestConnect.java $(TEST)TestConnectRunner.java
 
 runTestConnect:
 	java $(CP) TestConnectRunner
+
+testFindAN: FindAN $(TEST)TestFindAN.java $(TEST)TestFindANRunner.java
+	javac $(CP) $(ODIR) $(TEST)TestFindAN.java $(TEST)TestFindANRunner.java $(XLINT)
+
+runTestFindAN:
+	java $(CP) TestFindANRunner

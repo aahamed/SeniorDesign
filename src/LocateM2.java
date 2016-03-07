@@ -1,5 +1,6 @@
 /*
 * Author: Ezana Woldegebriel
+* Edited: Aadil Ahamed - Overloaded Constructor
 * Description: Port of locateC1.m
 */
 
@@ -89,6 +90,17 @@ public class LocateM2 {
 		
 		solutionSelect();
 	}
+    
+    /*
+    *  Overloaded Constructor: Added support for taking cluster coordinates p and q as type Coordinate<Integer>
+    */
+    public LocateM2(Coordinate<Integer> p, Coordinate<Integer> q, int H, double theta)
+    {
+        double[][] pMat = {{p.getX(), p.getY()},{0,0}};
+        double[][] qMat = {{q.getX(), q.getY()}, {0,0}};
+        LocateM2(new Matrix(pMat), new Matrix(qMat), H, theta);
+    }
+    
 	private void case1(Matrix p, Matrix q, int H, double theta){
 		Matrix Pi,Qi,Pj,Qj;
 		int index;
