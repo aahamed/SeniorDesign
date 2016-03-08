@@ -72,11 +72,17 @@ FindAN: Coordinate FindANOut
 PrimMST: $(SRC)PrimMST.java
 	javac $(CP) $(ODIR) $(SRC)PrimMST.java
 
+List_ops:
+	javac $(CP) $(ODIR) $(SRC)List_ops.java
+
+InitMaxOut:
+	javac $(CP) $(ODIR) $(SRC)InitMaxOut.java
+
 InitMax: Coordinate GlobalConstants HCS PrimMST
 	javac $(CP) $(ODIR) $(SRC)InitMax.java
 
-testInitMax: 
-	java $(CP) InitMax
+#testInitMax: 
+#	java $(CP) InitMax
 
 LocateM2:
 	javac $(CP) $(ODIR) $(SRC)LocateM2.java
@@ -116,3 +122,9 @@ testFindAN: FindAN $(TEST)TestFindAN.java $(TEST)TestFindANRunner.java
 
 runTestFindAN:
 	java $(CP) TestFindANRunner
+
+testInitMax:
+	javac $(CP) $(ODIR) $(TEST)TestInitMax.java $(TEST)TestInitMaxRunner.java $(XLINT)
+
+runTestInitMax:
+	java $(CP) TestInitMaxRunner

@@ -39,12 +39,12 @@ public class InitMax
 		return HCSCoords;
 	}
 	
-	/*
+	/* *********** DEPRECATED ****************
 	* computeDistMatrix: Computes the distance between every pair of coordinates
 	* @param HCSCoords List of all coordinates in HCS
 	* @return Distance Matrix
 	*/
-	private static int[][] computeDistMatrix(List<Coordinate<Integer>> HCSCoords)
+	private static int[][] computeDistMatrix_dep(List<Coordinate<Integer>> HCSCoords)
 	{
 		int DIM = HCSCoords.size();
 		int[][] distMat = new int[DIM][DIM];
@@ -65,8 +65,34 @@ public class InitMax
 		}
 		return distMat;
 	}
+    
+    /*
+	* computeDistMatrix: Computes the distance between every pair of coordinates
+	* @param HCSCoords List of all coordinates in HCS
+	* @return Distance Matrix
+	*/
+	private static List<List<Integer>> computeDistMatrix(List<Coordinate<Integer>> HCSCoords)
+	{
+		int DIM = HCSCoords.size();
+		List<List<Integer>> distMat = new ArrayList<List<Integer>>();
+		for(int i = 0; i < DIM; i++)
+		{
+			distMat.add(new ArrayList<Integer>());
+			for(int j = 0; j < DIM; j++)
+			{
+				int distance = HCS.distance(HCSCoords.get(i), HCSCoords.get(j));
+				if(D)
+				{
+					System.out.println("coord i: " + HCSCoords.get(i) + " coord j: " + HCSCoords.get(j));
+					System.out.println("i = " + i + "  j = " + j + "  distance = " + distance);
+				}
+				distMat.get(i).add(distance);
+			}
+		}
+		return distMat;
+	}
 	
-	/*
+	/* ******** DEPRECATED *************
 	*mergeDistMat: Merge new distance matrix with old distance matrix in order to prevent picking nodes that are already connected
 	*@param oldMat old distance matrix
 	*@param newMat new distance matrix
@@ -86,8 +112,29 @@ public class InitMax
 		}
 		return newMat;
 	}
+    
+    /*
+	*mergeDistMat: Merge new distance matrix with old distance matrix in order to prevent picking nodes that are already connected
+	*@param oldMat old distance matrix
+	*@param newMat new distance matrix
+	*@return merged distance matrix
+	*/
+	private static List<List<Integer>> mergeDistMat(List<List<Integer>> oldMat, List<List<Integer>> newMat)
+	{
+		for(int i = 0; i < oldMat.size(); i++)
+		{
+			for(int j = 0; j < oldMat.get(i).size(); j++)
+			{
+				if(oldMat.get(i).get(j) == GlobalConstants.H)
+				{
+					newMat.get(i).set(j, GlobalConstants.H);
+				}
+			}
+		}
+		return newMat;
+	}
 	
-	/*
+	/* ****** DEPRECATED ***************
 	* initMax: Port of Initate_MAX.m
 	* @param listOfCoords list of coordinates
 	* @param com center of mass
@@ -97,7 +144,7 @@ public class InitMax
 	public static int[] initMax(List<Coordinate<Double>> listOfCoords, Coordinate<Double> com, int[][] oldDistMat)
 	{
 		List<Coordinate<Integer>> HCSCoords = convertToHCS(listOfCoords, com);
-		int[][] newDistMat = InitMax.computeDistMatrix(HCSCoords);
+		int[][] newDistMat = InitMax.computeDistMatrix_dep(HCSCoords);
 		InitMax.mergeDistMat(oldDistMat, newDistMat);
 		if(D)
 		{
@@ -110,6 +157,30 @@ public class InitMax
 		PrimMST.printMST(mst, newDistMat[0].length, newDistMat);   //debug code - comment out
 		return mst;
 	}
+    
+    /*
+	* initMax: Port of Initate_MAX.m
+	* @param listOfCoords list of coordinates
+	* @param com center of mass
+	* @param oldDistMat old distance Matrix
+	* @return minimum spanning tree
+	*/
+	public static InitMaxOut initMax(List<Coordinate<Double>> listOfCoords, Coordinate<Double> com, List<List<Integer>> oldDistMat)
+	{
+		List<Coordinate<Integer>> HCSCoords = convertToHCS(listOfCoords, com);
+		List<List<Integer>> newDistMat = InitMax.computeDistMatrix(HCSCoords);
+		InitMax.mergeDistMat(oldDistMat, newDistMat);
+		if(D)
+		{
+			for(int i = 0; i < newDistMat.size(); i++)
+			{
+				System.out.println( Arrays.toString( newDistMat.get(i).toArray( new Integer [0] ) ) );
+			}
+		}
+		int[] mst = PrimMST.primMST(List_ops.ll2array(newDistMat));
+		//PrimMST.printMST(mst, newDistMat[0].length, newDistMat);   //debug code - comment out
+		return new InitMaxOut(HCSCoords, newDistMat, mst);
+	}
 	
 	public static void test1()
 	{
@@ -121,10 +192,27 @@ public class InitMax
 		int[][] oldDistMat = new int[][]{{2, 2}, {2, 2}};
 		int[] mst = InitMax.initMax(listOfCoords, com, oldDistMat);
 	}
+    
+    public static void test2()
+    {
+        List<Coordinate<Double>> listOfCoords = new ArrayList<Coordinate<Double>>();
+		listOfCoords.add(new Coordinate<Double>(1.0, 3.0));
+		listOfCoords.add(new Coordinate<Double>(20.0, 20.0));
+		listOfCoords.add(new Coordinate<Double>(70.0, 5.0));
+		Coordinate<Double> com = new Coordinate<Double>(0.0, 0.0);
+		List<Integer> row1 = Arrays.asList(new Integer[]{2, 2});
+        List<Integer> row2 = Arrays.asList(new Integer[]{2, 2});
+        List<List<Integer>> oldDistMat = new ArrayList<List<Integer>>();
+        oldDistMat.add(row1);
+        oldDistMat.add(row2);
+		InitMaxOut res = InitMax.initMax(listOfCoords, com, oldDistMat);
+        System.out.println("MST: \n" + PrimMST.MSTtoString(res.getParent()));
+    }
 	
 	public static void main(String[] args)
 	{
-		InitMax.test1();
+		//InitMax.test1();
+        InitMax.test2();
 	}
 	
 }
