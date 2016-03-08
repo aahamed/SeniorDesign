@@ -78,6 +78,9 @@ InitMax: Coordinate GlobalConstants HCS PrimMST
 testInitMax: 
 	java $(CP) InitMax
 
+LocateM2:
+	javac $(CP) $(ODIR) $(SRC)LocateM2.java
+
 Main: $(SRC)MainBody.java
 	javac $(CP) $(ODIR) $(SRC)MainBody.java
 

@@ -96,9 +96,8 @@ public class LocateM2 {
     */
     public LocateM2(Coordinate<Integer> p, Coordinate<Integer> q, int H, double theta)
     {
-        double[][] pMat = {{p.getX(), p.getY()},{0,0}};
-        double[][] qMat = {{q.getX(), q.getY()}, {0,0}};
-        LocateM2(new Matrix(pMat), new Matrix(qMat), H, theta);
+        this(new Matrix(new double[][] {{p.getX(), p.getY()}, {0,0}}), 
+            new Matrix(new double[][]{{q.getX(), q.getY()}, {0,0}}), H, theta);
     }
     
 	private void case1(Matrix p, Matrix q, int H, double theta){
