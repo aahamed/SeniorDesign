@@ -9,6 +9,8 @@ public class Connect
 	public static final char CONNECT_FLAG = 'a';
 	public static final char CONNECT_C_FLAG = 'c';
 	public static final char CONNECT_O_FLAG = 'o';
+    private static final boolean D = true;
+    
 	public Connect(){}
 	
 	/*
@@ -38,7 +40,15 @@ public class Connect
 	
 	private static double incrementNum(double num, double theta)
 	{
-		if((Math.abs(theta - Math.PI/6) < 0.03) && (Math.abs(num - Math.ceil(num)) < 0.1) || (num - Math.floor(num) < 0.02))
+        if(D)
+        {
+            boolean cond1 = Math.abs(theta - Math.PI/6) < 0.03;
+            boolean cond2 = Math.abs(num - Math.ceil(num)) < 0.1;
+            boolean cond3 = num - Math.floor(num) < 0.02;
+            boolean cond4 = cond1 && cond2 || cond3;
+            System.out.print("cond4: " + cond4 );
+        }
+		if((Math.abs(theta - Math.PI/6) < 0.03) && (Math.abs(num - Math.ceil(num)) < 0.1 || (num - Math.floor(num) < 0.02)))
 		{
 			num += 0.15;
 		}
