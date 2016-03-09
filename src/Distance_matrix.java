@@ -41,7 +41,7 @@ public class Distance_matrix
 		}
 	}
 
-	private int HCS_distance(Coordinate<Integer> a, Coordinate<Integer> b)
+	private static int HCS_distance(Coordinate<Integer> a, Coordinate<Integer> b)
 	{
 		int u = Math.abs(a.getX() - b.getX());
 		int v = Math.abs(a.getY() - b.getY());
@@ -70,6 +70,59 @@ public class Distance_matrix
 				w_matrix.get(x).add(0);
 			}
 		}
+	}
+
+	public static List<List<Integer>> DMCalc1(List<Coordinate<Integer>> a)
+	{
+		List<List<Integer>> output = new ArrayList<List<Integer>>();
+		int entries = a.size();
+		int distance;
+
+		for (int i = 0; i < entries; i++)
+		{
+			output.add(new ArrayList<Integer>());
+			for (int j = 0; j < entries; j++)
+			{
+				output.get(i).add(0);
+			}
+		}
+		for (int x = 0; x < entries; x++)
+		{
+			for (int y = (x + 1); y < entries; y++)
+			{
+				distance = HCS_distance(a.get(x), a.get(y));
+				output.get(x).set(y, distance);
+				output.get(y).set(x, distance);
+			}
+		}
+
+		return output;
+	}
+
+	public static List<List<Integer>> DMCalc2(List<Coordinate<Integer>> a)
+	{
+		List<List<Integer>> output = new ArrayList<List<Integer>>();
+		int entries = a.size();
+		int distance;
+
+		for (int i = 0; i < entries; i++)
+		{
+			output.add(new ArrayList<Integer>());
+			for (int j = 0; j < entries; j++)
+			{
+				output.get(i).add(GlobalConstants.TRANS_RANGE);
+			}
+		}
+		for (int x = 0; x < entries; x++)
+		{
+			for (int y = (x + 1); y < entries; y++)
+			{
+				distance = HCS_distance(a.get(x), a.get(y));
+				output.get(x).set(y, distance);
+			}
+		}
+
+		return output;
 	}
 
 	public int getSize()

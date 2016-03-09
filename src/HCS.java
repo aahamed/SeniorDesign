@@ -65,6 +65,14 @@ public class HCS
 		int qY = q.getY();
 		return HCS.max2(Math.abs(pX - qX + pY - qY), max2(Math.abs(pX - qX), Math.abs(pY - qY)));
 	}
+
+	public static Coordinate<Double> add2coord(Coordinate<Double> a, Coordinate<Double> b)
+	{
+		double x = a.getX() + b.getX();
+		double y = a.getY() + b.getY();
+
+		return new Coordinate<Double>(x, y);
+	}
 	
 	
 	/* Unit Testing */

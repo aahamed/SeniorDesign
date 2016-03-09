@@ -121,10 +121,24 @@ public class MSTCalc
 		List_ops.print_coordlist_int(HCSlist);
 	}
 
+	public void printMMcom()
+	{
+		System.out.println(">> Center of mass is:");
+		System.out.println(MMcom);
+	}
+
+	public void printMMlist()
+	{
+		System.out.println(">> Input points (x_r, y_r) are:");
+		List_ops.print_coordlist_double(MMlist);
+	}
+
 	public void printAll()
 	{
 		printMST();
 		printDM();
 		printHCS();
+		printMMcom();
+		printMMlist();
 	}
 }

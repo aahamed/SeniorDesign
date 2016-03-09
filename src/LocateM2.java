@@ -45,9 +45,9 @@ public class LocateM2 {
         double[][] q1 = {{881,-1178},{0,0}};
         double theta = 0.3355;*/
 		
-		double[][] p1 = {{-1248,349},{0,0}};
-        double[][] q1 = {{-800,969},{0,0}};
-        double theta = 0.3408;
+		double[][] p1 = {{-719, -954},{0,0}};
+        double[][] q1 = {{-778, 1022},{0,0}};
+        double theta = 0.02624390841691486;
 		
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
@@ -303,7 +303,7 @@ public class LocateM2 {
 					dnewtemp2 = new Coordinate<Integer>(qnewtemp[0].intValue(),qnewtemp[1].intValue());
 					zero = new Coordinate<Integer>(0,0);
 					d0 = HCS.distance(dtemp1, zero)+HCS.distance(dtemp2, zero);
-					d_new = HCS.distance(dnewtemp1, zero)+HCS.distance(dnewtemp1, zero);
+					d_new = HCS.distance(dnewtemp1, zero)+HCS.distance(dnewtemp2, zero);
 					if(d_new < d0){
 						Pc = ind1;
 						Qc = ind2;
