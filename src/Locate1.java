@@ -18,8 +18,8 @@ public class Locate1 {
 	boolean c1return=false,c2return=false,c3return=false,c4return=false;
 	
 	public static void main(String[] args) {
-        double[][] p1 = {{-181,-94},{0,0}};
-        double[][] q1 = {{-299,66},{0,0}};
+        double[][] p1 = {{0,0},{0,0}};
+        double[][] q1 = {{-1,1},{0,0}};
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
         int H = 91;
@@ -31,8 +31,13 @@ public class Locate1 {
 		i = new double[][]{{1,0},{0,0}};
 		j = new double[][]{{0,1},{0,0}};
 		k = new double[][]{{-1,1},{0,0}};
+<<<<<<< HEAD
 		d = new double[][]{{(q.get(0, 0)-p.get(0, 0)),(q.get(0, 1)-p.get(0, 1))},{0,0}};
 		System.out.println(d[0][0]+" " +d[0][1]);
+=======
+		d = new double[][]{{(double) (q.get(0, 0)-p.get(0, 0)),(double) (q.get(0, 1)-p.get(0, 1))},{0,0}};
+		//System.out.println(d[0][0]+" " +d[0][1]);
+>>>>>>> master
 		i1 = new Matrix(i);
 		j1 = new Matrix(j);
 		k1 = new Matrix(k);
@@ -66,7 +71,10 @@ public class Locate1 {
 			Matrix c = p;
 			p = q;
 			q = c;
-			case1(p,q,H);
+			//case1(p,q,H);
+			Locate1 l2 = new Locate1(p,q,H);
+			out.setAN(l2.out.getAN());
+			out.setexFlag(l2.out.getexFlag());
 		}
 	}
 	
@@ -102,12 +110,9 @@ public class Locate1 {
 			Matrix c = p;
 			p=q;
 			q=c;
-			d = new double[][]{{(q.get(0, 0)-p.get(0, 0)),(q.get(0, 1)-p.get(0, 1))},{0,0}};
-			System.out.println(d[0][0]+" " +d[0][1]);
-			case1(p,q,H);
-			case2(p,q,H);
-			case3(p,q,H);
-			//case4(p,q,H);
+			Locate1 l2 = new Locate1(p,q,H);
+			out.setAN(l2.out.getAN());
+			out.setexFlag(l2.out.getexFlag());
 		}
 	}
 	
@@ -173,6 +178,7 @@ public class Locate1 {
 					c1return=true;
 					return;
 				}
+				c1return=true;
 			}
 		}
 
@@ -238,6 +244,7 @@ public class Locate1 {
 					c1return=true;
 					return;
 				}
+				c1return=true;
 			}
 		}
 
@@ -306,8 +313,8 @@ public class Locate1 {
 	private void case3C1(Matrix p, Matrix q, int H){
 		Coordinate<Integer> J = new Coordinate<Integer>(0, 0);
 		Matrix I,K;
-		I = q.plus(i1.times((double)H));
-		K = p.plus(k1.times((double)-H));
+		I = p.plus(i1.times((double)H));
+		K = q.plus(k1.times((double)-H));
 		
 		int itemp1 = (int)I.get(0, 0);
 		int itemp2 = (int)I.get(0, 1);
@@ -363,6 +370,7 @@ public class Locate1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -429,6 +437,7 @@ public class Locate1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -496,6 +505,7 @@ public class Locate1 {
 					c3return=true;
 					return;
 				}
+				c3return=true;
 			}
 		}
 
@@ -591,8 +601,8 @@ public class Locate1 {
 			else{
 				out.setexFlag(0);
 				//AN = [];
-				c3return=true;
-				return;
+				//c3return=true;
+				//return;
 			}
 		}
 		else{

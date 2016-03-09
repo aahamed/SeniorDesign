@@ -1,6 +1,5 @@
 /*
 * Author: Ezana Woldegebriel
-* Edited: Aadil Ahamed - Overloaded Constructor
 * Description: Port of locateC1.m
 */
 
@@ -9,14 +8,14 @@ import java.util.Arrays;
 
 import Jama.Matrix;
 
-public class LocateM2 {
+public class LocateMM2 {
 	double[][] i;
 	double[][] j,k,d;
 	double[] lb,ub;
 	double[] x = new double[5];
 	double theta,h;
-	ArrayList<Double[]> Set1 = new ArrayList<Double[]>();
-	ArrayList<Double[]> Set2 = new ArrayList<Double[]>();
+	ArrayList<double[]> Set1 = new ArrayList<double[]>();
+	ArrayList<double[]> Set2 = new ArrayList<double[]>();
 	Matrix i1;
 	Matrix j1;
 	Matrix k1;
@@ -25,39 +24,19 @@ public class LocateM2 {
 	boolean c1return=false,c2return=false,c3return=false,c4return=false;
 	
 	public static void main(String[] args) {
-        /*double[][] p1 = {{-1324,385},{0,0}};
-        double[][] q1 = {{-67,990},{0,0}};
-        double theta = 0.3241;*/
-		
-		/*double[][] p1 = {{-199,2578},{0,0}};
-        double[][] q1 = {{282,600},{0,0}};
-        double theta = 0.2353;*/
-		
-		/*double[][] p1 = {{-324,137},{0,0}};
-        double[][] q1 = {{388,-1307},{0,0}};
-        double theta = 0.0392;*/
-		
-		/*double[][] p1 = {{1691,-847},{0,0}};
-        double[][] q1 = {{480,103},{0,0}};
-        double theta = 0.8410;*/
-		
-		/*double[][] p1 = {{250,-1734},{0,0}};
-        double[][] q1 = {{881,-1178},{0,0}};
-        double theta = 0.3355;*/
-		
-		double[][] p1 = {{-1248,349},{0,0}};
-        double[][] q1 = {{-800,969},{0,0}};
-        double theta = 0.3408;
+		double[][] p1 = {{348,-863},{0,0}};
+        double[][] q1 = {{56,-663},{0,0}};
+        double theta = 0.734;
 		
         Matrix p = new Matrix(p1);
         Matrix q = new Matrix(q1);
         int H = 91;
-        LocateM2 l = new LocateM2(p,q,H,theta);
+        LocateMM2 l = new LocateMM2(p,q,H,theta);
         System.out.println("AN1 Coordinate: "+l.out.getAN().getX()+" , "+l.out.getAN().getY());
         System.out.println("AN2 Coordinate: "+l.out.getAN2().getX()+" , "+l.out.getAN2().getY());
     }
 	
-	public LocateM2(Matrix p, Matrix q, int H, double theta){
+	public LocateMM2(Matrix p, Matrix q, int H, double theta){
 		i = new double[][]{{1,0},{0,0}};
 		j = new double[][]{{0,1},{0,0}};
 		k = new double[][]{{-1,1},{0,0}};
@@ -88,18 +67,8 @@ public class LocateM2 {
 				return;
 		}
 		
-		solutionSelect();
+		solutionSelect(q);
 	}
-    
-    /*
-    *  Overloaded Constructor: Added support for taking cluster coordinates p and q as type Coordinate<Integer>
-    */
-    public LocateM2(Coordinate<Integer> p, Coordinate<Integer> q, int H, double theta)
-    {
-        this(new Matrix(new double[][] {{p.getX(), p.getY()}, {0,0}}), 
-            new Matrix(new double[][]{{q.getX(), q.getY()}, {0,0}}), H, theta);
-    }
-    
 	private void case1(Matrix p, Matrix q, int H, double theta){
 		Matrix Pi,Qi,Pj,Qj;
 		int index;
@@ -111,7 +80,7 @@ public class LocateM2 {
 				index = 1;
 				while(x[1]<=h+Pi.get(0, 1)){
 					x[0] = Pi.get(0, 0)+0.5*Pi.get(0, 1)-0.5*x[1];
-					Set1.add(new Double[]{x[0],x[1]});
+					Set1.add(new double[]{x[0],x[1]});
 					x[1] = x[1]+2;
 					index++;
 				}
@@ -120,7 +89,7 @@ public class LocateM2 {
 				index = 1;
 				while(x[3]<=h+Qi.get(0, 1)){
 					x[2] = Qi.get(0, 0)+0.5*Qi.get(0, 1)-0.5*x[3];
-					Set2.add(new Double[]{x[2],x[3]});
+					Set2.add(new double[]{x[2],x[3]});
 					x[3] = x[3]+2;
 					index++;
 				}
@@ -132,7 +101,7 @@ public class LocateM2 {
 				index = 1;
 				while(x[0]<=h+Pj.get(0, 0)){
 					x[1] = 0.5*Pj.get(0, 0)+Pj.get(0, 1)-0.5*x[0];
-					Set1.add(new Double[]{x[0],x[1]});
+					Set1.add(new double[]{x[0],x[1]});
 					x[0] = x[0] + 2;
 					index++;
 				}
@@ -141,7 +110,7 @@ public class LocateM2 {
 				index=1;
 				while(x[2]<=h+Qj.get(0, 0)){
 					x[3] = 0.5*Qj.get(0, 0)+Qj.get(0, 1)-0.5*x[2];
-					Set2.add(new Double[]{x[2],x[3]});
+					Set2.add(new double[]{x[2],x[3]});
 					x[2] = x[2] + 2;
 					index++;
 				}
@@ -154,7 +123,7 @@ public class LocateM2 {
 			c = p;
 			p = q;
 			q = c;
-			LocateM2 v = new LocateM2(p,q,H,theta);
+			LocateMM2 v = new LocateMM2(p,q,H,theta);
 			out.setAN(v.out.getAN2());
 			out.setAN2(v.out.getAN());
 			c2return = true;
@@ -173,7 +142,7 @@ public class LocateM2 {
 				index = 1;
 				while(x[0]<=h+Pj.get(0, 0)){
 					x[1] = 0.5*Pj.get(0, 0)+Pj.get(0, 1)-0.5*x[0];
-					Set1.add(new Double[]{x[0],x[1]});
+					Set1.add(new double[]{x[0],x[1]});
 					x[0] = x[0]+2;
 					index++;
 				}
@@ -182,7 +151,7 @@ public class LocateM2 {
 				index = 1;
 				while(x[2]<=h+Qj.get(0, 0)){
 					x[3] = 0.5*Qj.get(0, 0)+Qj.get(0, 1)-0.5*x[2];
-					Set2.add(new Double[]{x[2],x[3]});
+					Set2.add(new double[]{x[2],x[3]});
 					x[2] = x[2]+2;
 					index++;
 				}
@@ -194,7 +163,7 @@ public class LocateM2 {
 				index=1;
 				while(x[0]<=Math.floor(h/2+Pk.get(0, 0))){
 					x[1] = x[0] - Pk.get(0, 0) + Pk.get(0, 1);
-					Set1.add(new Double[]{x[0],x[1]});
+					Set1.add(new double[]{x[0],x[1]});
 					x[0] = x[0] + 1;
 					index++;
 				}
@@ -202,7 +171,7 @@ public class LocateM2 {
 				index=1;
 				while(x[2]<=Math.floor(h/2+Qk.get(0, 0))){
 					x[3] = x[2]-Qk.get(0, 0)+Qk.get(0, 1);
-					Set2.add(new Double[]{x[2],x[3]});
+					Set2.add(new double[]{x[2],x[3]});
 					x[2] = x[2] + 1;
 					index++;
 				}
@@ -215,7 +184,7 @@ public class LocateM2 {
 				index=1;
 				while(x[0]<=Math.floor(h/2+Pk.get(0, 0))){
 					x[1] = x[0] - Pk.get(0, 0) + Pk.get(0, 1);
-					Set1.add(new Double[]{x[0],x[1]});
+					Set1.add(new double[]{x[0],x[1]});
 					x[0] = x[0]+1;
 					index++;
 				}
@@ -223,7 +192,7 @@ public class LocateM2 {
 				index=1;
 				while(x[2]<=Math.floor(h/2+Qk.get(0, 0))){
 					x[3] = x[2] - Qk.get(0, 0) + Qk.get(0, 1);
-					Set2.add(new Double[]{x[2],x[3]});
+					Set2.add(new double[]{x[2],x[3]});
 					x[2] = x[2] + 1;
 					index++;
 				}
@@ -236,7 +205,7 @@ public class LocateM2 {
 				index = 1;
 				while(x[1]<=h+Pri.get(0, 1)){
 					x[0] = Pri.get(0, 0) + 0.5*Pri.get(0, 1) - 0.5*x[1];
-					Set1.add(new Double[]{x[0],x[1]});
+					Set1.add(new double[]{x[0],x[1]});
 					x[1] = x[1] + 2;
 					index++;
 				}
@@ -244,7 +213,7 @@ public class LocateM2 {
 				index=1;
 				while(x[3]<=Qri.get(0, 1)+h){
 					x[2] = Qri.get(0, 0)+0.5*Qri.get(0, 1)-0.5*x[3];
-					Set2.add(new Double[]{x[2],x[3]});
+					Set2.add(new double[]{x[2],x[3]});
 					x[3] = x[3] + 2;
 					index++;
 				}
@@ -259,7 +228,7 @@ public class LocateM2 {
 			c = p;
 			p = q;
 			q = c;
-			LocateM2 v = new LocateM2(p,q,H,theta);
+			LocateMM2 v = new LocateMM2(p,q,H,theta);
 			out.setAN(v.out.getAN2());
 			out.setAN2(v.out.getAN());
 			c4return = true;
@@ -267,60 +236,45 @@ public class LocateM2 {
 		}
 	}
 	
-	private void solutionSelect(){
+	private void solutionSelect(Matrix q){
 		double d0 = 0.0;
 		double d_new = 0.0;
 		double M = 0.0;
-		Double[] a1;
-		Double[] a2;
-		Double[] dtemp,dnewtemp,qtemp,qnewtemp;
-		Coordinate<Integer> c1,c2,dtemp1,dtemp2,dnewtemp1,dnewtemp2,zero;
+		double[] a1;
+		double[] a2;
+		Coordinate<Integer> c1,c2;
 		double min = GlobalConstants.TRANS_RANGE;
 		int Pc = -1;
 		int Qc = -1;
 		
 		for(int ind1 = 0; ind1<Set1.size();ind1++){
-			for(int ind2 = 0; ind2<Set2.size();ind2++){
-				a1 = Set1.get(ind1);
-				a2 = Set2.get(ind2);
-				c1 = new Coordinate<Integer>(a1[0].intValue(),a1[1].intValue());
-				c2 = new Coordinate<Integer>(a2[0].intValue(),a2[1].intValue());
-				M = HCS.distance(c1, c2);
-				
-				if(M< min && M>= h){
-					min = M;
-					Pc = ind1;
-					Qc = ind2;
-				}
-				else if(M == min){
-					dtemp = Set1.get(Pc);
-					qtemp = Set2.get(Qc);
-					dnewtemp = Set1.get(ind1);
-					qnewtemp = Set2.get(ind2);
-					dtemp1 = new Coordinate<Integer>(dtemp[0].intValue(),dtemp[1].intValue());
-					dtemp2 = new Coordinate<Integer>(qtemp[0].intValue(),qtemp[1].intValue());
-					dnewtemp1 = new Coordinate<Integer>(dnewtemp[0].intValue(),dnewtemp[1].intValue());
-					dnewtemp2 = new Coordinate<Integer>(qnewtemp[0].intValue(),qnewtemp[1].intValue());
-					zero = new Coordinate<Integer>(0,0);
-					d0 = HCS.distance(dtemp1, zero)+HCS.distance(dtemp2, zero);
-					d_new = HCS.distance(dnewtemp1, zero)+HCS.distance(dnewtemp1, zero);
-					if(d_new < d0){
-						Pc = ind1;
-						Qc = ind2;
-					}
-					
-					
-				}
+			a1 = Set1.get(ind1);
+			c1 = new Coordinate<Integer>((int)a1[0],(int)a1[1]);
+			c2 = new Coordinate<Integer>((int)q.get(0, 0),(int)q.get(0,1));
+			M = HCS.distance(c1,c2);
+			
+			if(M<min){
+				min = M;
+				Pc = ind1;
+			}
+			
+		}
+		double[][] l1temp = new double[][]{{Set1.get(Pc)[0],Set1.get(Pc)[1]},{0,0}};
+		Matrix l1mat = new Matrix(l1temp);
+		Locate1 l1 = new Locate1(l1mat,q,GlobalConstants.H);
+		LocateC1 lC1 = new LocateC1(l1mat,q,GlobalConstants.H);
+		out.setAN(l1.out.getAN());
+		Coordinate<Integer> O = new Coordinate<Integer>(0,0);
+		if(l1.out.getexFlag()!=0&&lC1.out.getexFlag()!=0){
+			if(HCS.distance(out.getAN(), O) > HCS.distance(lC1.out.getAN(), O)){
+				out.setAN2(lC1.out.getAN());
+			}
+			else{
+				out.setAN2(out.getAN());
 			}
 		}
-		int tempa1 = Set1.get(Pc)[0].intValue();
-		int tempa2 = Set1.get(Pc)[1].intValue();
-		int tempb1 = Set2.get(Qc)[0].intValue();
-		int tempb2 = Set2.get(Qc)[1].intValue();
-		Coordinate<Integer> AN1 = new Coordinate<Integer>(tempa1,tempa2);
-		Coordinate<Integer> AN2 = new Coordinate<Integer>(tempb1,tempb2);
-		out.setAN(AN1);
-		out.setAN2(AN2);
+		double[] p1 = Set1.get(Pc);
+		out.setAN(new Coordinate<Integer>((int)p1[0],(int)p1[1]));
 	}
 	
 	

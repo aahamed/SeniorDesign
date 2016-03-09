@@ -45,4 +45,16 @@ public class FindANOut
 	{
 		this.flag = flag;
 	}
+    
+    public String toString()
+    {
+        String out = String.format("res: (%.2f, %.2f)  flag: %d", result[0][0], result[1][0], flag);
+        return out;
+    }
+    
+    public static void main(String[] args)
+    {
+        FindANOut f = new FindANOut(new double[][] {{0.0, 0}, {1.0, 0}}, 1);
+        System.out.println("f: " + f);  
+    }
 }

@@ -193,7 +193,7 @@ public class FindAN
 	private static FindANOut case12(Coordinate<Integer> I, Coordinate<Integer> K)
 	{
 		double[][] A_ji = {{1, 0.5}, {-0.5, 0.5}};
-		double[][] b_ji = {{0.5*I.getX() +I.getY()},{K.getX() + (0.5*K.getY())}};
+		double[][] b_ji = {{I.getX() + 0.5*I.getY()},{ -0.5 * K.getX() + (0.5*K.getY())}};
 		Matrix mat_A_ji = new Matrix(A_ji);
 		Matrix mat_b_ji = new Matrix(b_ji);
 		Matrix mat_b_yk = new Matrix(new double[][]{{0},{1}}); 
@@ -292,11 +292,12 @@ public class FindAN
 		System.out.println("flag: " + res.getFlag());
 		print2DArray(res.getResult());*/
 		
-		int[] indicator = {0,-1,-1};
-		Coordinate<Integer> I = new Coordinate<Integer>(0,0);
-		Coordinate<Integer> J = new Coordinate<Integer>(253,221);
-		Coordinate<Integer> K = new Coordinate<Integer>(198, 221);
+		int[] indicator = {-1,0,-1};
+		Coordinate<Integer> I = new Coordinate<Integer>(143,-795);
+		Coordinate<Integer> J = new Coordinate<Integer>(0, 0);
+		Coordinate<Integer> K = new Coordinate<Integer>(147, -754);
 		FindANOut res = FindAN.findANm(I, J, K, indicator);
+		System.out.println(res);
 		System.out.println("flag: " + res.getFlag());
 		print2DArray(res.getResult());
 	}

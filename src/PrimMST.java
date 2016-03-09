@@ -38,6 +38,17 @@ public class PrimMST
             System.out.println(parent[i]+" - "+ i+"    "+
                                graph[i][parent[i]]);
     }
+    
+    //Converts edges of mst to string
+    public static String MSTtoString(int[] parent)
+    {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 1; i < parent.length; i++)
+        {
+            sb.append(parent[i] + " - " + i + "\n");
+        }
+        return sb.toString();
+    }
  
     // Function to construct and print PrimMST for a graph represented
     //  using adjacency matrix representation
