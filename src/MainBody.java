@@ -182,25 +182,7 @@ public class MainBody
 		a.add(temp);
 	}
 
-	/*
-	private static void WORKAROUND(List<Coordinate<Double>> a, Coordinate<Double> b, List<Coordinate<Integer>> c, List<List<Integer>> d, List<Coordinate<Integer>> e)
-	{
-		int[][] SUPER_TEMP, MORE_TEMP, EXTRA_TEMP; // TODO: Temporary fix for InitMax
-		int[] PARENT_TEMP;
-		MSTOut NEWMST;
-
-		c = InitMax.convertToHCS(a, b);
-		SUPER_TEMP = List_ops.ll2array(d);
-		MORE_TEMP = InitMax.computeDistMatrix(c);
-		EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
-		d = List_ops.array2ll(EXTRA_TEMP);
-		PARENT_TEMP = InitMax.initMax(a, b, SUPER_TEMP);
-		NEWMST = MSTCalc.primMapper(PARENT_TEMP, EXTRA_TEMP, EXTRA_TEMP.length);
-		e = NEWMST.getST();
-	}
-	*/
-
-	private static List<Coordinate<Integer>> PrimShifter(int[] a)
+	private static List<Coordinate<Integer>> PrimPrep(int[] a)
 	{
 		List<Coordinate<Integer>> output = new ArrayList<Coordinate<Integer>>();
 
@@ -461,12 +443,10 @@ public class MainBody
 						// the spanning Tree. Meanwhile, the dimension of D2
 						// needs to be RESHAPED
 						reshapeDmatrix(D2, rcv);
-						// TODO: TEMPORARY WORK-AROUND
-						// WORKAROUND(XYr, XYc, UV, D2, ST);
 						IMOUT = InitMax.initMax(XYr, XYc, D2);
 						UV = IMOUT.getHCSList();
 						D2 = IMOUT.getDMatrix();
-						ST = PrimShifter(IMOUT.getParent());
+						ST = PrimPrep(IMOUT.getParent());
 					}
 				}
 				else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01)
@@ -514,12 +494,10 @@ public class MainBody
 					// Update information in distance matrix
 					reshapeDmatrix2(D2, rcv);
 					D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
-					// TODO: TEMPORARY WORK-AROUND
-					// WORKAROUND(XYr, XYc, UV, D2, ST);
 					IMOUT = InitMax.initMax(XYr, XYc, D2);
 					UV = IMOUT.getHCSList();
 					D2 = IMOUT.getDMatrix();
-					ST = PrimShifter(IMOUT.getParent());
+					ST = PrimPrep(IMOUT.getParent());
 				}
 				else
 				{
@@ -667,12 +645,10 @@ public class MainBody
 					// After placement, change the Max Value to be 0 --> R/r
 					D2.get(rcv[0] - 1).set(base, GlobalConstants.H);
 					D2.get(rcv[1] - 1).set((base + 1), GlobalConstants.H);
-					// TODO: TEMPORARY WORK-AROUND
-					// WORKAROUND(XYr, XYc, UV, D2, ST);
 					IMOUT = InitMax.initMax(XYr, XYc, D2);
 					UV = IMOUT.getHCSList();
 					D2 = IMOUT.getDMatrix();
-					ST = PrimShifter(IMOUT.getParent());
+					ST = PrimPrep(IMOUT.getParent());
 				}
 			}
 		}
