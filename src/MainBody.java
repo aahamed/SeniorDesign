@@ -182,6 +182,36 @@ public class MainBody
 		a.add(temp);
 	}
 
+	/*
+	private static void WORKAROUND(List<Coordinate<Double>> a, Coordinate<Double> b, List<Coordinate<Integer>> c, List<List<Integer>> d, List<Coordinate<Integer>> e)
+	{
+		int[][] SUPER_TEMP, MORE_TEMP, EXTRA_TEMP; // TODO: Temporary fix for InitMax
+		int[] PARENT_TEMP;
+		MSTOut NEWMST;
+
+		c = InitMax.convertToHCS(a, b);
+		SUPER_TEMP = List_ops.ll2array(d);
+		MORE_TEMP = InitMax.computeDistMatrix(c);
+		EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
+		d = List_ops.array2ll(EXTRA_TEMP);
+		PARENT_TEMP = InitMax.initMax(a, b, SUPER_TEMP);
+		NEWMST = MSTCalc.primMapper(PARENT_TEMP, EXTRA_TEMP, EXTRA_TEMP.length);
+		e = NEWMST.getST();
+	}
+	*/
+
+	private static List<Coordinate<Integer>> PrimShifter(int[] a)
+	{
+		List<Coordinate<Integer>> output = new ArrayList<Coordinate<Integer>>();
+
+		for (int i = 1; i < a.length; i++)
+		{
+			output.add(new Coordinate<Integer>((a[i] + 1), (i + 1)));
+		}
+
+		return output;
+	}
+
 	private static void options(String[] a)
 	{
 		boolean check1 = false, check2 = false, check3 = false;
@@ -322,6 +352,7 @@ public class MainBody
 
 		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();
+		List<Coordinate<Integer>> ST = Tree.getST();
 		Tree.printAll(); // TODO: For debugging
 		List<List<Integer>> D2 = mc.getDM();
 		Coordinate<Double> XYc = mc.getMMcom();
@@ -336,26 +367,26 @@ public class MainBody
 		LocateC1 LC1;
 		LocateM2 LM2;
 		LocateMM2 LMM2;
+		InitMaxOut IMOUT;
 		boolean cond1, cond2;
 		int dist1, dist2;
 		int base, base_t;
 		Coordinate<Integer> AN, AN2, O = new Coordinate<Integer>(0, 0);
 		Coordinate<Double> C12, C12_2, T_AN1, T_AN2;
 		double xAN, yAN, num;
-		int[][] SUPER_TEMP, MORE_TEMP, EXTRA_TEMP; // TODO: Temporary fix for InitMax
 
 		while (!exit)
 		{
 			Nsign = 1;
 			// Seach through the Spanning Tree to pick up the shortest edge
-			rcv = maxMST(Tree.getST(), D2);
+			rcv = maxMST(ST, D2);
 			if (rcv[2] <= GlobalConstants.H)
 				break;
 			// Prepare for Placement
 			pq = getUVs(UV, rcv);
 			p = new Coordinate<Integer>(pq[0], pq[1]);
 			q = new Coordinate<Integer>(pq[2], pq[3]);
-			temp = Connect.connect(p, q, 'a'); // TODO: Maybe rename this to something better?
+			temp = Connect.connect(p, q, 'a'); // TODO: Maybe rename 'temp' to something better?
 
 			// Check Necessity
 			if (temp.getPointer() != 0)
@@ -431,11 +462,11 @@ public class MainBody
 						// needs to be RESHAPED
 						reshapeDmatrix(D2, rcv);
 						// TODO: TEMPORARY WORK-AROUND
-						UV = InitMax.convertToHCS(XYr, XYc);
-						SUPER_TEMP = List_ops.ll2array(D2);
-						MORE_TEMP = InitMax.computeDistMatrix(UV);
-						EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
-						D2 = List_ops.array2ll(EXTRA_TEMP);
+						// WORKAROUND(XYr, XYc, UV, D2, ST);
+						IMOUT = InitMax.initMax(XYr, XYc, D2);
+						UV = IMOUT.getHCSList();
+						D2 = IMOUT.getDMatrix();
+						ST = PrimShifter(IMOUT.getParent());
 					}
 				}
 				else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01)
@@ -444,7 +475,7 @@ public class MainBody
 					// the last one comes when it seems to be ok but not
 					p1 = new Matrix(hcoord2array(p));
 					q1 = new Matrix(hcoord2array(q));
-					LMM2 = new LocateMM2(p1, q1, GlobalConstants.H);
+					LMM2 = new LocateMM2(p1, q1, GlobalConstants.H, temp.getTheta());
 
 					AN = LMM2.out.getAN();
 					AN2 = LMM2.out.getAN2();
@@ -484,11 +515,11 @@ public class MainBody
 					reshapeDmatrix2(D2, rcv);
 					D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
 					// TODO: TEMPORARY WORK-AROUND
-					UV = InitMax.convertToHCS(XYr, XYc);
-					SUPER_TEMP = List_ops.ll2array(D2);
-					MORE_TEMP = InitMax.computeDistMatrix(UV);
-					EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
-					D2 = List_ops.array2ll(EXTRA_TEMP);
+					// WORKAROUND(XYr, XYc, UV, D2, ST);
+					IMOUT = InitMax.initMax(XYr, XYc, D2);
+					UV = IMOUT.getHCSList();
+					D2 = IMOUT.getDMatrix();
+					ST = PrimShifter(IMOUT.getParent());
 				}
 				else
 				{
@@ -582,7 +613,7 @@ public class MainBody
 							// the last one comes when it seems to be ok but not
 							p1 = new Matrix(hcoord2array(p));
 							q1 = new Matrix(hcoord2array(q));
-							LMM2 = new LocateMM2(p1, q1, GlobalConstants.H);
+							LMM2 = new LocateMM2(p1, q1, GlobalConstants.H, temp.getTheta());
 
 							AN = LMM2.out.getAN();
 							AN2 = LMM2.out.getAN2();
@@ -637,11 +668,11 @@ public class MainBody
 					D2.get(rcv[0] - 1).set(base, GlobalConstants.H);
 					D2.get(rcv[1] - 1).set((base + 1), GlobalConstants.H);
 					// TODO: TEMPORARY WORK-AROUND
-					UV = InitMax.convertToHCS(XYr, XYc);
-					SUPER_TEMP = List_ops.ll2array(D2);
-					MORE_TEMP = InitMax.computeDistMatrix(UV);
-					EXTRA_TEMP = InitMax.mergeDistMat(SUPER_TEMP, MORE_TEMP);
-					D2 = List_ops.array2ll(EXTRA_TEMP);
+					// WORKAROUND(XYr, XYc, UV, D2, ST);
+					IMOUT = InitMax.initMax(XYr, XYc, D2);
+					UV = IMOUT.getHCSList();
+					D2 = IMOUT.getDMatrix();
+					ST = PrimShifter(IMOUT.getParent());
 				}
 			}
 		}
