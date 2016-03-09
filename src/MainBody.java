@@ -286,6 +286,16 @@ public class MainBody
 		System.exit(0);
 	}
 
+    private static void printOutput (List<Coordinate<Double>> coords)
+    {
+        System.out.println("Final List of Coordinates:");
+        for(int i = 0; i < coords.size(); i++)
+        {
+            Coordinate<Double> c = coords.get(i);
+            System.out.printf("(%.2f, %.2f)\n", c.getX(), c.getY());
+        }
+    }
+    
 	public static void main(String[] args)
 	{
 		options(args);
@@ -335,7 +345,7 @@ public class MainBody
 		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();
 		List<Coordinate<Integer>> ST = Tree.getST();
-		Tree.printAll(); // TODO: For debugging
+		//Tree.printAll(); // TODO: For debugging
 		List<List<Integer>> D2 = mc.getDM();
 		Coordinate<Double> XYc = mc.getMMcom();
 		List<Coordinate<Double>> XYr = mc.getMMlist();
@@ -652,5 +662,6 @@ public class MainBody
 				}
 			}
 		}
+        printOutput(XYr);
 	}
 }
