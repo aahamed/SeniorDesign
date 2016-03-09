@@ -473,8 +473,10 @@ public class MainBody
 					AN2 = LMM2.out.getAN2();
 
 					// Draw newly placed ANs
-					C12 = HCS.hexToCart(new Coordinate<Integer>(AN.getX(), AN2.getX()));
-					C12_2 = HCS.hexToCart(new Coordinate<Integer>(AN.getY(), AN2.getY()));
+					//C12 = HCS.hexToCart(new Coordinate<Integer>(AN.getX(), AN2.getX()));
+					//C12_2 = HCS.hexToCart(new Coordinate<Integer>(AN.getY(), AN2.getY()));
+                    C12 = HCS.hexToCart(AN);
+                    C12_2 = HCS.hexToCart(AN2);
 					// TODO: Temporary List to hold all these 'C1, C2' coordinates
 					C1C2List.add(new Coordinate<Double>(C12.getX(), C12_2.getX()));
 					C1C2List.add(new Coordinate<Double>(C12.getY(), C12_2.getY()));
@@ -611,8 +613,8 @@ public class MainBody
 							AN2 = LMM2.out.getAN2();
 
 							// Draw newly placed ANs
-							C12 = HCS.hexToCart(new Coordinate<Integer>(AN.getX(), AN2.getX()));
-							C12_2 = HCS.hexToCart(new Coordinate<Integer>(AN.getY(), AN2.getY()));
+							C12 = HCS.hexToCart(AN);
+							C12_2 = HCS.hexToCart(AN2);
 							// TODO: Temporary List to hold all these 'C1, C2' coordinates
 							C1C2List.add(new Coordinate<Double>(C12.getX(), C12_2.getX()));
 							C1C2List.add(new Coordinate<Double>(C12.getY(), C12_2.getY()));

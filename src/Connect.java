@@ -9,7 +9,7 @@ public class Connect
 	public static final char CONNECT_FLAG = 'a';
 	public static final char CONNECT_C_FLAG = 'c';
 	public static final char CONNECT_O_FLAG = 'o';
-    private static final boolean D = true;
+    private static final boolean D = false;
     
 	public Connect(){}
 	

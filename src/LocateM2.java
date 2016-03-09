@@ -303,7 +303,7 @@ public class LocateM2 {
 					dnewtemp2 = new Coordinate<Integer>(qnewtemp[0].intValue(),qnewtemp[1].intValue());
 					zero = new Coordinate<Integer>(0,0);
 					d0 = HCS.distance(dtemp1, zero)+HCS.distance(dtemp2, zero);
-					d_new = HCS.distance(dnewtemp1, zero)+HCS.distance(dnewtemp1, zero);
+					d_new = HCS.distance(dnewtemp1, zero)+HCS.distance(dnewtemp2, zero);
 					if(d_new < d0){
 						Pc = ind1;
 						Qc = ind2;
