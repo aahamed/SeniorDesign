@@ -313,6 +313,7 @@ public class MainBody
 		Coordinate<Double> cen1, cen2;
 		int pointer;
 
+        /*  ONLY NEED THIS FOR SHORTEST EDGE STRATEGY
 		for (int i = 1; i <= (GlobalConstants.n * (GlobalConstants.n - 1) / 2); i++)
 		{
 			rcv = minE(D1);
@@ -341,6 +342,7 @@ public class MainBody
 				D1.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.TRANS_RANGE);
 			}
 		}
+        */
 
 		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();

@@ -80,12 +80,8 @@ public class InitMax
 			distMat.add(new ArrayList<Integer>());
 			for(int j = 0; j < DIM; j++)
 			{
-				int distance = HCS.distance(HCSCoords.get(i), HCSCoords.get(j));
-				if(D)
-				{
-					System.out.println("coord i: " + HCSCoords.get(i) + " coord j: " + HCSCoords.get(j));
-					System.out.println("i = " + i + "  j = " + j + "  distance = " + distance);
-				}
+				
+                int distance = HCS.distance(HCSCoords.get(i), HCSCoords.get(j));
 				distMat.get(i).add(distance);
 			}
 		}
@@ -128,6 +124,7 @@ public class InitMax
 				if(oldMat.get(i).get(j) == GlobalConstants.H)
 				{
 					newMat.get(i).set(j, GlobalConstants.H);
+                    newMat.get(j).set(i, GlobalConstants.H);
 				}
 			}
 		}
@@ -157,6 +154,15 @@ public class InitMax
 		PrimMST.printMST(mst, newDistMat[0].length, newDistMat);   //debug code - comment out
 		return mst;
 	}
+    
+    private static List<List<Integer>> prepOutput(List<List<Integer>> newMat)
+    {
+        for(int i = 0; i < newMat.size() - 1; i++)
+        {
+            newMat.get(newMat.size()-1).set(i, GlobalConstants.TRANS_RANGE);
+        }
+        return newMat;
+    }
     
     /*
 	* initMax: Port of Initate_MAX.m
