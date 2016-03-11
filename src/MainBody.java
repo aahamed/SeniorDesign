@@ -305,7 +305,6 @@ public class MainBody
 		Coordinate<Double> cen1, cen2;
 		int pointer;
 
-		System.out.println(">> Entering PCG loop."); // TODO: DEBUG
 		for (int i = 1; i <= (GlobalConstants.n * (GlobalConstants.n - 1) / 2); i++)
 		{
 			rcv = minE(D1);
@@ -334,8 +333,6 @@ public class MainBody
 				D1.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.TRANS_RANGE);
 			}
 		}
-		System.out.println(">> Done with PCG loop."); // TODO: DEBUG
-		System.out.println();
 
 		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();
@@ -362,7 +359,7 @@ public class MainBody
 		double num;
 		int[][] HOPE;
 
-		System.out.println(">> Entering AN placement loop."); // TODO: DEBUG
+		System.out.println(">> Entering IN placement loop."); // TODO: DEBUG
 		while (!exit)
 		{
 			Nsign = 1;
@@ -378,7 +375,7 @@ public class MainBody
 			q = new Coordinate<Integer>(pq[2], pq[3]);
 			temp = Connect.connect(p, q, 'a'); // TODO: Maybe rename 'temp' to something better?
 
-			System.out.println("Checking necessity for AN!"); // TODO: DEBUG
+			System.out.println("Checking necessity for IN!"); // TODO: DEBUG
 			// Check Necessity
 			if (temp.getPointer() != 0)
 			{
@@ -399,7 +396,7 @@ public class MainBody
 				// TODO: Graph functions go here
 			}
 
-			System.out.println("Entering Nsign loop."); // TODO: DEBUG
+			System.out.println("Recursive \"attempt connection\" loop."); // TODO: DEBUG
 			if (Nsign != 0)
 			{
 				if (temp.getNum() <= 2.01)
@@ -546,7 +543,7 @@ public class MainBody
 						// Considering the case if we need 1 or 2
 						if (temp.getNum() <= 2.01 && temp.getPointer() == 0)
 						{
-							System.out.println("\tInternal: Exactly 1 node needed case!"); // TODO: DEBUG
+							System.out.println("\tRecursive: Exactly 1 node needed case!"); // TODO: DEBUG
 							p1 = new Matrix(hcoord2array(p));
 							q1 = new Matrix(hcoord2array(q));
 							L1 = new Locate1(p1, q1, GlobalConstants.H);
@@ -581,7 +578,7 @@ public class MainBody
 						}
 						else if (temp.getNum() > 2.01 && temp.getNum() <= 3.01 && temp.getPointer() == 0)
 						{
-							System.out.println("\tInternal: Exactly 2 nodes needed case!"); // TODO: DEBUG
+							System.out.println("\tRecursive: Exactly 2 nodes needed case!"); // TODO: DEBUG
 							// & abs(theta - pi/6) > 0.013
 							// the last one comes when it seems to be ok but not
 							p1 = new Matrix(hcoord2array(p));
@@ -623,7 +620,8 @@ public class MainBody
 
 						if ((GlobalConstants.n - base) > 3)
 						{
-							System.out.println("\tInternal: More than two nodes needed case!"); // TODO: DEBUG
+							if (temp.getPointer() == 0)
+								System.out.println("\tRecursive: More than two nodes needed case!"); // TODO: DEBUG
 							base_t = GlobalConstants.n - 3;
 
 							// D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);

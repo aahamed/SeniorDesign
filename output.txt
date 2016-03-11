@@ -1,0 +1,327 @@
+java -cp './bin/:./lib/*' MainBody -m -k -i ./src/input/min.txt
+Using MATLAB generated values from "./src/input/min.txt".
+Using Kruskal's algorithm for calculating the MST.
+>> w_st is:
+9804
+>> ST is:
+(2, 10)
+(5, 8)
+(9, 10)
+(5, 9)
+(6, 7)
+(4, 9)
+(1, 4)
+(3, 8)
+(7, 8)
+>> X_st is:
+0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+0, 0, 0, 0, 0, 0, 0, 1, 0, 0
+1, 0, 0, 0, 0, 0, 0, 0, 1, 0
+0, 0, 0, 0, 0, 0, 0, 1, 1, 0
+0, 0, 0, 0, 0, 0, 1, 0, 0, 0
+0, 0, 0, 0, 0, 1, 0, 1, 0, 0
+0, 0, 1, 0, 1, 0, 1, 0, 0, 0
+0, 0, 0, 1, 1, 0, 0, 0, 0, 1
+0, 1, 0, 0, 0, 0, 0, 0, 1, 0
+>> D is:
+500000, 3252, 3981, 1311, 2570, 2516, 2385, 3032, 2538, 3207
+500000, 500000, 2725, 1941, 1289, 4458, 3271, 1354, 714, 227
+500000, 500000, 500000, 3668, 2064, 3261, 2142, 1537, 3207, 2907
+500000, 500000, 500000, 500000, 1604, 3514, 2327, 2131, 1227, 1896
+500000, 500000, 500000, 500000, 500000, 3169, 1982, 527, 1143, 1471
+500000, 500000, 500000, 500000, 500000, 500000, 1187, 3104, 4280, 4640
+500000, 500000, 500000, 500000, 500000, 500000, 500000, 1976, 3093, 3453
+500000, 500000, 500000, 500000, 500000, 500000, 500000, 500000, 1670, 1536
+500000, 500000, 500000, 500000, 500000, 500000, 500000, 500000, 500000, 669
+500000, 500000, 500000, 500000, 500000, 500000, 500000, 500000, 500000, 500000
+>> HCS normalized points (u, v) are:
+(1666, -2010)
+(356, 1242)
+(-2315, 1188)
+(1353, -699)
+(-251, 560)
+(-787, -2073)
+(-719, -954)
+(-778, 1022)
+(892, 528)
+(583, 1197)
+>> Center of mass is:
+(18715.6591675, 19806.335495900003)
+>> Input points (x_r, y_r) are:
+(24441.71059, 4728.39245)
+(27173.75811, 29117.78345)
+(3809.604489, 28715.00845)
+(27401.27568, 14561.26946)
+(18970.77739, 24008.41407)
+(2926.21215, 4256.590159)
+(8354.946566, 12652.83848)
+(16406.44558, 27472.06576)
+(28725.20506, 23766.21989)
+(28946.65606, 28784.77279)
+
+>> Entering IN placement loop.
+
+Current longest edge is at: (7, 8), and that length is: 1976
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: Exactly 1 node needed case!
+XYr now has: (15693.23050829231, 18156.335495900003)
+
+Current longest edge is at: (3, 8), and that length is: 1537
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: Exactly 1 node needed case!
+XYr now has: (10103.03652686376, 25873.835495900003)
+
+Current longest edge is at: (1, 4), and that length is: 1311
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: Exactly 2 nodes needed case!
+XYr now has: (25297.452236261735, 9696.3354959)
+XYr now has: (25184.868933769758, 10536.3354959)
+
+Current longest edge is at: (4, 9), and that length is: 1227
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: Exactly 2 nodes needed case!
+XYr now has: (27882.538066558285, 18838.835495900003)
+XYr now has: (27847.897050406908, 19723.835495900003)
+
+Current longest edge is at: (6, 7), and that length is: 1187
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: Exactly 2 nodes needed case!
+XYr now has: (6781.829103350436, 7491.335495900001)
+XYr now has: (7565.582093775352, 7798.835495900001)
+
+Current longest edge is at: (5, 9), and that length is: 1143
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: More than two nodes needed case!
+	Recursive: Exactly 2 nodes needed case!
+XYr now has: (23695.305239260524, 22281.335495900003)
+XYr now has: (24236.571116625797, 21688.835495900003)
+
+Current longest edge is at: (9, 10), and that length is: 669
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: Exactly 1 node needed case!
+XYr now has: (28648.970548907513, 26226.335495900003)
+
+Current longest edge is at: (5, 18), and that length is: 343
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+More than 2 nodes needed case!
+	Recursive: Exactly 1 node needed case!
+XYr now has: (17494.563348163945, 23196.335495900003)
+
+Current longest edge is at: (2, 10), and that length is: 227
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 2 nodes needed case!
+XYr now has: (27661.701588593256, 28491.335495900006)
+XYr now has: (28159.666195769307, 29113.835495900006)
+
+Current longest edge is at: (27, 29), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (15004.74031228368, 17113.835495900003)
+
+Current longest edge is at: (42, 44), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (8635.123467449135, 25791.335495900003)
+
+Current longest edge is at: (53, 55), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (24128.31794115274, 8661.3354959)
+
+Current longest edge is at: (54, 56), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+
+Current longest edge is at: (63, 65), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (26999.192154698158, 17638.835495900003)
+
+Current longest edge is at: (64, 66), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (27653.04133455541, 20856.335495900003)
+
+Current longest edge is at: (75, 77), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+
+Current longest edge is at: (76, 78), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (8228.091527670447, 8976.3354959)
+
+Current longest edge is at: (87, 89), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+
+Current longest edge is at: (88, 90), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+
+Current longest edge is at: (93, 95), and that length is: 114
+Checking necessity for IN!
+Recursive "attempt connection" loop.
+Exactly 1 node needed case!
+XYr now has: (28129.35530663685, 25131.335495900003)
+
+Current longest edge is at: (1, 47), and that length is: 91
+>> Done with AN placement loop. Algorithm complete.
+>> Final list of node locations:
+(24441.71059, 4728.39245)
+(27173.75811, 29117.78345)
+(3809.604489, 28715.00845)
+(27401.27568, 14561.26946)
+(18970.77739, 24008.41407)
+(2926.21215, 4256.590159)
+(8354.946566, 12652.83848)
+(16406.44558, 27472.06576)
+(28725.20506, 23766.21989)
+(28946.65606, 28784.77279)
+(8674.094610619433, 13378.835495900003)
+(16308.108544979263, 26616.335495900003)
+(9366.914933646985, 13888.835495900003)
+(16212.845750562974, 25761.335495900003)
+(10059.735256674536, 14398.835495900003)
+(16117.582956146685, 24906.335495900003)
+(10752.555579702086, 14908.835495900003)
+(16022.320161730397, 24051.335495900003)
+(11445.375902729638, 15418.835495900003)
+(15927.057367314108, 23196.335495900003)
+(12138.19622575719, 15928.835495900003)
+(15831.794572897821, 22341.335495900003)
+(12831.01654878474, 16438.835495900003)
+(15736.531778481532, 21486.335495900003)
+(13523.836871812291, 16948.835495900003)
+(15641.268984065246, 20631.335495900003)
+(14216.657194839841, 17458.835495900003)
+(15546.006189648957, 19776.335495900003)
+(14909.477517867394, 17968.835495900003)
+(15450.743395232668, 18921.335495900003)
+(15693.23050829231, 18156.335495900003)
+(4599.445085813653, 28371.335495900006)
+(15615.288221951712, 27816.335495900003)
+(5387.5282032574905, 28026.335495900006)
+(14827.205104507873, 28026.335495900006)
+(6175.6113207013295, 27681.335495900003)
+(14039.121987064034, 27681.335495900003)
+(6963.6944381451685, 27336.335495900003)
+(13251.038869620194, 27336.335495900003)
+(7751.7775555890075, 26991.335495900003)
+(12462.955752176356, 26991.335495900003)
+(8539.860673032847, 26646.335495900006)
+(11674.872634732516, 26646.335495900006)
+(9327.943790476686, 26301.335495900003)
+(10886.789517288675, 26301.335495900003)
+(10103.03652686376, 25873.835495900003)
+(24535.349880931426, 5586.335495899999)
+(27310.961300060553, 13708.835495900003)
+(24630.61267534772, 6441.335495900001)
+(27215.698505644265, 12853.835495900003)
+(24725.875469764003, 7296.335495900001)
+(27120.435711227976, 11998.8354959)
+(24821.138264180292, 8151.335495900001)
+(26661.44224722223, 11353.8354959)
+(24916.40105859658, 9006.3354959)
+(25968.621924194675, 10843.835495900003)
+(25297.452236261735, 9696.3354959)
+(25184.868933769758, 10536.3354959)
+(27501.48688889313, 15418.835495900003)
+(28631.650040831824, 22911.335495900003)
+(27596.74968330942, 16273.835495900003)
+(28536.387246415536, 22056.335495900003)
+(27692.012477725708, 17128.835495900003)
+(28441.124451999247, 21201.335495900003)
+(27787.275272141997, 17983.835495900003)
+(28345.86165758296, 20346.335495900003)
+(27882.538066558285, 18838.835495900003)
+(27847.897050406908, 19723.835495900003)
+(3616.506252518311, 4768.835495900001)
+(7821.059587891761, 12051.3354959)
+(4309.326575545863, 5278.835495900001)
+(7725.796793475474, 11196.335495900003)
+(5002.146898573414, 5788.835495899999)
+(7630.533999059186, 10341.3354959)
+(5694.967221600964, 6298.835495900001)
+(7535.271204642897, 9486.3354959)
+(6387.787544628514, 6808.835495900001)
+(7440.008410226608, 8631.3354959)
+(6781.829103350436, 7491.335495900001)
+(7565.582093775352, 7798.835495900001)
+(19754.88965204133, 23661.335495900003)
+(27938.829717804274, 23661.335495900003)
+(20542.972769485168, 23316.335495900003)
+(27150.746600360435, 23316.335495900003)
+(21331.055886929007, 22971.335495900003)
+(26362.663482916596, 22971.335495900003)
+(22119.139004372846, 22626.335495900003)
+(25574.580365472757, 22626.335495900003)
+(22907.222121816685, 22281.335495900003)
+(24786.497248028918, 22281.335495900003)
+(23695.305239260524, 22281.335495900003)
+(24236.571116625797, 21688.835495900003)
+(28822.1756296644, 24621.335495900003)
+(28852.486518796857, 27928.835495900006)
+(28917.43842408069, 25476.335495900003)
+(28757.22372438057, 27073.835495900003)
+(28648.970548907513, 26226.335495900003)
+(18178.72341715365, 23706.335495900003)
+(16810.403279174236, 23706.335495900003)
+(17494.563348163945, 23196.335495900003)
+(27661.701588593256, 28491.335495900006)
+(28159.666195769307, 29113.835495900006)
+(15004.74031228368, 17113.835495900003)
+(8635.123467449135, 25791.335495900003)
+(24128.31794115274, 8661.3354959)
+(26999.192154698158, 17638.835495900003)
+(27653.04133455541, 20856.335495900003)
+(8228.091527670447, 8976.3354959)
+(28129.35530663685, 25131.335495900003)
+>> Original node locations saved in "./src/output/original.dat"
+>> Additional node locations saved in "./src/output/additional.dat"
