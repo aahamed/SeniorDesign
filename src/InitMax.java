@@ -134,6 +134,22 @@ public class InitMax
 		return newMat;
 	}
 	
+	private static List<List<Integer>> mergeDistMat2(List<List<Integer>> oldMat, List<List<Integer>> newMat)
+	{
+		for(int i = 0; i < oldMat.size(); i++)
+		{
+			for(int j = (i + 1); j < oldMat.get(i).size(); j++)
+			{
+				if(oldMat.get(i).get(j) == GlobalConstants.H)
+				{
+					newMat.get(i).set(j, GlobalConstants.H);
+					newMat.get(j).set(i, GlobalConstants.H);
+				}
+			}
+		}
+		return newMat;
+	}
+	
 	/* ****** DEPRECATED ***************
 	* initMax: Port of Initate_MAX.m
 	* @param listOfCoords list of coordinates
@@ -168,8 +184,12 @@ public class InitMax
 	public static InitMaxOut initMax(List<Coordinate<Double>> listOfCoords, Coordinate<Double> com, List<List<Integer>> oldDistMat)
 	{
 		List<Coordinate<Integer>> HCSCoords = convertToHCS(listOfCoords, com);
-		List<List<Integer>> newDistMat = InitMax.computeDistMatrix(HCSCoords);
-		InitMax.mergeDistMat(oldDistMat, newDistMat);
+		// List<List<Integer>> newDistMat = InitMax.computeDistMatrix(HCSCoords);
+		List<List<Integer>> newDistMat = Distance_matrix.DMCalc2(HCSCoords);
+		List<List<Integer>> WM = Distance_matrix.DMCalc1(HCSCoords);
+		mergeDistMat(oldDistMat, newDistMat);
+		mergeDistMat2(oldDistMat, WM);
+		List<List<Integer>> XM = InitX(WM.size());
 		if(D)
 		{
 			for(int i = 0; i < newDistMat.size(); i++)
@@ -178,8 +198,9 @@ public class InitMax
 			}
 		}
 		int[] mst = PrimMST.primMST(List_ops.ll2array(newDistMat));
+		List<Coordinate<Integer>> KST = Kruskal.MST(XM, WM).getST();
 		//PrimMST.printMST(mst, newDistMat[0].length, newDistMat);   //debug code - comment out
-		return new InitMaxOut(HCSCoords, newDistMat, mst);
+		return new InitMaxOut(HCSCoords, newDistMat, mst, KST);
 	}
 	
 	public static void test1()
@@ -191,6 +212,25 @@ public class InitMax
 		Coordinate<Double> com = new Coordinate<Double>(0.0, 0.0);
 		int[][] oldDistMat = new int[][]{{2, 2}, {2, 2}};
 		int[] mst = InitMax.initMax(listOfCoords, com, oldDistMat);
+	}
+
+	private static List<List<Integer>> InitX(int a)
+	{
+		List<List<Integer>> output = new ArrayList<List<Integer>>();
+
+		for (int x = 0; x < a; x++)
+		{
+			output.add(new ArrayList<Integer>());
+			for (int y = 0; y < a; y++)
+			{
+				if (x != y)
+					output.get(x).add(1);
+				else
+					output.get(x).add(0);
+			}
+		}
+
+		return output;
 	}
     
     public static void test2()

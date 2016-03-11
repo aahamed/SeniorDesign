@@ -10,12 +10,14 @@ public class InitMaxOut
     private List<Coordinate<Integer>> HCSList;
     private List<List<Integer>> DMatrix;
     private int[] parent;  // parent pointer representation of mst
+	private List<Coordinate<Integer>> ST;
     
-    public InitMaxOut(List<Coordinate<Integer>> HCSList, List<List<Integer>> DMatrix, int[] parent)
+    public InitMaxOut(List<Coordinate<Integer>> HCSList, List<List<Integer>> DMatrix, int[] parent, List<Coordinate<Integer>> ST)
     {
         this.HCSList = HCSList;
         this.DMatrix = DMatrix;
         this.parent = parent;
+		this.ST = ST;
     }
     
     public List<Coordinate<Integer>> getHCSList()
@@ -46,5 +48,15 @@ public class InitMaxOut
     {
         parent = p;
     }
+
+	public List<Coordinate<Integer>> getST()
+	{
+		return ST;
+	}
+
+	public void setST(List<Coordinate<Integer>> l)
+	{
+		ST = l;
+	}
     
 }
