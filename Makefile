@@ -5,6 +5,7 @@ BIN=./bin/
 SRC=./src/
 LIB=./lib/*
 TEST=./test/
+GP=./gnuplot/
 CP=-cp '$(BIN);$(LIB)'
 ODIR=-d $(BIN)
 OSNAME = $(OS)
@@ -54,7 +55,7 @@ testCoord:
 ConnectOut: $(SRC)ConnectOut.java
 	javac $(CP) $(ODIR) $(SRC)ConnectOut.java
 
-Connect: ConnectOut HCS GlobalConstants Coordinate 
+Connect: ConnectOut HCS GlobalConstants Coordinate
 	javac $(CP) $(ODIR) $(SRC)Connect.java
 
 #testConnect:
@@ -81,7 +82,7 @@ InitMaxOut:
 InitMax: Coordinate GlobalConstants HCS PrimMST
 	javac $(CP) $(ODIR) $(SRC)InitMax.java
 
-#testInitMax: 
+#testInitMax:
 #	java $(CP) InitMax
 
 LocateM2:
@@ -92,6 +93,15 @@ Main: $(SRC)MainBody.java
 
 testMain:
 	java $(CP) MainBody -m -k -i ./src/input/min.txt
+
+testMainGPS:
+	java $(CP) -Xms4096M -Xmx8192M -d64 MainBody -g -k -i ./src/input/in.txt
+
+GraphInit:
+	gnuplot -persist -c $(GP)initial.gnu
+
+GraphFinal:
+	gnuplot -persist -c $(GP)graph.gnu
 
 echo_osname:
 	echo $(OSNAME)
