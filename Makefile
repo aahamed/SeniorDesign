@@ -97,10 +97,10 @@ testMain:
 testMainGPS:
 	java $(CP) -Xms4096M -Xmx8192M -d64 MainBody -g -k -i ./src/input/in.txt
 
-GraphInit:
+graphInit:
 	gnuplot -persist -c $(GP)initial.gnu
 
-GraphFinal:
+graphFinal:
 	gnuplot -persist -c $(GP)graph.gnu
 
 echo_osname:
