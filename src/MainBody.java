@@ -296,48 +296,15 @@ public class MainBody
 		mc.printAll(); // TODO: For debugging
 		System.out.println();
 
-		// Pre-connective Graph
-		List<List<Integer>> D1 = mc.getDM(); // TODO: This is a reference, not a copy, might cause issues
-		GlobalConstants.n = D1.size();
+		// Place ANs to achieve connection
 		List<Coordinate<Integer>> UV = mc.getHCS();
 		int[] rcv, pq;
 		Coordinate<Integer> p = null, q = null;
 		Coordinate<Double> cen1, cen2;
-		int pointer;
-
-		for (int i = 1; i <= (GlobalConstants.n * (GlobalConstants.n - 1) / 2); i++)
-		{
-			rcv = minE(D1);
-			pq = getUVs(UV, rcv);
-			p = new Coordinate<Integer>(pq[0], pq[1]);
-			q = new Coordinate<Integer>(pq[2], pq[3]);
-
-			pointer = Connect.connect(p, q, 'c').getPointer();
-
-			if (pointer != 0)
-			{
-				// Is a statement of checking connectivity
-				// Draw a cluster
-				pq = getUVs(UV, rcv);
-				p = new Coordinate<Integer>(pq[0], pq[2]);
-				q = new Coordinate<Integer>(pq[1], pq[3]);
-				cen1 = HCS.hexToCart(p);
-				cen2 = HCS.hexToCart(q);
-
-				// TODO: Temporary List to hold all these 'cen' coordinates
-				CenList1.add(new Coordinate<Double>(cen1.getX(), cen2.getX()));
-				CenList2.add(new Coordinate<Double>(cen1.getY(), cen2.getY()));
-				// TODO: Graph functions go here
-
-				// Mark whomever has been connected !!!
-				D1.get(rcv[0] - 1).set((rcv[1] - 1), GlobalConstants.TRANS_RANGE);
-			}
-		}
-
-		// Place ANs to achieve connection
 		MSTOut Tree = mc.getMST();
 		List<Coordinate<Integer>> ST = Tree.getST();
 		List<List<Integer>> D2 = mc.getDM();
+		GlobalConstants.n = D2.size();
 		Coordinate<Double> XYc = mc.getMMcom();
 		List<Coordinate<Double>> XYr = mc.getMMlist();
 		boolean exit = false;
@@ -620,8 +587,8 @@ public class MainBody
 
 						if ((GlobalConstants.n - base) > 3)
 						{
-							if (temp.getPointer() == 0)
-								System.out.println("\tRecursive: More than two nodes needed case!"); // TODO: DEBUG
+							// if (temp.getPointer() == 0)
+							// 	System.out.println("\tRecursive: More than two nodes needed case!"); // TODO: DEBUG
 							base_t = GlobalConstants.n - 3;
 
 							// D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);

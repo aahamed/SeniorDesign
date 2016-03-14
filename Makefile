@@ -94,9 +94,6 @@ Main: $(SRC)MainBody.java
 testMain:
 	java $(CP) MainBody -m -k -i ./src/input/min.txt
 
-testMainGPS:
-	java $(CP) -Xms4096M -Xmx8192M -d64 MainBody -g -k -i ./src/input/in.txt
-
 graphInit:
 	gnuplot -persist -c $(GP)initial.gnu
 
