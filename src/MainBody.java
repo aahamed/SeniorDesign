@@ -8,6 +8,94 @@ import java.util.ArrayList;
 import java.util.List;
 import Jama.Matrix;
 
+class ReshapeDM
+{
+	public static void Type1(List<List<Integer>> DM, int[] RCV)
+	{
+		int entries = DM.size();
+		int row = RCV[0] - 1;
+		int col = RCV[1] - 1;
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			if ((i == row) || (i == col))
+				DM.get(i).add(GlobalConstants.H);
+			else
+				DM.get(i).add(0);
+		}
+		for (int j = 0; j < (entries + 1); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		DM.add(temp);
+	}
+
+	public static void Type2(List<List<Integer>> DM, int[] RCV)
+	{
+		int entries = DM.size();
+		int row = RCV[0] - 1;
+		int col = RCV[1] - 1;
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			if ((i == row) || (i == col))
+			{
+				DM.get(i).add(GlobalConstants.H);
+				DM.get(i).add(GlobalConstants.H);
+			}
+			else
+			{
+				DM.get(i).add(0);
+				DM.get(i).add(0);
+			}
+		}
+		for (int j = 0; j < (entries + 2); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		DM.add(temp);
+		DM.add(temp);
+	}
+
+	public static void Type3(List<List<Integer>> DM)
+	{
+		int entries = DM.size();
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			DM.get(i).add(1);
+			DM.get(i).add(1);
+		}
+		for (int j = 0; j < (entries + 2); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		DM.add(temp);
+		DM.add(temp);
+	}
+
+	public static void Type4(List<List<Integer>> DM)
+	{
+		int entries = DM.size();
+		List<Integer> temp = new ArrayList<Integer>();
+
+		for (int i = 0; i < entries; i++)
+		{
+			DM.get(i).add(0);
+		}
+		for (int j = 0; j < (entries + 1); j++)
+		{
+			temp.add(GlobalConstants.TRANS_RANGE);
+		}
+		DM.get(entries - 1).set(entries, GlobalConstants.H);
+		DM.get(entries - 2).set(entries, GlobalConstants.H);
+		DM.add(temp);
+	}
+}
+
 public class MainBody
 {
 	private static String input_filename;
@@ -95,91 +183,6 @@ public class MainBody
 		output[1][1] = 0.0;
 
 		return output;
-	}
-
-	private static void reshapeDmatrix(List<List<Integer>> a, int[] b)
-	{
-		int entries = a.size();
-		int row = b[0] - 1;
-		int col = b[1] - 1;
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			if ((i == row) || (i == col))
-				a.get(i).add(GlobalConstants.H);
-			else
-				a.get(i).add(0);
-		}
-		for (int j = 0; j < (entries + 1); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		a.add(temp);
-	}
-
-	private static void reshapeDmatrix2(List<List<Integer>> a, int[] b)
-	{
-		int entries = a.size();
-		int row = b[0] - 1;
-		int col = b[1] - 1;
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			if ((i == row) || (i == col))
-			{
-				a.get(i).add(GlobalConstants.H);
-				a.get(i).add(GlobalConstants.H);
-			}
-			else
-			{
-				a.get(i).add(0);
-				a.get(i).add(0);
-			}
-		}
-		for (int j = 0; j < (entries + 2); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		a.add(temp);
-		a.add(temp);
-	}
-
-	private static void reshapeDmatrix3(List<List<Integer>> a)
-	{
-		int entries = a.size();
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			a.get(i).add(1);
-			a.get(i).add(1);
-		}
-		for (int j = 0; j < (entries + 2); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		a.add(temp);
-		a.add(temp);
-	}
-
-	private static void reshapeDmatrix4(List<List<Integer>> a)
-	{
-		int entries = a.size();
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			a.get(i).add(0);
-		}
-		for (int j = 0; j < (entries + 1); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		a.get(entries - 1).set(entries, GlobalConstants.H);
-		a.get(entries - 2).set(entries, GlobalConstants.H);
-		a.add(temp);
 	}
 
 	private static List<Coordinate<Integer>> PrimPrep(int[] a)
@@ -410,7 +413,7 @@ public class MainBody
 						// First reset certain element in D2 and then calculate
 						// the spanning Tree. Meanwhile, the dimension of D2
 						// needs to be RESHAPED
-						reshapeDmatrix(D2, rcv);
+						ReshapeDM.Type1(D2, rcv);
 						IMOUT = InitMax.initMax(XYr, XYc, D2);
 						UV = IMOUT.getHCSList();
 						D2 = IMOUT.getDMatrix();
@@ -455,7 +458,7 @@ public class MainBody
 					System.out.println("XYr now has: " + XYr.get(XYr.size() - 1));
 
 					// Update information in distance matrix
-					reshapeDmatrix2(D2, rcv);
+					ReshapeDM.Type2(D2, rcv);
 					D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
 					IMOUT = InitMax.initMax(XYr, XYc, D2);
 					UV = IMOUT.getHCSList();
@@ -500,7 +503,7 @@ public class MainBody
 						XYr.add(HCS.add2coord(C2, XYc));
 						GlobalConstants.n++;
 
-						reshapeDmatrix3(D2);
+						ReshapeDM.Type3(D2);
 
 						p = AN;
 						q = AN2;
@@ -539,7 +542,7 @@ public class MainBody
 								System.out.println("XYr now has: " + XYr.get(XYr.size() - 1));
 
 								// Update Distance Matrix
-								reshapeDmatrix4(D2);
+								ReshapeDM.Type4(D2);
 								temp.setPointer(1);
 							}
 						}
@@ -580,7 +583,7 @@ public class MainBody
 							System.out.println("XYr now has: " + XYr.get(XYr.size() - 1));
 
 							// Update information in distance matrix
-							reshapeDmatrix3(D2);
+							ReshapeDM.Type3(D2);
 							D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
 							temp.setPointer(1);
 						}
