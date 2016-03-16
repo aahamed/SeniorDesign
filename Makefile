@@ -100,6 +100,9 @@ graphInit:
 graphFinal:
 	gnuplot -persist -c $(GP)graph.gnu
 
+graphFinalPNG:
+	gnuplot -persist -c $(GP)graphpng.gnu
+
 echo_osname:
 	echo $(OSNAME)
 
