@@ -19,7 +19,7 @@ public class TestConnect {
 		Coordinate<Integer> q1 = new Coordinate<Integer>(1, 1);
         exp = new ConnectOut(0.17, 0.52, 1, new int[]{1, 0});
         res = Connect.connect(p1, q1, Connect.CONNECT_FLAG);
-        //System.out.println(Connect.connect(p1, q1, Connect.CONNECT_FLAG)); // case1 1st quadrant theta<30
+        //System.out.println("Test case1 failed!\nres: " + res + "\nexp: " + exp); // case1 1st quadrant theta<30
         assertTrue(test_equals(res, exp));
 
 		Coordinate<Integer> p2 = new Coordinate<Integer>(0, 0);
