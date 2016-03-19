@@ -15,7 +15,9 @@ Software Dependencies:
 GNUplot Installation:
 ---------------------
 ###For Windows:
-Coming soon...
+Download GNUPlot for windows from [here](http://www.gnuplot.info/).
+Add GNUPlot to your PATH environment variable so that you can invoke it from the command line. 
+There should be plenty of information online on how to accomplish this.
 
 ###For OS X:
 Note: OS X does not come with a package manager, we recommend [Homebrew](http://brew.sh/).
@@ -74,6 +76,24 @@ Usage:
 		-p for Prim's algorithm
 		```
 	* Note: Prim's algorithm process is currently bugged, use Kruskal for now 
+* To plot the results, navigate back to the project root directory and run the command mapped to your platform:
+  OS X/Linux/Unix:
+  ```
+  make graphFinal
+  ```
+  Windows:
+  ```
+  make graphFinalWin
+  ```
+  * Note: If you do not wish to use Make use:
+  OS X/Linux/Unix:
+  ```
+  gnuplot -persist ./gnuplot/graph.gnu
+  ```
+  Windows:
+  ```
+  gnuplot -persist ./gnuplot/graph_win.gnu
+  ```
 
 Sources:
 --------
