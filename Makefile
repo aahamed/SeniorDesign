@@ -26,6 +26,11 @@ else
 	ifeq '$(OSNAME)' 'Darwin'
 		CP=-cp '$(BIN):$(LIB)'
 	endif
+
+	# Linux
+	ifeq '$(OSNAME)' 'Linux'
+		CP=-cp '$(BIN):$(LIB)'
+	endif
 endif
 
 
@@ -95,13 +100,13 @@ testMain:
 	java $(CP) MainBody -m -k -i ./src/input/min.txt
 
 graphInit:
-	gnuplot -persist -c $(GP)initial.gnu
+	gnuplot -persist $(GP)initial.gnu
 
 graphFinal:
-	gnuplot -persist -c $(GP)graph.gnu
+	gnuplot -persist $(GP)graph.gnu
 
 graphFinalPNG:
-	gnuplot -persist -c $(GP)graphpng.gnu
+	gnuplot -persist $(GP)graphpng.gnu
 
 echo_osname:
 	echo $(OSNAME)

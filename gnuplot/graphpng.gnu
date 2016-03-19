@@ -1,12 +1,11 @@
 #!/usr/bin/gnuplot
 
 #Author: Josue Galeas
-#Last Edit: Mar 12, 2016
+#Last Edit: Mar 18, 2016
 #Description: GNUplot script for plotting data in files "original.dat" and "additional.dat"
 
 set term png
 set output 'graph.png'
-
 reset
 unset key
 set xtic auto
