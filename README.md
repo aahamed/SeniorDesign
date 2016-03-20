@@ -17,7 +17,7 @@ Usage
 1. Navigate to the project's root directory, and compile the codebase with: `make all`
 	* **Note:** If you do not wish to use Make, use:
 		* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
-		* OS X/Linux/Unix: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
+		* OS X/Linux: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
 2. Navigate to `./bin`, and use `java MainBody`
 	* Use `--help` flag to see usage details
 	* Usage details are:
@@ -48,8 +48,8 @@ GNUplot Installation
 --------------------
 ### For Windows:
 * Download GNUplot for Windows from [here](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
-* Add GNUplot to your PATH environment variable so that you can invoke it from the command line
-	* There should be plenty of information online on how to accomplish this.
+* Add GNUplot to your terminal's PATH environment variable so that you can invoke it from the command line
+	* There should be plenty of information online on how to accomplish this
 
 ### For OS X:
 **Note:** OS X does not come with a package manager, we recommend [Homebrew](http://brew.sh/).
@@ -57,7 +57,7 @@ GNUplot Installation
 brew install gnuplot-x11
 ```
 
-### For Linux/Unix:
+### For Linux:
 #### For Ubuntu:
 ```
 sudo apt-get install gnuplot
@@ -70,7 +70,7 @@ apt-get install gnuplot
 ```
 
 #### For Fedora:
-**Note:** Use `yum` instead of `dnf` if on Fedora 21 or older
+**Note:** Use `yum` instead of `dnf` if on Fedora 21 or older.
 ```
 su root
 dnf install gnuplot
@@ -79,7 +79,7 @@ dnf install gnuplot
 Known Issues
 ------------
 * Prim's algorithm option is currently bugged, use only Kruskal's algorithm for now
-* Kruskal's algorithm has a few edge cases that sometimes causes inaccurate results
+* Kruskal's algorithm option has a few edge cases that sometimes causes inaccurate results
 * Currently does not output GPS coordinates when the input has GPS coordinates
 
 Sources
