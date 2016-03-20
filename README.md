@@ -7,7 +7,7 @@ Software Dependencies
 * Java Development Kit (version 1.7.0_95 or greater) from [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * Make (version 3.81 or greater) from [here](https://www.gnu.org/software/make/)
 * GNUplot (version 4.6 patchlevel 6 or greater)
-	* **Note:** See installation instructions [below](https://github.com/aahamed/SeniorDesign#gnuplot-installation)
+	* **Note:** See installation instructions below
 * X11 (any version)
 	* Xming for Windows from [here](https://sourceforge.net/projects/xming/)
 	* Xquartz for OS X from [here](http://www.xquartz.org/)
@@ -15,7 +15,7 @@ Software Dependencies
 Usage
 -----
 1. Navigate to the project's root directory, and compile the codebase with: `make all`
-	* **Note:** If you do not wish to install Make, use:
+	* **Note:** If you do not wish to use Make, use:
 		* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
 		* OS X/Linux/Unix: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
 2. Navigate to `./bin`, and use `java MainBody`
@@ -40,9 +40,9 @@ Usage
 		* See `./src/input/min.txt` for an example of how to set up MATLAB generated coordinates
 	* **Note:** Prim's algorithm option is currently bugged, use only Kruskal's algorithm for now
 3. To plot the results, navigate back to the project root directory, and use: `make graphFinal`
-	* **Note:** If you do not wish to install Make use: `gnuplot -persist ./gnuplot/graph.gnu`
+	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graph.gnu`
 4. To save the plot to a PNG file, use: `make graphFinalPNG`
-	* **Note:** If you do not wish to install Make use: `gnuplot -persist ./gnuplot/graphpng.gnu`
+	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graphpng.gnu`
 
 GNUplot Installation
 --------------------
@@ -58,27 +58,22 @@ brew install gnuplot-x11
 ```
 
 ### For Linux/Unix:
-For Ubuntu:
+#### For Ubuntu:
 ```
 sudo apt-get install gnuplot
 ```
 
-For Debian:
+#### For Debian:
 ```
 su root
 apt-get install gnuplot
 ```
 
-For Fedora 22 or newer:
+#### For Fedora:
+**Note:** Use `yum` instead of `dnf` if on Fedora 21 or older
 ```
 su root
 dnf install gnuplot
-```
-
-For Fedora 21 or older:
-```
-su root
-yum install gnuplot
 ```
 
 Known Issues
