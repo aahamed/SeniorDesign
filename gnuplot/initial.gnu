@@ -4,7 +4,6 @@
 #Last Edit: Mar 18, 2016
 #Description: GNUplot script for plotting data in file "original.dat"
 
-set term x11
 reset
 unset key
 set xtic auto

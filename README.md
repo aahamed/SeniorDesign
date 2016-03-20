@@ -39,12 +39,10 @@ Usage
 		* See `./src/input/in.txt` for an example of how to set up GPS coordinates
 		* See `./src/input/min.txt` for an example of how to set up MATLAB generated coordinates
 	* **Note:** Prim's algorithm option is currently bugged, use only Kruskal's algorithm for now
-3. To plot the results, navigate back to the project root directory, and use:
-	* Windows: `make graphFinalWin`
-	* OS X/Linux/Unix: `make graphFinal`
-	* **Note:** If you do not wish to install Make use:
-		* Windows: `gnuplot -persist ./gnuplot/graph_win.gnu`
-		* OS X/Linux/Unix: `gnuplot -persist ./gnuplot/graph.gnu`
+3. To plot the results, navigate back to the project root directory, and use: `make graphFinal`
+	* **Note:** If you do not wish to install Make use: `gnuplot -persist ./gnuplot/graph.gnu`
+4. To save the plot to a PNG file, use: `make graphFinalPNG`
+	* **Note:** If you do not wish to install Make use: `gnuplot -persist ./gnuplot/graphpng.gnu`
 
 GNUplot Installation
 --------------------
@@ -59,16 +57,16 @@ GNUplot Installation
 brew install gnuplot-x11
 ```
 
-### For Linux:
+### For Linux/Unix:
 For Ubuntu:
 ```
-sudo apt-get install gnuplot-x11
+sudo apt-get install gnuplot
 ```
 
 For Debian:
 ```
 su root
-apt-get install gnuplot-x11
+apt-get install gnuplot
 ```
 
 For Fedora 22 or newer:
@@ -82,9 +80,6 @@ For Fedora 21 or older:
 su root
 yum install gnuplot
 ```
-
-### For Unix:
-Coming soon...
 
 Known Issues
 ------------

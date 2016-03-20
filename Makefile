@@ -105,9 +105,6 @@ graphInit:
 graphFinal:
 	gnuplot -persist $(GP)graph.gnu
 
-graphFinalWin:
-	gnuplot -persist $(GP)graph_win.gnu
-
 graphFinalPNG:
 	gnuplot -persist $(GP)graphpng.gnu
 
