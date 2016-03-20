@@ -8,9 +8,6 @@ Software Dependencies
 * Make (version 3.81 or greater) from [here](https://www.gnu.org/software/make/)
 * GNUplot (version 4.6 patchlevel 6 or greater)
 	* **Note:** See installation instructions below
-* X11 (any version)
-	* Xming for Windows from [here](https://sourceforge.net/projects/xming/)
-	* Xquartz for OS X from [here](http://www.xquartz.org/)
 
 Usage
 -----
@@ -47,14 +44,16 @@ Usage
 GNUplot Installation
 --------------------
 ### For Windows:
-* Download GNUplot for Windows from [here](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
+* Download and install GNUplot for Windows from [here](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
+* Download and install Xming for Windows from [here](https://sourceforge.net/projects/xming/)
 * Add GNUplot to your terminal's PATH environment variable so that you can invoke it from the command line
 	* There should be plenty of information online on how to accomplish this
 
 ### For OS X:
 **Note:** OS X does not come with a package manager, we recommend [Homebrew](http://brew.sh/).
 ```
-brew install gnuplot-x11
+brew install qt
+brew install gnuplot --with-qt
 ```
 
 ### For Linux:
