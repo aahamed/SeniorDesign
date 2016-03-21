@@ -45,9 +45,9 @@ GNUplot Installation
 --------------------
 ### For Windows:
 * Download and install GNUplot for Windows from [here](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
-* Download and install Xming for Windows from [here](https://sourceforge.net/projects/xming/)
 * Add GNUplot to your terminal's PATH environment variable so that you can invoke it from the command line
 	* There should be plenty of information online on how to accomplish this
+	* An example of how to do this could be: `export PATH="$PATH:/c/Program Files/gnuplot/bin"`
 
 ### For OS X:
 **Note:** OS X does not come with a package manager, we recommend [Homebrew](http://brew.sh/).
