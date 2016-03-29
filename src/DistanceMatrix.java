@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 1, 2016
- * Description: Gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
+ * Last Edit: Mar 28, 2016
+ * Description: Class that gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 21, 2016
+ * Last Edit: Feb 28, 2016
  * Description: Class that maps latitude and longitude values to a Mercator projection, a 2D Cartesian plane.
  */
 

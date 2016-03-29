@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 1, 2016
+ * Last Edit: Mar 28, 2016
  * Description: Class which uses an MST algorithm and generates the corresponding data structures.
  */
 
