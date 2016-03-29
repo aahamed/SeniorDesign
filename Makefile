@@ -99,6 +99,9 @@ Main: $(SRC)MainBody.java
 testMain:
 	java $(CP) MainBody -m -k -i ./src/input/min.txt
 
+testMain2:
+	java $(CP) MainBody2 -m -k -i ./src/input/min.txt
+
 graphInit:
 	gnuplot -persist $(GP)initial.gnu
 

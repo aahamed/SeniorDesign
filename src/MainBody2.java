@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Jama.Matrix;
 
-public class MainBody
+public class MainBody2
 {
 	private static String input_filename;
 	private static boolean q_matlab;
@@ -178,22 +178,26 @@ public class MainBody
 		options(args);
 
 		// Step 1: Find out the distance matrix
+		List<Coordinate<Double>> test1 = MercatorMapping.MM(input_filename, q_matlab);
+		Coordinate<Double> test1COM = List_ops.getCOM(test1);
+		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
+		DMOut test3 = DistanceMatrix.DMCalc(test2);
 		// Calculating Minimal Spanning Tree
-		MSTCalc mc = new MSTCalc(input_filename, q_matlab, q_mstalgo);
-		mc.printAll(); // TODO: For debugging
+		MSTOut test4 = MSTCalc2.Calc(test3, q_mstalgo);
+		test4.printAll();
 		System.out.println();
 
 		// Place ANs to achieve connection
-		List<Coordinate<Integer>> UV = mc.getHCS();
+		List<Coordinate<Integer>> UV = test2;
 		int[] rcv, pq;
 		Coordinate<Integer> p = null, q = null;
 		Coordinate<Double> cen1, cen2;
-		MSTOut Tree = mc.getMST();
+		MSTOut Tree = test4;
 		List<Coordinate<Integer>> ST = Tree.getST();
-		List<List<Integer>> D2 = mc.getDM();
+		List<List<Integer>> D2 = test3.getDM();
 		GlobalConstants.n = D2.size();
-		Coordinate<Double> XYc = mc.getMMcom();
-		List<Coordinate<Double>> XYr = mc.getMMlist();
+		Coordinate<Double> XYc = test1COM;
+		List<Coordinate<Double>> XYr = test1;
 		boolean exit = false;
 		// Pointer if-statement
 		int Nsign;
