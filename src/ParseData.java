@@ -70,7 +70,7 @@ public class ParseData
 
 	public static void main(String[] args)
 	{
-		List<Coordinate<Double>> test = PD(args[0], true);
+		List<Coordinate<Double>> test = PD(args[0], false);
 		// True is Matlab, false is GPS
 
 		System.out.println(">> The parsed data has " + test.size() + " entries.");

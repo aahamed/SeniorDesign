@@ -42,7 +42,7 @@ public class DistanceMatrix
 		{
 			for (int j = (i + 1); j < entries; j++)
 			{
-				distance = HCS_distance(HCSData.get(i), HCSData.get(j));
+				distance = HCSDistance(HCSData.get(i), HCSData.get(j));
 				DM.get(i).set(j, distance);
 				SP0M.get(i).set(j, distance);
 				wM.get(i).set(j, distance);
@@ -53,7 +53,7 @@ public class DistanceMatrix
 		return new DMOut(DM, SP0M, XM, wM);
 	}
 
-	private static int HCS_distance(Coordinate<Integer> a, Coordinate<Integer> b)
+	private static int HCSDistance(Coordinate<Integer> a, Coordinate<Integer> b)
 	{
 		int u = Math.abs(a.getX() - b.getX());
 		int v = Math.abs(a.getY() - b.getY());
@@ -80,7 +80,7 @@ public class DistanceMatrix
 		{
 			for (int y = (x + 1); y < entries; y++)
 			{
-				distance = HCS_distance(a.get(x), a.get(y));
+				distance = HCSDistance(a.get(x), a.get(y));
 				output.get(x).set(y, distance);
 				output.get(y).set(x, distance);
 			}
@@ -107,7 +107,7 @@ public class DistanceMatrix
 		{
 			for (int y = (x + 1); y < entries; y++)
 			{
-				distance = HCS_distance(a.get(x), a.get(y));
+				distance = HCSDistance(a.get(x), a.get(y));
 				output.get(x).set(y, distance);
 			}
 		}
@@ -117,7 +117,7 @@ public class DistanceMatrix
 
 	public static void main(String[] args)
 	{
-		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], true);
+		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], false);
 		// True is Matlab, false is GPS
 		Coordinate<Double> test1COM = List_ops.getCOM(test1);
 		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);

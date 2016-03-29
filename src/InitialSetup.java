@@ -32,7 +32,7 @@ public class InitialSetup
 
 	public static void main(String[] args)
 	{
-		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], true);
+		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], false);
 		// True is Matlab, false is GPS
 		Coordinate<Double> test1COM = List_ops.getCOM(test1);
 		List<Coordinate<Integer>> test2 = IS(test1);

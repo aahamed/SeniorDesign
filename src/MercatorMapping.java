@@ -36,8 +36,8 @@ public class MercatorMapping
 		{
 			for (int c = 0; c < entries; c++)
 			{
-				mX = lon2mercX(parsedData.get(c).getX());
-				mY = lat2mercY(parsedData.get(c).getY());
+				mX = lon2mercX(parsedData.get(c).getY());
+				mY = lat2mercY(parsedData.get(c).getX());
 
 				output.add(new Coordinate<Double>(mX, mY));
 			}
@@ -48,7 +48,7 @@ public class MercatorMapping
 
 	private static double lon2mercX(double lon)
 	{
-		return WGS84_A * Math.toRadians(lon) / 1000.0;
+		return WGS84_A * Math.toRadians(lon) / 100.0;
 	}
 
 	private static double lat2mercY(double lat)
@@ -69,12 +69,12 @@ public class MercatorMapping
 		double ts = Math.tan(0.5 * ((Math.PI * 0.5) - phi)) / con;
 		double y = 0.0 - WGS84_A * Math.log(ts);
 
-		return y / 1000.0;
+		return y / 100.0;
 	}
 
 	public static void main(String[] args)
 	{
-		List<Coordinate<Double>> test = MM(args[0], true);
+		List<Coordinate<Double>> test = MM(args[0], false);
 		// True is Matlab, false is GPS
 
 		System.out.println(">> The mapped data has " + test.size() + " entries.");

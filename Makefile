@@ -102,6 +102,9 @@ testMain:
 testMain2:
 	java $(CP) MainBody2 -m -k -i ./src/input/min.txt
 
+testMain3:
+	java $(CP) MainBody2 -g -k -i ./src/input/in.txt
+
 graphInit:
 	gnuplot -persist $(GP)initial.gnu
 
