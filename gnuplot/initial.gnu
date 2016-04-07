@@ -11,4 +11,4 @@ set ytic auto
 set title "Initial Locations of Clusters"
 set autoscale
 set size ratio -1
-plot "./src/output/original.dat" using 1:2 with points pt 6 lw 2
+plot "./output/original.dat" using 1:2 with points pt 6 lw 2

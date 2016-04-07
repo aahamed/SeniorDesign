@@ -506,7 +506,7 @@ public class MainBody2
 		System.out.println(">> Final list of node locations:");
 		List_ops.print_coordlist_double(XYr);
 		WriteFile.WF(XYr);
-		System.out.println(">> Original node locations saved in \"./src/output/original.dat\"");
-		System.out.println(">> Additional node locations saved in \"./src/output/additional.dat\"");
+		System.out.println(">> Original node locations saved in \"./output/original.dat\"");
+		System.out.println(">> Additional node locations saved in \"./output/additional.dat\"");
 	}
 }

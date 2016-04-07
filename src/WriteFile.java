@@ -25,10 +25,10 @@ public class WriteFile
 		BufferedWriter BW2 = null;
 		try
 		{
-			File datafile1 = new File("./src/output/original.dat");
+			File datafile1 = new File("./output/original.dat");
 			if (!datafile1.exists())
 				datafile1.createNewFile();
-			File datafile2 = new File("./src/output/additional.dat");
+			File datafile2 = new File("./output/additional.dat");
 			if (!datafile2.exists())
 				datafile2.createNewFile();
 
