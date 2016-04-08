@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 4, 2016
- * Description: TODO
+ * Last Edit: Apr 7, 2016
+ * Description: GUI for easy use of the proposed connectivity algorithm.
  */
 
 import javax.swing.JFrame;
@@ -23,7 +23,6 @@ import java.io.File;
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame implements ActionListener
 {
-	private JTextField console;
 	private static String filePath;
 	private static String qGPS = "-g";
 	private static String qMST = "-k";
@@ -31,23 +30,24 @@ public class MainGUI extends JFrame implements ActionListener
 	public MainGUI()
 	{
 		setTitle("Algorithm (WIP)");
-		setLayout(new GridLayout(5, 1));
+		setLayout(new GridLayout(4, 1));
+		JPanel actions = new JPanel();
 		JButton start = new JButton("Run");
+		JButton graph = new JButton("Graph");
 
 		add(new FileSelect());
 		add(new QuestionGPS());
 		add(new QuestionMST());
 
 		start.addActionListener(this);
-		add(start);
-
-		console = new JTextField("");
-		console.setEditable(false);
-		console.addActionListener(this);
-		add(console);
+		actions.setLayout(new GridLayout(1, 2));
+		actions.add(start);
+		actions.add(graph);
+		add(actions);
 
 		setVisible(true);
 		pack();
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -166,7 +166,7 @@ public class MainGUI extends JFrame implements ActionListener
 	{
 		if (filePath == null)
 		{
-			JOptionPane.showMessageDialog(null, "ERROR: Missing input data file.", "", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Missing input data file.", "", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -177,7 +177,7 @@ public class MainGUI extends JFrame implements ActionListener
 		argsArray[2] = qGPS;
 		argsArray[3] = qMST;
 
-		console.setText("Complete.");
 		MainBody2.main(argsArray);
+		JOptionPane.showMessageDialog(this, "Job Complete.", "", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

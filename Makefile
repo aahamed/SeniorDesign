@@ -99,13 +99,10 @@ Main: $(SRC)MainBody.java
 run:
 	java $(CP) MainGUI
 
-#testMain:
-#	java $(CP) MainBody -m -k -i ./input/min.txt
-
-testMain2:
+testMain:
 	java $(CP) MainBody2 -m -k -i ./input/min.txt
 
-testMain3:
+testMain2:
 	java $(CP) MainBody2 -g -k -i ./input/in.txt
 
 graphInit:
