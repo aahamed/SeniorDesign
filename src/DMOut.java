@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 28, 2016
- * Description: TODO
+ * Last Edit: Apr 13, 2016
+ * Description: Packages the four distance matrices of DistanceMatrix.
  */
 
 import java.util.ArrayList;
@@ -40,5 +40,17 @@ public class DMOut
 	public List<List<Integer>> getwM()
 	{
 		return wM;
+	}
+
+	public void printAll()
+	{
+		System.out.println(">> DM is:");
+		List_ops.print_matrix(DM);
+		System.out.println(">> SP0M is:");
+		List_ops.print_matrix(SP0M);
+		System.out.println(">> XM is:");
+		List_ops.print_matrix(XM);
+		System.out.println(">> wM is:");
+		List_ops.print_matrix(wM);
 	}
 }

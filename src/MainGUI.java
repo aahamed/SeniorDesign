@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 7, 2016
- * Description: GUI for easy use of the proposed connectivity algorithm.
+ * Last Edit: Apr 13, 2016
+ * Description: GUI for easy use of the connectivity algorithm.
  */
 
 import javax.swing.JFrame;
@@ -172,12 +172,12 @@ public class MainGUI extends JFrame implements ActionListener
 
 		String[] argsArray = new String[4];
 
-		argsArray[0] = "-i";
-		argsArray[1] = filePath;
-		argsArray[2] = qGPS;
-		argsArray[3] = qMST;
+		argsArray[0] = qGPS;
+		argsArray[1] = qMST;
+		argsArray[2] = "-i";
+		argsArray[3] = filePath;
 
-		MainBody2.main(argsArray);
+		MainBody.main(argsArray);
 		JOptionPane.showMessageDialog(this, "Job Complete.", "", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

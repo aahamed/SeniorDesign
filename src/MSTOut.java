@@ -1,7 +1,7 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 1, 2016
- * Description: Object that will contain the three data structures that the MST algorithm produces.
+ * Last Edit: Apr 13, 2016
+ * Description: Packages the three data structures of MSTCalc.
  */
 
 import java.util.ArrayList;

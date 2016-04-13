@@ -1,13 +1,13 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 28, 2016
+ * Last Edit: Apr 13, 2016
  * Description: Class which uses an MST algorithm and generates the corresponding data structures.
  */
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MSTCalc2
+public class MSTCalc
 {
 	public static MSTOut Calc(DMOut DMatrices, boolean mstalgo)
 	{
@@ -26,38 +26,38 @@ public class MSTCalc2
 		return output;
 	}
 
-	private static MSTOut primMapper(int[] a, int[][] b, int c)
+	private static MSTOut primMapper(int[] parent, int[][] graph, int entries)
 	{
-		MSTOut output;
 		int w_st = 0;
 		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
 
-		for (int x = 0 ; x < c; x++)
+		for (int x = 0 ; x < entries; x++)
 		{
 			X_st.add(new ArrayList<Integer>());
 
-			for (int y = 0; y < c; y++)
+			for (int y = 0; y < entries; y++)
 			{
 				X_st.get(x).add(0);
 			}
 		}
 
-		for (int i = 1; i < a.length; i++)
+		for (int i = 1; i < parent.length; i++)
 		{
-			X_st.get(a[i]).set(i, 1);
-			X_st.get(i).set(a[i], 1);
-			w_st += b[a[i]][i];
+			X_st.get(parent[i]).set(i, 1);
+			X_st.get(i).set(parent[i], 1);
+			w_st += graph[parent[i]][i];
 		}
 
-		for (int d = 1; d < a.length; d++)
+		for (int j = 1; j < parent.length; j++)
 		{
-			ST.add(new Coordinate<Integer>((a[d] + 1), (d + 1)));
+			if ((parent[j] + 1) < (j + 1))
+				ST.add(new Coordinate<Integer>((parent[j] + 1), (j + 1)));
+			if ((parent[j] + 1) > (j + 1))
+				ST.add(new Coordinate<Integer>((j + 1), (parent[j] + 1)));
 		}
 
-		output = new MSTOut(w_st, ST, X_st);
-
-		return output;
+		return new MSTOut(w_st, ST, X_st);
 	}
 
 	public static void main(String[] args)
@@ -66,7 +66,7 @@ public class MSTCalc2
 		// True is Matlab, false is GPS
 		Coordinate<Double> test1COM = List_ops.getCOM(test1);
 		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
-		DMOut test3 = DistanceMatrix.DMCalc(test2);
+		DMOut test3 = DistanceMatrix.Calc(test2);
 		MSTOut test4 = Calc(test3, false);
 		// True is Prim, false is Kruskal
 

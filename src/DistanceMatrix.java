@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 28, 2016
+ * Last Edit: Apr 13, 2016
  * Description: Class that gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DistanceMatrix
 {
-	public static DMOut DMCalc(List<Coordinate<Integer>> HCSData)
+	public static DMOut Calc(List<Coordinate<Integer>> HCSData)
 	{
 		List<List<Integer>> DM = new ArrayList<List<Integer>>();
 		List<List<Integer>> SP0M = new ArrayList<List<Integer>>();
@@ -53,7 +53,7 @@ public class DistanceMatrix
 		return new DMOut(DM, SP0M, XM, wM);
 	}
 
-	private static int HCSDistance(Coordinate<Integer> a, Coordinate<Integer> b)
+	public static int HCSDistance(Coordinate<Integer> a, Coordinate<Integer> b)
 	{
 		int u = Math.abs(a.getX() - b.getX());
 		int v = Math.abs(a.getY() - b.getY());
@@ -62,66 +62,13 @@ public class DistanceMatrix
 		return Math.max(Math.max(u, v), uv);
 	}
 
-	public static List<List<Integer>> DMCalc1(List<Coordinate<Integer>> a)
-	{
-		List<List<Integer>> output = new ArrayList<List<Integer>>();
-		int entries = a.size();
-		int distance;
-
-		for (int i = 0; i < entries; i++)
-		{
-			output.add(new ArrayList<Integer>());
-			for (int j = 0; j < entries; j++)
-			{
-				output.get(i).add(0);
-			}
-		}
-		for (int x = 0; x < entries; x++)
-		{
-			for (int y = (x + 1); y < entries; y++)
-			{
-				distance = HCSDistance(a.get(x), a.get(y));
-				output.get(x).set(y, distance);
-				output.get(y).set(x, distance);
-			}
-		}
-
-		return output;
-	}
-
-	public static List<List<Integer>> DMCalc2(List<Coordinate<Integer>> a)
-	{
-		List<List<Integer>> output = new ArrayList<List<Integer>>();
-		int entries = a.size();
-		int distance;
-
-		for (int i = 0; i < entries; i++)
-		{
-			output.add(new ArrayList<Integer>());
-			for (int j = 0; j < entries; j++)
-			{
-				output.get(i).add(GlobalConstants.TRANS_RANGE);
-			}
-		}
-		for (int x = 0; x < entries; x++)
-		{
-			for (int y = (x + 1); y < entries; y++)
-			{
-				distance = HCSDistance(a.get(x), a.get(y));
-				output.get(x).set(y, distance);
-			}
-		}
-
-		return output;
-	}
-
 	public static void main(String[] args)
 	{
 		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], false);
 		// True is Matlab, false is GPS
 		Coordinate<Double> test1COM = List_ops.getCOM(test1);
 		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
-		DMOut test3 = DMCalc(test2);
+		DMOut test3 = Calc(test2);
 
 		System.out.println(">> The mapped data has " + test1.size() + " entries.");
 		System.out.println(">> The mapped data has COM: ");

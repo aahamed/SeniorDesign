@@ -1,14 +1,14 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 28, 2016
- * Description: Main body of the algorithm.
+ * Last Edit: Apr 13, 2016
+ * Description: Main body of the connectivity algorithm.
  */
 
 import java.util.ArrayList;
 import java.util.List;
 import Jama.Matrix;
 
-public class MainBody2
+public class MainBody
 {
 	private static String input_filename;
 	private static boolean q_matlab;
@@ -18,23 +18,25 @@ public class MainBody2
 	private static List<Coordinate<Double>> CenList2 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> C1C2List = new ArrayList<Coordinate<Double>>();
 
-	private static int[] maxMST(List<Coordinate<Integer>> a, List<List<Integer>> b)
+	private static int[] maxMST(List<Coordinate<Integer>> MST, List<List<Integer>> DM)
 	{
 		int[] output = new int[3];
-		int len = a.size();
-		int maxv = 0;
-		int row = 0, col = 0;
-		int x_st = 0, y_st = 0;
+		int len = MST.size();
+		int row = 0, col = 0, maxv = 0;
+		int xST = 0, yST = 0;
 
 		for (int c = 0; c < len; c++)
 		{
-			x_st = a.get(c).getX() - 1;
-			y_st = a.get(c).getY() - 1;
-			if (b.get(x_st).get(y_st) > maxv)
+			xST = MST.get(c).getX() - 1;
+			yST = MST.get(c).getY() - 1;
+
+			// Temporary fix for those weird extra ANs in the final graph
+			// use an if and if else by placing the smaller endpoint in the ST coordinate first
+			if (DM.get(xST).get(yST) > maxv)
 			{
-				maxv = b.get(x_st).get(y_st);
-				row = x_st;
-				col = y_st;
+				maxv = DM.get(xST).get(yST);
+				row = xST;
+				col = yST;
 			}
 		}
 
@@ -65,18 +67,6 @@ public class MainBody2
 		output[0][1] = a.getY();
 		output[1][0] = 0.0;
 		output[1][1] = 0.0;
-
-		return output;
-	}
-
-	private static List<Coordinate<Integer>> PrimPrep(int[] a)
-	{
-		List<Coordinate<Integer>> output = new ArrayList<Coordinate<Integer>>();
-
-		for (int i = 1; i < a.length; i++)
-		{
-			output.add(new Coordinate<Integer>((a[i] + 1), (i + 1)));
-		}
 
 		return output;
 	}
@@ -181,9 +171,10 @@ public class MainBody2
 		List<Coordinate<Double>> test1 = MercatorMapping.MM(input_filename, q_matlab);
 		Coordinate<Double> test1COM = List_ops.getCOM(test1);
 		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
-		DMOut test3 = DistanceMatrix.DMCalc(test2);
+		DMOut test3 = DistanceMatrix.Calc(test2);
+		test3.printAll();
 		// Calculating Minimal Spanning Tree
-		MSTOut test4 = MSTCalc2.Calc(test3, q_mstalgo);
+		MSTOut test4 = MSTCalc.Calc(test3, q_mstalgo);
 		test4.printAll();
 		System.out.println();
 
@@ -302,10 +293,9 @@ public class MainBody2
 						// the spanning Tree. Meanwhile, the dimension of D2
 						// needs to be RESHAPED
 						ReshapeDM.Type1(D2, rcv);
-						IMOUT = InitMax.initMax(XYr, XYc, D2);
+						IMOUT = InitMax.initMax(XYr, XYc, D2, q_mstalgo);
 						UV = IMOUT.getHCSList();
 						D2 = IMOUT.getDMatrix();
-						// ST = PrimPrep(IMOUT.getParent());
 						ST = IMOUT.getST();
 					}
 				}
@@ -348,10 +338,9 @@ public class MainBody2
 					// Update information in distance matrix
 					ReshapeDM.Type2(D2, rcv);
 					D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
-					IMOUT = InitMax.initMax(XYr, XYc, D2);
+					IMOUT = InitMax.initMax(XYr, XYc, D2, q_mstalgo);
 					UV = IMOUT.getHCSList();
 					D2 = IMOUT.getDMatrix();
-					// ST = PrimPrep(IMOUT.getParent());
 					ST = IMOUT.getST();
 				}
 				else
@@ -482,26 +471,22 @@ public class MainBody2
 							// 	System.out.println("\tRecursive: More than two nodes needed case!"); // TODO: DEBUG
 							base_t = GlobalConstants.n - 3;
 
-							// D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);
-							// D2.get(base_t).set((base_t + 2), GlobalConstants.H);
-							HOPE = List_ops.ll2array(D2); // TODO: WORK-AROUND
-							HOPE[base_t - 1][base_t + 1] = GlobalConstants.H;
-							HOPE[base_t][base_t + 2] = GlobalConstants.H;
-							D2 = List_ops.array2ll(HOPE);
+							D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);
+							D2.get(base_t).set((base_t + 2), GlobalConstants.H);
 						}
 					}
 
 					// After placement, change the Max Value to be 0 --> R/r
 					D2.get(rcv[0] - 1).set(base, GlobalConstants.H);
 					D2.get(rcv[1] - 1).set((base + 1), GlobalConstants.H);
-					IMOUT = InitMax.initMax(XYr, XYc, D2);
+					IMOUT = InitMax.initMax(XYr, XYc, D2, q_mstalgo);
 					UV = IMOUT.getHCSList();
 					D2 = IMOUT.getDMatrix();
-					// ST = PrimPrep(IMOUT.getParent());
 					ST = IMOUT.getST();
 				}
 			}
 		}
+
 		System.out.println(">> Done with AN placement loop. Algorithm complete."); // TODO: DEBUG
 		System.out.println(">> Final list of node locations:");
 		List_ops.print_coordlist_double(XYr);

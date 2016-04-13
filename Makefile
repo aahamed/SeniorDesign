@@ -100,10 +100,13 @@ run:
 	java $(CP) MainGUI
 
 testMain:
-	java $(CP) MainBody2 -m -k -i ./input/min.txt
+	java $(CP) MainBody -m -k -i ./input/min.txt
 
 testMain2:
-	java $(CP) MainBody2 -g -k -i ./input/in.txt
+	java $(CP) MainBody -g -k -i ./input/in.txt
+
+testMain3:
+	java $(CP) MainBody -m -p -i ./input/min.txt
 
 graphInit:
 	gnuplot -persist $(GP)initial.gnu
