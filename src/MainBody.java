@@ -21,11 +21,10 @@ public class MainBody
 	private static int[] maxMST(List<Coordinate<Integer>> MST, List<List<Integer>> DM)
 	{
 		int[] output = new int[3];
-		int len = MST.size();
 		int row = 0, col = 0, maxv = 0;
 		int xST = 0, yST = 0;
 
-		for (int c = 0; c < len; c++)
+		for (int c = 0; c < MST.size(); c++)
 		{
 			xST = MST.get(c).getX() - 1;
 			yST = MST.get(c).getY() - 1;
@@ -47,14 +46,14 @@ public class MainBody
 		return output;
 	}
 
-	private static int[] getUVs(List<Coordinate<Integer>> a, int[] b)
+	private static int[] getUVs(List<Coordinate<Integer>> UV, int[] rcv)
 	{
 		int[] output = new int[4];
 
-		output[0] = a.get(b[0] - 1).getX(); // u(row)
-		output[1] = a.get(b[0] - 1).getY(); // v(row)
-		output[2] = a.get(b[1] - 1).getX(); // u(col)
-		output[3] = a.get(b[1] - 1).getY(); // v(col)
+		output[0] = UV.get(rcv[0] - 1).getX(); // u(row)
+		output[1] = UV.get(rcv[0] - 1).getY(); // v(row)
+		output[2] = UV.get(rcv[1] - 1).getX(); // u(col)
+		output[3] = UV.get(rcv[1] - 1).getY(); // v(col)
 
 		return output;
 	}
@@ -168,27 +167,20 @@ public class MainBody
 		options(args);
 
 		// Step 1: Find out the distance matrix
-		List<Coordinate<Double>> test1 = MercatorMapping.MM(input_filename, q_matlab);
-		Coordinate<Double> test1COM = List_ops.getCOM(test1);
-		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
-		DMOut test3 = DistanceMatrix.Calc(test2);
-		test3.printAll();
+		List<Coordinate<Double>> XYr = MercatorMapping.MM(input_filename, q_matlab);
+		Coordinate<Double> XYc = List_ops.getCOM(XYr);
+		List<Coordinate<Integer>> UV = InitialSetup.IS(XYr);
+		DMOut DMatrices = DistanceMatrix.Calc(UV);
 		// Calculating Minimal Spanning Tree
-		MSTOut test4 = MSTCalc.Calc(test3, q_mstalgo);
-		test4.printAll();
-		System.out.println();
+		MSTOut Tree = MSTCalc.Calc(DMatrices, q_mstalgo);
 
 		// Place ANs to achieve connection
-		List<Coordinate<Integer>> UV = test2;
 		int[] rcv, pq;
 		Coordinate<Integer> p = null, q = null;
 		Coordinate<Double> cen1, cen2;
-		MSTOut Tree = test4;
 		List<Coordinate<Integer>> ST = Tree.getST();
-		List<List<Integer>> D2 = test3.getDM();
+		List<List<Integer>> D2 = DMatrices.getDM();
 		GlobalConstants.n = D2.size();
-		Coordinate<Double> XYc = test1COM;
-		List<Coordinate<Double>> XYr = test1;
 		boolean exit = false;
 		// Pointer if-statement
 		int Nsign;
@@ -206,7 +198,6 @@ public class MainBody
 		Coordinate<Integer> AN, AN2, O = new Coordinate<Integer>(0, 0);
 		Coordinate<Double> C1, C2;
 		double num;
-		int[][] HOPE;
 
 		System.out.println(">> Entering IN placement loop."); // TODO: DEBUG
 		while (!exit)
@@ -215,7 +206,7 @@ public class MainBody
 			// Search through the Spanning Tree to pick up the shortest edge
 			rcv = maxMST(ST, D2);
 			System.out.println();
-			System.out.println("Current longest edge is at: (" + rcv[0] + ", " + rcv[1] + "), and that length is: " + rcv[2]);
+			System.out.printf("Current longest edge is at: (%d, %d), and that length is: %d\n", rcv[0], rcv[1], rcv[2]);
 			if (rcv[2] <= GlobalConstants.H)
 				break;
 			// Prepare for Placement
