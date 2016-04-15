@@ -17,8 +17,8 @@ public class Kruskal
 		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
 
 		boolean isUndirGraph = true;
-		int[][] X_ne = List_ops.ll2array(a);
-		int[][] w_ne = List_ops.ll2array(b);
+		int[][] X_ne = ListOps.ll2array(a);
+		int[][] w_ne = ListOps.ll2array(b);
 
 		// "Convert logical adjacent matrix to neighbors' matrix"
 		boolean cond1 = a.size() == a.get(0).size();

@@ -79,8 +79,8 @@ public class MercatorMapping
 
 		System.out.println(">> The mapped data has " + test.size() + " entries.");
 		System.out.println(">> The mapped data has COM: ");
-		System.out.println(List_ops.getCOM(test));
+		System.out.println(ListOps.getCOM(test));
 		System.out.println(">> The mapped data contains:");
-		List_ops.print_coordlist_double(test);
+		ListOps.printDoubleCoords(test);
 	}
 }

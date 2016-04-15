@@ -174,7 +174,7 @@ public class InitMax
 
 		if (qMST)
 		{
-			int[] mst = PrimMST.primMST(List_ops.ll2array(WM));
+			int[] mst = PrimMST.primMST(ListOps.ll2array(WM));
 			ST = primPrep(mst);
 			//PrimMST.printMST(mst, newDistMat[0].length, newDistMat);   //debug code - comment out
 		}
@@ -228,7 +228,7 @@ public class InitMax
 		oldDistMat.add(row2);
 		InitMaxOut res = InitMax.initMax(listOfCoords, com, oldDistMat, false);
 		System.out.println("MST:");
-		List_ops.print_coordlist_int(res.getST());
+		ListOps.printIntCoords(res.getST());
 	}
 
 	public static void main(String[] args)

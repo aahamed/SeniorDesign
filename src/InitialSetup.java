@@ -14,7 +14,7 @@ public class InitialSetup
 		List<Coordinate<Integer>> output = new ArrayList<Coordinate<Integer>>();
 
 		int entries = mappedData.size();
-		Coordinate<Double> mappedDataCOM = List_ops.getCOM(mappedData);
+		Coordinate<Double> mappedDataCOM = ListOps.getCOM(mappedData);
 		double normX, normY;
 		Coordinate<Double> temp;
 
@@ -34,17 +34,17 @@ public class InitialSetup
 	{
 		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], false);
 		// True is Matlab, false is GPS
-		Coordinate<Double> test1COM = List_ops.getCOM(test1);
+		Coordinate<Double> test1COM = ListOps.getCOM(test1);
 		List<Coordinate<Integer>> test2 = IS(test1);
 
 		System.out.println(">> The mapped data has " + test1.size() + " entries.");
 		System.out.println(">> The mapped data has COM: ");
-		System.out.println(List_ops.getCOM(test1));
+		System.out.println(ListOps.getCOM(test1));
 		System.out.println(">> The mapped data contains:");
-		List_ops.print_coordlist_double(test1);
+		ListOps.printDoubleCoords(test1);
 
 		System.out.println(">> The HCS data has " + test2.size() + " entries.");
 		System.out.println(">> The HCS data contains:");
-		List_ops.print_coordlist_int(test2);
+		ListOps.printIntCoords(test2);
 	}
 }

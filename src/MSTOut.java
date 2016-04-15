@@ -32,7 +32,7 @@ public class MSTOut
 
 	public int[][] getSTArray()
 	{
-		return List_ops.lc2array(ST);
+		return ListOps.lc2array(ST);
 	}
 
 	public List<List<Integer>> getXst()
@@ -42,7 +42,7 @@ public class MSTOut
 
 	public int[][] getXstArray()
 	{
-		return List_ops.ll2array(X_st);
+		return ListOps.ll2array(X_st);
 	}
 
 	public void setwst(int a)
@@ -57,7 +57,7 @@ public class MSTOut
 
 	public void setSTArray(int[][] a)
 	{
-		ST = List_ops.array2lc(a);
+		ST = ListOps.array2lc(a);
 	}
 
 	public void setXst(List<List<Integer>> a)
@@ -67,7 +67,7 @@ public class MSTOut
 
 	public void setXstArray(int[][] a)
 	{
-		X_st = List_ops.array2ll(a);
+		X_st = ListOps.array2ll(a);
 	}
 
 	public void printwst()
@@ -79,13 +79,13 @@ public class MSTOut
 	public void printST()
 	{
 		System.out.println(">> ST is:");
-		List_ops.print_coordlist_int(ST);
+		ListOps.printIntCoords(ST);
 	}
 
 	public void printXst()
 	{
 		System.out.println(">> X_st is:");
-		List_ops.print_matrix(X_st);
+		ListOps.printMatrix(X_st);
 	}
 
 	public void printAll()

@@ -45,12 +45,12 @@ public class DMOut
 	public void printAll()
 	{
 		System.out.println(">> DM is:");
-		List_ops.print_matrix(DM);
+		ListOps.printMatrix(DM);
 		System.out.println(">> SP0M is:");
-		List_ops.print_matrix(SP0M);
+		ListOps.printMatrix(SP0M);
 		System.out.println(">> XM is:");
-		List_ops.print_matrix(XM);
+		ListOps.printMatrix(XM);
 		System.out.println(">> wM is:");
-		List_ops.print_matrix(wM);
+		ListOps.printMatrix(wM);
 	}
 }

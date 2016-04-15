@@ -168,7 +168,7 @@ public class MainBody
 
 		// Step 1: Find out the distance matrix
 		List<Coordinate<Double>> XYr = MercatorMapping.MM(input_filename, q_matlab);
-		Coordinate<Double> XYc = List_ops.getCOM(XYr);
+		Coordinate<Double> XYc = ListOps.getCOM(XYr);
 		List<Coordinate<Integer>> UV = InitialSetup.IS(XYr);
 		DMOut DMatrices = DistanceMatrix.Calc(UV);
 		// Calculating Minimal Spanning Tree
@@ -480,7 +480,7 @@ public class MainBody
 
 		System.out.println(">> Done with AN placement loop. Algorithm complete."); // TODO: DEBUG
 		System.out.println(">> Final list of node locations:");
-		List_ops.print_coordlist_double(XYr);
+		ListOps.printDoubleCoords(XYr);
 		WriteFile.WF(XYr);
 		System.out.println(">> Original node locations saved in \"./output/original.dat\"");
 		System.out.println(">> Additional node locations saved in \"./output/additional.dat\"");

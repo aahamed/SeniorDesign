@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 13, 2016
+ * Last Edit: Apr 14, 2016
  * Description: GUI for easy use of the connectivity algorithm.
  */
 
@@ -26,23 +26,33 @@ public class MainGUI extends JFrame implements ActionListener
 	private static String filePath;
 	private static String qGPS = "-g";
 	private static String qMST = "-k";
+	private JButton start;
+	private JButton graph;
+	private JButton exit;
 
 	public MainGUI()
 	{
-		setTitle("Algorithm (WIP)");
+		setTitle("Connectivity Algorithm");
 		setLayout(new GridLayout(4, 1));
-		JPanel actions = new JPanel();
-		JButton start = new JButton("Run");
-		JButton graph = new JButton("Graph");
 
 		add(new FileSelect());
 		add(new QuestionGPS());
 		add(new QuestionMST());
 
+		JPanel actions = new JPanel();
+		start = new JButton("Run");
+		graph = new JButton("Graph");
+		exit = new JButton("Exit");
+
 		start.addActionListener(this);
-		actions.setLayout(new GridLayout(1, 2));
+		graph.addActionListener(this);
+		graph.setEnabled(false);
+		exit.addActionListener(this);
+
+		actions.setLayout(new GridLayout(1, 3));
 		actions.add(start);
 		actions.add(graph);
+		actions.add(exit);
 		add(actions);
 
 		setVisible(true);
@@ -164,20 +174,36 @@ public class MainGUI extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent event)
 	{
-		if (filePath == null)
+		Object source = event.getSource();
+
+		if (source == start)
 		{
-			JOptionPane.showMessageDialog(this, "Missing input data file.", "", JOptionPane.ERROR_MESSAGE);
-			return;
+			if (filePath == null)
+			{
+				JOptionPane.showMessageDialog(this, "Missing input data file.", "", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			String[] argsArray = new String[4];
+
+			argsArray[0] = qGPS;
+			argsArray[1] = qMST;
+			argsArray[2] = "-i";
+			argsArray[3] = filePath;
+
+			MainBody.main(argsArray);
+			graph.setEnabled(true);
+			JOptionPane.showMessageDialog(this, "Job Complete.", "", JOptionPane.INFORMATION_MESSAGE);
 		}
-
-		String[] argsArray = new String[4];
-
-		argsArray[0] = qGPS;
-		argsArray[1] = qMST;
-		argsArray[2] = "-i";
-		argsArray[3] = filePath;
-
-		MainBody.main(argsArray);
-		JOptionPane.showMessageDialog(this, "Job Complete.", "", JOptionPane.INFORMATION_MESSAGE);
+		else if (source == graph)
+		{
+			System.out.println("LITERALLY NOTHING");
+		}
+		else if (source == exit)
+		{
+			setVisible(false);
+			dispose();
+			System.exit(0);
+		}
 	}
 }

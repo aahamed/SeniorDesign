@@ -75,6 +75,6 @@ public class ParseData
 
 		System.out.println(">> The parsed data has " + test.size() + " entries.");
 		System.out.println(">> The parsed data contains:");
-		List_ops.print_coordlist_double(test);
+		ListOps.printDoubleCoords(test);
 	}
 }
