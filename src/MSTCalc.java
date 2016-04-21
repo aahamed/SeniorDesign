@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 13, 2016
+ * Last Edit: Apr 21, 2016
  * Description: Class which uses an MST algorithm and generates the corresponding data structures.
  */
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MSTCalc
 {
-	public static MSTOut Calc(DMOut DMatrices, boolean mstalgo)
+	public static MSTOut MC(DMOut DMatrices, boolean mstalgo)
 	{
 		MSTOut output;
 
@@ -66,8 +66,8 @@ public class MSTCalc
 		// True is Matlab, false is GPS
 		Coordinate<Double> test1COM = ListOps.getCOM(test1);
 		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
-		DMOut test3 = DistanceMatrix.Calc(test2);
-		MSTOut test4 = Calc(test3, false);
+		DMOut test3 = DistanceMatrix.DM(test2);
+		MSTOut test4 = MC(test3, false);
 		// True is Prim, false is Kruskal
 
 		System.out.println(">> The mapped data has " + test1.size() + " entries.");

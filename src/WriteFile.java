@@ -1,78 +1,73 @@
 /*
  * Author: Josue Galeas
- * Last Edit: March 10, 2016
- * Description: TODO.
+ * Last Edit: Apr 21, 2016
+ * Description: Class for writing lines from the list of coordinates, to a data file.
  */
 
-import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-
 public class WriteFile
 {
-	public static void WF(List<Coordinate<Double>> input)
+	public static void WF(List<Coordinate<Double>> input, int originalNodes)
 	{
-		BufferedWriter BW1 = null;
-		BufferedWriter BW2 = null;
+		Path original = Paths.get("./output/original.dat");
+		Path additional = Paths.get("./output/additional.dat");
+
 		try
 		{
-			File datafile1 = new File("./output/original.dat");
-			if (!datafile1.exists())
-				datafile1.createNewFile();
-			File datafile2 = new File("./output/additional.dat");
-			if (!datafile2.exists())
-				datafile2.createNewFile();
-
-			FileWriter FW1 = new FileWriter(datafile1);
-			FileWriter FW2 = new FileWriter(datafile2);
-			BW1 = new BufferedWriter(FW1);
-			BW2 = new BufferedWriter(FW2);
-
-			int entries = input.size();
-			String X = null, Y = null, datastring = null;
-
-			for (int i = 0; i < 10; i++)
+			BufferedWriter writer1 = Files.newBufferedWriter(original);
+			BufferedWriter writer2 = Files.newBufferedWriter(additional);
+			try
 			{
-				X = Double.toString(input.get(i).getX());
-				Y = Double.toString(input.get(i).getY());
-				datastring = X + "         " + Y + "\n"; 
-				BW1.write(datastring);
+				String X = null, Y = null, datastring = null;
+
+				for (int i = 0; i < originalNodes; i++)
+				{
+					X = Double.toString(input.get(i).getX());
+					Y = Double.toString(input.get(i).getY());
+					datastring = X + "\t" + Y + "\n";
+					writer1.write(datastring);
+				}
+
+				for (int j = originalNodes; j < input.size(); j++)
+				{
+					X = Double.toString(input.get(j).getX());
+					Y = Double.toString(input.get(j).getY());
+					datastring = X + "\t" + Y + "\n";
+					writer2.write(datastring);
+				}
 			}
-
-			for (int i = 10; i < entries; i++)
+			catch (IOException x)
 			{
-				X = Double.toString(input.get(i).getX());
-				Y = Double.toString(input.get(i).getY());
-				datastring = X + "         " + Y + "\n"; 
-				BW2.write(datastring);
+				System.err.format("ERROR: Could not open the output file. [%s]\n", x);
+				System.exit(0);
+			}
+			finally
+			{
+				try
+				{
+					if (writer1 != null)
+						writer1.close();
+					if (writer2 != null)
+						writer2.close();
+				}
+				catch (IOException x)
+				{
+					System.err.format("ERROR: Could not close the output file. [%s]\n", x);
+					System.exit(0);
+				}
 			}
 		}
 		catch (IOException x)
 		{
-			x.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				if (BW1 != null)
-					BW1.close();
-				if (BW2 != null)
-					BW2.close();
-			}
-			catch (Exception x)
-			{
-				System.out.println("Error is closing BW" + x);
-			}
+			System.err.format("ERROR: Could not find the output file. This should NEVER occur. [%s]\n", x);
+			System.exit(0);
 		}
 	}
 }

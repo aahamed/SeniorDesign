@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 13, 2016
+ * Last Edit: Apr 21, 2016
  * Description: Main body of the connectivity algorithm.
  */
 
@@ -170,9 +170,9 @@ public class MainBody
 		List<Coordinate<Double>> XYr = MercatorMapping.MM(input_filename, q_matlab);
 		Coordinate<Double> XYc = ListOps.getCOM(XYr);
 		List<Coordinate<Integer>> UV = InitialSetup.IS(XYr);
-		DMOut DMatrices = DistanceMatrix.Calc(UV);
+		DMOut DMatrices = DistanceMatrix.DM(UV);
 		// Calculating Minimal Spanning Tree
-		MSTOut Tree = MSTCalc.Calc(DMatrices, q_mstalgo);
+		MSTOut Tree = MSTCalc.MC(DMatrices, q_mstalgo);
 
 		// Place ANs to achieve connection
 		int[] rcv, pq;
@@ -181,6 +181,7 @@ public class MainBody
 		List<Coordinate<Integer>> ST = Tree.getST();
 		List<List<Integer>> D2 = DMatrices.getDM();
 		GlobalConstants.n = D2.size();
+		int originalNodes = GlobalConstants.n;
 		boolean exit = false;
 		// Pointer if-statement
 		int Nsign;
@@ -479,9 +480,7 @@ public class MainBody
 		}
 
 		System.out.println(">> Done with AN placement loop. Algorithm complete."); // TODO: DEBUG
-		System.out.println(">> Final list of node locations:");
-		ListOps.printDoubleCoords(XYr);
-		WriteFile.WF(XYr);
+		WriteFile.WF(XYr, originalNodes);
 		System.out.println(">> Original node locations saved in \"./output/original.dat\"");
 		System.out.println(">> Additional node locations saved in \"./output/additional.dat\"");
 	}

@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: March 28, 2016
+ * Last Edit: Apr 21, 2016
  * Description: Class for reading lines from a text file and storing each line into an ArrayList of strings.
  */
 
@@ -33,7 +33,7 @@ public class ReadFile
 			}
 			catch (IOException x)
 			{
-				System.err.format("ERROR: Could not open the input file.");
+				System.err.format("ERROR: Could not open the input file. [%s]\n", x);
 				System.exit(2);
 			}
 			finally
@@ -45,7 +45,7 @@ public class ReadFile
 				}
 				catch (IOException x)
 				{
-					System.err.format("ERROR: Could not close the input file.");
+					System.err.format("ERROR: Could not close the input file. [%s]\n", x);
 					System.exit(3);
 				}
 			}

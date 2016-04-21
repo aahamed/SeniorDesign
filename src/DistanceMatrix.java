@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 13, 2016
+ * Last Edit: Apr 21, 2016
  * Description: Class that gets normalized data set and calculates four distance matrices to be interpreted by the MST algorithm.
  */
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DistanceMatrix
 {
-	public static DMOut Calc(List<Coordinate<Integer>> HCSData)
+	public static DMOut DM(List<Coordinate<Integer>> HCSData)
 	{
 		List<List<Integer>> DM = new ArrayList<List<Integer>>();
 		List<List<Integer>> SP0M = new ArrayList<List<Integer>>();
@@ -68,7 +68,7 @@ public class DistanceMatrix
 		// True is Matlab, false is GPS
 		Coordinate<Double> test1COM = ListOps.getCOM(test1);
 		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
-		DMOut test3 = Calc(test2);
+		DMOut test3 = DM(test2);
 
 		System.out.println(">> The mapped data has " + test1.size() + " entries.");
 		System.out.println(">> The mapped data has COM: ");

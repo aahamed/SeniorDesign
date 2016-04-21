@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 14, 2016
+ * Last Edit: Apr 21, 2016
  * Description: GUI for easy use of the connectivity algorithm.
  */
 
@@ -33,13 +33,18 @@ public class MainGUI extends JFrame implements ActionListener
 	public MainGUI()
 	{
 		setTitle("Connectivity Algorithm");
-		setLayout(new GridLayout(4, 1));
+		setLayout(new GridLayout(3, 1));
 
 		add(new FileSelect());
-		add(new QuestionGPS());
-		add(new QuestionMST());
 
-		JPanel actions = new JPanel();
+		JPanel questions = new JPanel();
+		questions.setLayout(new GridLayout(1, 2));
+		questions.add(new QuestionGPS());
+		questions.add(new QuestionMST());
+
+		add(questions);
+
+		JPanel actions = new JPanel(new GridLayout(1, 3));
 		start = new JButton("Run");
 		graph = new JButton("Graph");
 		exit = new JButton("Exit");
@@ -49,7 +54,6 @@ public class MainGUI extends JFrame implements ActionListener
 		graph.setEnabled(false);
 		exit.addActionListener(this);
 
-		actions.setLayout(new GridLayout(1, 3));
 		actions.add(start);
 		actions.add(graph);
 		actions.add(exit);
@@ -108,7 +112,7 @@ public class MainGUI extends JFrame implements ActionListener
 	{
 		public QuestionGPS()
 		{
-			setLayout(new GridLayout(1, 2));
+			setLayout(new GridLayout(2, 1));
 			ButtonGroup choice = new ButtonGroup();
 
 			JRadioButton GPS = new JRadioButton("GPS");
@@ -139,7 +143,7 @@ public class MainGUI extends JFrame implements ActionListener
 	{
 		public QuestionMST()
 		{
-			setLayout(new GridLayout(1, 2));
+			setLayout(new GridLayout(2, 1));
 			ButtonGroup choice = new ButtonGroup();
 
 			JRadioButton K = new JRadioButton("Kruskal's");
