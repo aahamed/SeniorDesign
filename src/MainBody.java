@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 21, 2016
+ * Last Edit: Apr 25, 2016
  * Description: Main body of the connectivity algorithm.
  */
 
@@ -14,6 +14,7 @@ public class MainBody
 	private static boolean q_matlab;
 	private static boolean q_mstalgo;
 
+	private static List<Coordinate<Double>> XYr;
 	private static List<Coordinate<Double>> CenList1 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> CenList2 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> C1C2List = new ArrayList<Coordinate<Double>>();
@@ -68,6 +69,11 @@ public class MainBody
 		output[1][1] = 0.0;
 
 		return output;
+	}
+
+	public static List<Coordinate<Double>> getXYr()
+	{
+		return XYr;
 	}
 
 	private static void options(String[] a)
@@ -147,7 +153,7 @@ public class MainBody
 
 	private static void helpMenu()
 	{
-		System.out.println("Usage: java MainBody [--help] [<args>] [-i <path>]");
+		System.out.println("Usage: MainBody [--help] [<args>] [-i <path>]");
 		System.out.println();
 		System.out.println("Input file:");
 		System.out.println("    -i followed by the path to input text file");
@@ -167,7 +173,7 @@ public class MainBody
 		options(args);
 
 		// Step 1: Find out the distance matrix
-		List<Coordinate<Double>> XYr = MercatorMapping.MM(input_filename, q_matlab);
+		XYr = MercatorMapping.MM(input_filename, q_matlab);
 		Coordinate<Double> XYc = ListOps.getCOM(XYr);
 		List<Coordinate<Integer>> UV = InitialSetup.IS(XYr);
 		DMOut DMatrices = DistanceMatrix.DM(UV);

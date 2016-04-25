@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Feb 28, 2016
+ * Last Edit: Apr 25, 2016
  * Description: Class that maps latitude and longitude values to a Mercator projection, a 2D Cartesian plane.
  */
 
@@ -12,6 +12,7 @@ public class MercatorMapping
 	private static final double WGS84_A = 6378137.0;
 	private static final double WGS84_F = 1.0/298.257223563;
 	private static final double WGS84_B = WGS84_A * (1.0 - WGS84_F);
+	private static final double SCALE = 100.0;
 
 	public static List<Coordinate<Double>> MM(String inputFile, boolean matlab)
 	{
@@ -48,15 +49,20 @@ public class MercatorMapping
 
 	private static double lon2mercX(double lon)
 	{
-		return WGS84_A * Math.toRadians(lon) / 100.0;
+		return WGS84_A * Math.toRadians(lon) / SCALE;
+	}
+
+	private static double mercX2lon(double mercX)
+	{
+		return Math.toDegrees(mercX * SCALE / WGS84_A);
 	}
 
 	private static double lat2mercY(double lat)
 	{
-		if (lat > 89.5)
-			lat = 89.5;
-		if (lat < -89.5)
-			lat = -89.5;
+		if (lat > 89.999)
+			lat = 89.999;
+		if (lat < -89.999)
+			lat = -89.999;
 
 		double temp = WGS84_B / WGS84_A;
 		double es = 1.0 - (temp * temp);
@@ -69,7 +75,22 @@ public class MercatorMapping
 		double ts = Math.tan(0.5 * ((Math.PI * 0.5) - phi)) / con;
 		double y = 0.0 - WGS84_A * Math.log(ts);
 
-		return y / 100.0;
+		return y / SCALE;
+	}
+
+	private static double mercY2lat(double mercY)
+	{
+		// TODO: Finish reverse conversion
+		// If not possible, switch to a different mapping system
+		double y = mercY * SCALE;
+		double ts = Math.exp(y / -WGS84_A);
+
+		double temp = WGS84_B / WGS84_A;
+		double es = 1.0 - (temp * temp);
+		double eccent = Math.sqrt(es);
+		double com = 0.5 * eccent;
+
+		return 0.0;
 	}
 
 	public static void main(String[] args)

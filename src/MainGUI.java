@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 21, 2016
+ * Last Edit: Apr 25, 2016
  * Description: GUI for easy use of the connectivity algorithm.
  */
 
@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame implements ActionListener
@@ -201,7 +203,9 @@ public class MainGUI extends JFrame implements ActionListener
 		}
 		else if (source == graph)
 		{
-			System.out.println("LITERALLY NOTHING");
+			System.out.println("Insert graphing capability here.");
+			// Use MainBody.getXYr() to the get the list of coordinates
+			// This method returns List<Coordinate<Double>>
 		}
 		else if (source == exit)
 		{
