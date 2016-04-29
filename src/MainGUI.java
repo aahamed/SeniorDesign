@@ -31,6 +31,7 @@ public class MainGUI extends JFrame implements ActionListener
 	private JButton start;
 	private JButton graph;
 	private JButton exit;
+	private List<Coordinate<Double>> list;
 
 	public MainGUI()
 	{
@@ -198,12 +199,14 @@ public class MainGUI extends JFrame implements ActionListener
 			argsArray[3] = filePath;
 
 			MainBody.main(argsArray);
+			list = MainBody.getXYr();
 			graph.setEnabled(true);
 			JOptionPane.showMessageDialog(this, "Job Complete.", "", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else if (source == graph)
 		{
 			System.out.println("Insert graphing capability here.");
+			ListOps.printDoubleCoords(list);
 			// Use MainBody.getXYr() to the get the list of coordinates
 			// This method returns List<Coordinate<Double>>
 		}
