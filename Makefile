@@ -1,46 +1,43 @@
-# Top Level Makefile
-# Put rules for compilation/running here
+### Top Level Makefile ###
 
-BIN=./bin/
-SRC=./src/
-LIB=./lib/*
-TEST=./test/
-GP=./gnuplot/
-CP=-cp '$(BIN);$(LIB)'
-ODIR=-d $(BIN)
-OSNAME = $(OS)
+BIN = ./bin/
+LIB = ./lib/*
+SRC = ./src/
+TEST = ./test/
+GP = ./gnuplot/
+ODIR = -d $(BIN)
+OS = $(shell uname)
 XLINT = -Xlint:unchecked
 
-# Determine OS
+# Determine OS for CP #
 
 ifeq '$(OS)' 'Windows_NT'
-	# set variables for windows
-	OSNAME=$(OS)
-	CP=-cp '$(BIN);$(LIB)'
+	# For Windows
+	CP = -cp '$(BIN);$(LIB)'
+else ifeq '$(OS)' 'Darwin'
+	# For OS X
+	CP = -cp '$(BIN):$(LIB)'
+else ifeq '$(OS)' 'Linux'
+	# For Linux
+	CP = -cp '$(BIN):$(LIB)'
 else
-	# get OS name
-	OSNAME=$(shell uname)
-	# set variables according to OS
-
-	# Mac OS X
-	ifeq '$(OSNAME)' 'Darwin'
-		CP=-cp '$(BIN):$(LIB)'
-	endif
-
-	# Linux
-	ifeq '$(OSNAME)' 'Linux'
-		CP=-cp '$(BIN):$(LIB)'
-	endif
+	echo Unsupported OS: Add condition for your OS.
 endif
 
+### Make Rules ###
 
-#Make Rules
+# General #
 
 all:
 	javac $(CP) $(ODIR) $(SRC)*.java
 
+run:
+	java $(CP) MainGUI
+
 clean:
 	rm -rf $(BIN)*.class
+
+# TODO: Everything Else #
 
 GlobalConstants: $(SRC)GlobalConstants.java
 	javac $(CP) $(ODIR) $(SRC)GlobalConstants.java
@@ -96,9 +93,6 @@ LocateM2:
 Main: $(SRC)MainBody.java
 	javac $(CP) $(ODIR) $(SRC)MainBody.java
 
-run:
-	java $(CP) MainGUI
-
 testMain:
 	java $(CP) MainBody -m -k -i ./input/min.txt
 
@@ -108,20 +102,11 @@ testMain2:
 testMain3:
 	java $(CP) MainBody -m -p -i ./input/min.txt
 
-graphInit:
-	gnuplot -persist $(GP)initial.gnu
-
 graphFinal:
 	gnuplot -persist $(GP)graph.gnu
 
 graphFinalPNG:
 	gnuplot -persist $(GP)graphpng.gnu
-
-echo_osname:
-	echo $(OSNAME)
-
-echo_cp:
-	echo $(CP)
 
 testJunit: $(TEST)TestJunit.java $(TEST)TestRunner.java
 	javac $(CP) $(ODIR) $(TEST)TestJunit.java $(TEST)TestRunner.java

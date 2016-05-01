@@ -35,8 +35,8 @@ Command-Line Usage
 		-p for Prim's algorithm
 		```
 	* Input text file should be formatted as follows:
-		* See `./src/input/in.txt` for an example of how to set up GPS coordinates
-		* See `./src/input/min.txt` for an example of how to set up MATLAB generated coordinates
+		* See `./input/in.txt` for an example of how to set up GPS coordinates
+		* See `./input/min.txt` for an example of how to set up MATLAB generated coordinates
 4. To plot the results using GNUplot, use: `make graphFinal`
 	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graph.gnu`
 5. To save the plot directly to a PNG file, use: `make graphFinalPNG`
