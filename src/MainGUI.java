@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Color;
+
 
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame implements ActionListener
@@ -139,6 +141,7 @@ public class MainGUI extends JFrame implements ActionListener
 		public void actionPerformed(ActionEvent event)
 		{
 			qGPS = event.getActionCommand();
+
 		}
 	}
 
@@ -176,6 +179,7 @@ public class MainGUI extends JFrame implements ActionListener
 	public static void main(String[] args)
 	{
 		MainGUI app = new MainGUI();
+
 	}
 
 	@Override
@@ -209,6 +213,13 @@ public class MainGUI extends JFrame implements ActionListener
 			ListOps.printDoubleCoords(list);
 			// Use MainBody.getXYr() to the get the list of coordinates
 			// This method returns List<Coordinate<Double>>
+				JFrame f = new JFrame();
+	TransformScale graph= new TransformScale();
+	graph.getlist(list);
+    f.getContentPane().add(graph);
+    f.getContentPane().setBackground(Color.WHITE);
+    f.setSize(500, 500);
+    f.setVisible(true);
 		}
 		else if (source == exit)
 		{
