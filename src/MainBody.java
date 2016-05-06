@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 25, 2016
+ * Last Edit: May 5, 2016
  * Description: Main body of the connectivity algorithm.
  */
 
@@ -15,6 +15,8 @@ public class MainBody
 	private static boolean q_mstalgo;
 
 	private static List<Coordinate<Double>> XYr;
+	private static int originalNodes;
+
 	private static List<Coordinate<Double>> CenList1 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> CenList2 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> C1C2List = new ArrayList<Coordinate<Double>>();
@@ -74,6 +76,11 @@ public class MainBody
 	public static List<Coordinate<Double>> getXYr()
 	{
 		return XYr;
+	}
+
+	public static int getOriginalNodes()
+	{
+		return originalNodes;
 	}
 
 	private static void options(String[] a)
@@ -187,7 +194,7 @@ public class MainBody
 		List<Coordinate<Integer>> ST = Tree.getST();
 		List<List<Integer>> D2 = DMatrices.getDM();
 		GlobalConstants.n = D2.size();
-		int originalNodes = GlobalConstants.n;
+		originalNodes = GlobalConstants.n;
 		boolean exit = false;
 		// Pointer if-statement
 		int Nsign;

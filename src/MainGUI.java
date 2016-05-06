@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 25, 2016
+ * Last Edit: May 5, 2016
  * Description: GUI for easy use of the connectivity algorithm.
  */
 
@@ -15,8 +15,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JOptionPane;
-import java.awt.event.ActionListener;
 import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -30,10 +31,13 @@ public class MainGUI extends JFrame implements ActionListener
 	private static String filePath;
 	private static String qGPS = "-g";
 	private static String qMST = "-k";
-	private JButton start;
-	private JButton graph;
-	private JButton exit;
-	private List<Coordinate<Double>> list;
+
+	private static JButton start;
+	private static JButton graph;
+	private static JButton exit;
+
+	private static List<Coordinate<Double>> dataPoints;
+	private static int originalPoints;
 
 	public MainGUI()
 	{
@@ -203,23 +207,21 @@ public class MainGUI extends JFrame implements ActionListener
 			argsArray[3] = filePath;
 
 			MainBody.main(argsArray);
-			list = MainBody.getXYr();
+			dataPoints = MainBody.getXYr();
+			originalPoints = MainBody.getOriginalNodes();
 			graph.setEnabled(true);
 			JOptionPane.showMessageDialog(this, "Job Complete.", "", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else if (source == graph)
 		{
-			System.out.println("Insert graphing capability here.");
-			ListOps.printDoubleCoords(list);
-			// Use MainBody.getXYr() to the get the list of coordinates
-			// This method returns List<Coordinate<Double>>
-				JFrame f = new JFrame();
-	TransformScale graph= new TransformScale();
-	graph.getlist(list);
-    f.getContentPane().add(graph);
-    f.getContentPane().setBackground(Color.WHITE);
-    f.setSize(500, 500);
-    f.setVisible(true);
+			JFrame graphWindow = new JFrame();
+			TransformScale graph = new TransformScale();
+			graph.getList(dataPoints);
+			graphWindow.getContentPane().add(graph);
+			graphWindow.getContentPane().setBackground(Color.WHITE);
+			graphWindow.setSize(500, 500);
+			graphWindow.setVisible(true);
+			graphWindow.setLocationRelativeTo(null);
 		}
 		else if (source == exit)
 		{

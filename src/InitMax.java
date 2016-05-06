@@ -1,5 +1,6 @@
 /*
- * Author: Aadil Ahamed, Josue Galeas
+ * Author: Aadil Ahamed
+ * Edited By: Josue Galeas
  * Last Edit: Apr 13, 2016
  * Description: Port of InitMax.m
  */
