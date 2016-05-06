@@ -214,14 +214,7 @@ public class MainGUI extends JFrame implements ActionListener
 		}
 		else if (source == graph)
 		{
-			JFrame graphWindow = new JFrame();
-			TransformScale graph = new TransformScale();
-			graph.getList(dataPoints);
-			graphWindow.getContentPane().add(graph);
-			graphWindow.getContentPane().setBackground(Color.WHITE);
-			graphWindow.setSize(500, 500);
-			graphWindow.setVisible(true);
-			graphWindow.setLocationRelativeTo(null);
+			TransformScale graph = new TransformScale(dataPoints, originalPoints);
 		}
 		else if (source == exit)
 		{

@@ -1,14 +1,15 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 21, 2016
+ * Last Edit: May 5, 2016
  * Description: Class for reading lines from a text file and storing each line into an ArrayList of strings.
  */
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +19,11 @@ public class ReadFile
 	{
 		List<String> output = new ArrayList<String>();
 
-		Path filePath = Paths.get(inputFile);
 		try
 		{
+			Path filePath = Paths.get(inputFile);
 			BufferedReader reader = Files.newBufferedReader(filePath);
+
 			try
 			{
 				String line = null;
@@ -34,7 +36,7 @@ public class ReadFile
 			catch (IOException x)
 			{
 				System.err.format("ERROR: Could not open the input file. [%s]\n", x);
-				System.exit(2);
+				System.exit(3);
 			}
 			finally
 			{
@@ -46,14 +48,19 @@ public class ReadFile
 				catch (IOException x)
 				{
 					System.err.format("ERROR: Could not close the input file. [%s]\n", x);
-					System.exit(3);
+					System.exit(4);
 				}
 			}
 		}
+		catch (InvalidPathException x)
+		{
+			System.err.format("FATAL ERROR: Could not convert path string to a Path. [%s]\n", x);
+			System.exit(1);
+		}
 		catch (IOException x)
 		{
-			System.err.format("ERROR: Could not find the input file. Use --help for usage details. [%s]\n", x);
-			System.exit(1);
+			System.err.format("ERROR: Could not find the input file. Use --help flag for usage details. [%s]\n", x);
+			System.exit(2);
 		}
 
 		return output;

@@ -1,14 +1,15 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Apr 21, 2016
- * Description: Class for writing lines from the list of coordinates, to a data file.
+ * Last Edit: May 5, 2016
+ * Description: Class for writing lines from a list of coordinates, to a data file.
  */
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +17,13 @@ public class WriteFile
 {
 	public static void WF(List<Coordinate<Double>> input, int originalNodes)
 	{
-		Path original = Paths.get("./output/original.dat");
-		Path additional = Paths.get("./output/additional.dat");
-
 		try
 		{
+			Path original = Paths.get("./output/original.dat");
+			Path additional = Paths.get("./output/additional.dat");
 			BufferedWriter writer1 = Files.newBufferedWriter(original);
 			BufferedWriter writer2 = Files.newBufferedWriter(additional);
+
 			try
 			{
 				String X = null, Y = null, datastring = null;
@@ -46,7 +47,7 @@ public class WriteFile
 			catch (IOException x)
 			{
 				System.err.format("ERROR: Could not open the output file. [%s]\n", x);
-				System.exit(0);
+				System.exit(103);
 			}
 			finally
 			{
@@ -60,14 +61,19 @@ public class WriteFile
 				catch (IOException x)
 				{
 					System.err.format("ERROR: Could not close the output file. [%s]\n", x);
-					System.exit(0);
+					System.exit(104);
 				}
 			}
 		}
+		catch (InvalidPathException x)
+		{
+			System.err.format("FATAL ERROR: Could not convert path string to a Path. [%s]\n", x);
+			System.exit(101);
+		}
 		catch (IOException x)
 		{
-			System.err.format("ERROR: Could not find the output file. This should NEVER occur. [%s]\n", x);
-			System.exit(0);
+			System.err.format("FATAL ERROR: Could not find the output file. [%s]\n", x);
+			System.exit(102);
 		}
 	}
 }
