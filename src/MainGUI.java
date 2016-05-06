@@ -183,7 +183,6 @@ public class MainGUI extends JFrame implements ActionListener
 	public static void main(String[] args)
 	{
 		MainGUI app = new MainGUI();
-
 	}
 
 	@Override
@@ -215,6 +214,7 @@ public class MainGUI extends JFrame implements ActionListener
 		else if (source == graph)
 		{
 			TransformScale graph = new TransformScale(dataPoints, originalPoints);
+			graph.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 		else if (source == exit)
 		{

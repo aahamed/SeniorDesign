@@ -40,6 +40,7 @@ public class TransformScale extends JFrame
 		setSize(500, 500);
 		setVisible(true);
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public class Graph extends JComponent
@@ -167,9 +168,11 @@ public class TransformScale extends JFrame
 
 	public static void main(String[] args)
 	{
-		List<Coordinate<Double>> testPoints = new ArrayList<Coordinate<Double>>();
-		int originalTestPoints = 0;
+		List<Coordinate<Double>> originalNodes = ParseData.NodeList("./output/original.dat");
+		List<Coordinate<Double>> additionalNodes = ParseData.NodeList("./output/additional.dat");
+		int originalPoints = originalNodes.size();
+		originalNodes.addAll(additionalNodes);
 
-		TransformScale test = new TransformScale(testPoints, originalTestPoints);
+		TransformScale test = new TransformScale(originalNodes, originalPoints);
 	}
 }

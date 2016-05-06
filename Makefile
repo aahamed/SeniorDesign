@@ -34,6 +34,9 @@ all:
 run:
 	java $(CP) MainGUI
 
+graph:
+	java $(CP) TransformScale
+
 clean:
 	rm -rf $(BIN)*.class
 
@@ -101,12 +104,6 @@ testMain2:
 
 testMain3:
 	java $(CP) MainBody -m -p -i ./input/min.txt
-
-graphFinal:
-	gnuplot -persist $(GP)graph.gnu
-
-graphFinalPNG:
-	gnuplot -persist $(GP)graphpng.gnu
 
 testJunit: $(TEST)TestJunit.java $(TEST)TestRunner.java
 	javac $(CP) $(ODIR) $(TEST)TestJunit.java $(TEST)TestRunner.java

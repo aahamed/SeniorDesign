@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: March 28, 2016
+ * Last Edit: May 5, 2016
  * Description: Class for parsing and converting GPS coordinates or MATLAB coordinates into latitude and longitude format.
  */
 
@@ -63,6 +63,27 @@ public class ParseData
 				line.close();
 				output.add(new Coordinate<Double>(lat, lon));
 			}
+		}
+
+		return output;
+	}
+
+	public static List<Coordinate<Double>> NodeList(String inputFile)
+	{
+		List<Coordinate<Double>> output = new ArrayList<Coordinate<Double>>();
+		List<String> fileData = ReadFile.RF(inputFile);
+
+		double mat1, mat2;
+
+		for (int c = 0; c < fileData.size(); c++)
+		{
+			Scanner line = new Scanner(fileData.get(c));
+
+			mat1 = Double.parseDouble(line.next());
+			mat2 = Double.parseDouble(line.next());
+
+			line.close();
+			output.add(new Coordinate<Double>(mat1, mat2));
 		}
 
 		return output;
