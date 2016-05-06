@@ -91,11 +91,10 @@ Known Issues
 ------------
 * Kruskal's algorithm option has a few edge cases that sometimes causes inaccurate results
 * Currently does not output GPS coordinates when the input has GPS coordinates
-* GUI currently has no graphing feature implemented
 
 Sources
 -------
 * Based off the work from Kai Ding and Professor Homayoun Yousefi'zadeh from University of California, Irvine
 	* Can be contacted at [kaid1,hyousefi]@uci.edu
 * Java matrix operations library obtained from [here](http://math.nist.gov/javanumerics/jama/)
-* Mercator mapping method based off the Elliptical Mercator script from [here](http://wiki.openstreetmap.org/wiki/Mercator#Elliptical_Mercator)
+* Mercator mapping class based off the elliptical Mercator Java implementation from [here](http://wiki.openstreetmap.org/wiki/Mercator#Java_Implementation)
