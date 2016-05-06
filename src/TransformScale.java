@@ -131,9 +131,9 @@ public class TransformScale extends JFrame
 				double X ,Y;
 				int X1,Y1;
 
-				for (int i = 0; i < GlobalConstants.n; i++)
+				for (int i = 0; i < originalPoints; i++)
 				{
-					String fileName = "./bin/circle.png";
+					String fileName = "./src/O.png";
 					Image img = getToolkit().getImage(fileName);
 					AffineTransform aTran = new AffineTransform();
 					X = dataPoints.get(i).getX();
@@ -146,9 +146,9 @@ public class TransformScale extends JFrame
 				}
 				int entries = dataPoints.size();
 
-				for (int i = 10; i < entries; i++)
+				for (int i = originalPoints; i < entries; i++)
 				{
-					String fileName2 = "./bin/X.png";
+					String fileName2 = "./src/X.png";
 					Image img2 = getToolkit().getImage(fileName2);
 					AffineTransform aTran = new AffineTransform();
 					X = dataPoints.get(i).getX();
