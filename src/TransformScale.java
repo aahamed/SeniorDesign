@@ -1,7 +1,7 @@
 /*
  * Author: Shuai Zheng
  * Edited By: Josue Galeas
- * Last Edit: May 5, 2016
+ * Last Edit: May 8, 2016
  * Description: Class for graphing that data points.
  */
 
@@ -170,9 +170,10 @@ public class TransformScale extends JFrame
 	{
 		List<Coordinate<Double>> originalNodes = ParseData.NodeList("./output/original.dat");
 		List<Coordinate<Double>> additionalNodes = ParseData.NodeList("./output/additional.dat");
-		int originalPoints = originalNodes.size();
+
+		int numOriginalNodes = originalNodes.size();
 		originalNodes.addAll(additionalNodes);
 
-		TransformScale test = new TransformScale(originalNodes, originalPoints);
+		TransformScale GraphWindow = new TransformScale(originalNodes, numOriginalNodes);
 	}
 }

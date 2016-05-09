@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: May 5, 2016
+ * Last Edit: May 8, 2016
  * Description: Class for reading lines from a text file and storing each line into an ArrayList of strings.
  */
 
@@ -35,7 +35,7 @@ public class ReadFile
 			}
 			catch (IOException x)
 			{
-				System.err.format("ERROR: Could not open the input file. [%s]\n", x);
+				System.err.format("ERROR: Could not open the input file.\n[%s]\n", x);
 				System.exit(3);
 			}
 			finally
@@ -47,19 +47,19 @@ public class ReadFile
 				}
 				catch (IOException x)
 				{
-					System.err.format("ERROR: Could not close the input file. [%s]\n", x);
+					System.err.format("ERROR: Could not close the input file.\n[%s]\n", x);
 					System.exit(4);
 				}
 			}
 		}
 		catch (InvalidPathException x)
 		{
-			System.err.format("FATAL ERROR: Could not convert path string to a Path. [%s]\n", x);
+			System.err.format("FATAL ERROR: Could not convert path string to a Path.\n[%s]\n", x);
 			System.exit(1);
 		}
 		catch (IOException x)
 		{
-			System.err.format("ERROR: Could not find the input file. Use --help flag for usage details. [%s]\n", x);
+			System.err.format("ERROR: Could not find the input file. Use --help flag for usage details.\n[%s]\n", x);
 			System.exit(2);
 		}
 

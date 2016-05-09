@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: May 5, 2016
+ * Last Edit: May 8, 2016
  * Description: Class for writing lines from a list of coordinates, to a data file.
  */
 
@@ -46,7 +46,7 @@ public class WriteFile
 			}
 			catch (IOException x)
 			{
-				System.err.format("ERROR: Could not open the output file. [%s]\n", x);
+				System.err.format("ERROR: Could not open the output file.\n[%s]\n", x);
 				System.exit(103);
 			}
 			finally
@@ -60,19 +60,19 @@ public class WriteFile
 				}
 				catch (IOException x)
 				{
-					System.err.format("ERROR: Could not close the output file. [%s]\n", x);
+					System.err.format("ERROR: Could not close the output file.\n[%s]\n", x);
 					System.exit(104);
 				}
 			}
 		}
 		catch (InvalidPathException x)
 		{
-			System.err.format("FATAL ERROR: Could not convert path string to a Path. [%s]\n", x);
+			System.err.format("FATAL ERROR: Could not convert path string to a Path.\n[%s]\n", x);
 			System.exit(101);
 		}
 		catch (IOException x)
 		{
-			System.err.format("FATAL ERROR: Could not find the output file. [%s]\n", x);
+			System.err.format("FATAL ERROR: Could not find the output file.\n[%s]\n", x);
 			System.exit(102);
 		}
 	}

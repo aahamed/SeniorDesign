@@ -9,7 +9,7 @@ ODIR = -d $(BIN)
 OS = $(shell uname)
 XLINT = -Xlint:unchecked
 
-# Determine OS for CP #
+# Determine 'CP' based on OS #
 
 ifeq '$(OS)' 'Windows_NT'
 	# For Windows
@@ -21,7 +21,7 @@ else ifeq '$(OS)' 'Linux'
 	# For Linux
 	CP = -cp '$(BIN):$(LIB)'
 else
-	echo Unsupported OS: Add condition for your OS.
+	echo Unknown OS. Add condition for your OS.
 endif
 
 ### Make Rules ###
@@ -30,6 +30,9 @@ endif
 
 all:
 	javac $(CP) $(ODIR) $(SRC)*.java
+
+help:
+	java $(CP) MainBody --help
 
 run:
 	java $(CP) MainGUI
@@ -92,9 +95,6 @@ InitMax: Coordinate GlobalConstants HCS PrimMST
 
 LocateM2:
 	javac $(CP) $(ODIR) $(SRC)LocateM2.java
-
-Main: $(SRC)MainBody.java
-	javac $(CP) $(ODIR) $(SRC)MainBody.java
 
 testMain:
 	java $(CP) MainBody -m -k -i ./input/min.txt
