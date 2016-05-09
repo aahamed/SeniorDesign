@@ -90,6 +90,7 @@ dnf install gnuplot
 Known Issues
 ------------
 * Kruskal's algorithm option has a few edge cases that sometimes causes inaccurate results
+* MainBody has a bug that causes extra intermediate nodes to be placed
 * Currently does not output GPS coordinates when the input has GPS coordinates
 
 Sources
