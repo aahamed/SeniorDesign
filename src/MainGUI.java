@@ -4,26 +4,24 @@
  * Description: GUI for easy use of the connectivity algorithm.
  */
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JRadioButton;
-import javax.swing.JOptionPane;
-import java.awt.GridLayout;
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Color;
-
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class MainGUI extends JFrame implements ActionListener
@@ -50,26 +48,25 @@ public class MainGUI extends JFrame implements ActionListener
 		questions.setLayout(new GridLayout(1, 2));
 		questions.add(new QuestionGPS());
 		questions.add(new QuestionMST());
-
 		add(questions);
 
 		JPanel actions = new JPanel(new GridLayout(1, 3));
 		start = new JButton("Run");
 		graph = new JButton("Graph");
 		exit = new JButton("Exit");
-
 		start.addActionListener(this);
 		graph.addActionListener(this);
 		graph.setEnabled(false);
 		exit.addActionListener(this);
-
 		actions.add(start);
 		actions.add(graph);
 		actions.add(exit);
+		actions.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Actions"));
 		add(actions);
 
-		setVisible(true);
 		pack();
+		setResizable(false);
+		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -182,7 +179,7 @@ public class MainGUI extends JFrame implements ActionListener
 
 	public static void main(String[] args)
 	{
-		MainGUI app = new MainGUI();
+		new MainGUI();
 	}
 
 	@Override
