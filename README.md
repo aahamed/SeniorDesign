@@ -9,17 +9,19 @@ Software Dependencies
 * GNUplot (version 4.6 patchlevel 6 or greater)
 	* **Note:** See installation instructions below
 
-Usage
------
+Command-Line Usage
+------------------
 1. Navigate to the project's root directory, and compile the codebase with: `make all`
 	* **Note:** If you do not wish to use Make, use:
 		* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
 		* OS X/Linux: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
-2. Navigate to `./bin`, and use `java MainBody`
-	* Use `--help` flag to see usage details
-	* Usage details are:
+2. Run the code with:
+	* Windows: `java -cp './bin/;./lib/*' MainBody`
+	* OS X/Linux: `java -cp './bin/:./lib/*' MainBody`
+3. Set options with flags:
+	* Use `--help` flag to see usage details:
 		```
-		Usage: java MainBody [--help] [<args>] [-i <path>]
+		Usage: MainBody [--help] [<args>] [-i <path>]
 
 		Input file:
 		-i followed by the path to input text file
@@ -33,13 +35,23 @@ Usage
 		-p for Prim's algorithm
 		```
 	* Input text file should be formatted as follows:
-		* See `./src/input/in.txt` for an example of how to set up GPS coordinates
-		* See `./src/input/min.txt` for an example of how to set up MATLAB generated coordinates
-	* **Note:** Prim's algorithm option is currently bugged, use only Kruskal's algorithm for now
-3. To plot the results, navigate back to the project root directory, and use: `make graphFinal`
+		* See `./input/in.txt` for an example of how to set up GPS coordinates
+		* See `./input/min.txt` for an example of how to set up MATLAB generated coordinates
+4. To plot the results using GNUplot, use: `make graphFinal`
 	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graph.gnu`
-4. To save the plot to a PNG file, use: `make graphFinalPNG`
+5. To save the plot directly to a PNG file, use: `make graphFinalPNG`
 	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graphpng.gnu`
+
+GUI Usage
+---------
+1. Navigate to the project's root directory, and compile the codebase with: `make all`
+	* **Note:** If you do not wish to use Make, use:
+		* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
+		* OS X/Linux: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
+2. Run the GUI with: `make run`
+	* **Note:** If you do not wish to use Make, use:
+		* Windows: `java -cp './bin/;./lib/*' MainGUI`
+		* OS X/Linux: `java -cp './bin/:./lib/*' MainGUI`
 
 GNUplot Installation
 --------------------
@@ -77,11 +89,13 @@ dnf install gnuplot
 
 Known Issues
 ------------
-* Prim's algorithm option is currently bugged, use only Kruskal's algorithm for now
 * Kruskal's algorithm option has a few edge cases that sometimes causes inaccurate results
+* MainBody has a bug that causes extra intermediate nodes to be placed
 * Currently does not output GPS coordinates when the input has GPS coordinates
 
 Sources
 -------
+* Based off the work from Kai Ding and Professor Homayoun Yousefi'zadeh from University of California, Irvine
+	* Can be contacted at [kaid1,hyousefi]@uci.edu
 * Java matrix operations library obtained from [here](http://math.nist.gov/javanumerics/jama/)
-* Mercator mapping method based off the Elliptical Mercator script from [here](http://wiki.openstreetmap.org/wiki/Mercator#Elliptical_Mercator)
+* Mercator mapping class based off the elliptical Mercator Java implementation from [here](http://wiki.openstreetmap.org/wiki/Mercator#Java_Implementation)

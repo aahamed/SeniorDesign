@@ -1,22 +1,21 @@
 /*
-* Author: Aadil Ahamed
-* InitMaxOut.java
-* Description: Packages the output of InitMax.java
-*/
+ * Author: Aadil Ahamed
+ * Last Edit: Apr 13, 2016
+ * Description: Packages the output of InitMax
+ */
+
 import java.util.List;
 
 public class InitMaxOut
 {
     private List<Coordinate<Integer>> HCSList;
     private List<List<Integer>> DMatrix;
-    private int[] parent;  // parent pointer representation of mst
 	private List<Coordinate<Integer>> ST;
     
-    public InitMaxOut(List<Coordinate<Integer>> HCSList, List<List<Integer>> DMatrix, int[] parent, List<Coordinate<Integer>> ST)
+    public InitMaxOut(List<Coordinate<Integer>> HCSList, List<List<Integer>> DMatrix, List<Coordinate<Integer>> ST)
     {
         this.HCSList = HCSList;
         this.DMatrix = DMatrix;
-        this.parent = parent;
 		this.ST = ST;
     }
     
@@ -39,17 +38,7 @@ public class InitMaxOut
         DMatrix = l;
     }
     
-    public int[] getParent()
-    {
-        return parent;
-    }
-    
-    public void setParent(int[] p)
-    {
-        parent = p;
-    }
-
-	public List<Coordinate<Integer>> getST()
+    public List<Coordinate<Integer>> getST()
 	{
 		return ST;
 	}
@@ -58,5 +47,4 @@ public class InitMaxOut
 	{
 		ST = l;
 	}
-    
 }

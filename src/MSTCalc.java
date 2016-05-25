@@ -1,6 +1,6 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 1, 2016
+ * Last Edit: Apr 21, 2016
  * Description: Class which uses an MST algorithm and generates the corresponding data structures.
  */
 
@@ -9,136 +9,81 @@ import java.util.List;
 
 public class MSTCalc
 {
-	private MSTOut mstinfo;
-	private List<List<Integer>> D_matrix;
-	private List<Coordinate<Integer>> HCSlist;
-	private Coordinate<Double> MMcom;
-	private List<Coordinate<Double>> MMlist;
-
-	public MSTCalc(String input, boolean matlab, boolean mstalgo)
+	public static MSTOut MC(DMOut DMatrices, boolean mstalgo)
 	{
-		Distance_matrix dm = new Distance_matrix(input, matlab);
-		D_matrix = dm.getMatrix("D");
-		HCSlist = dm.getHCSlist();
-		MMcom = dm.getMMcom();
-		MMlist = dm.getMMlist();
+		MSTOut output;
 
 		if (mstalgo)
 		{
-			int entries = dm.getSize();
-			int[][] graph = List_ops.ll2array(dm.getMatrix("w"));
+			int[][] graph = ListOps.ll2array(DMatrices.getwM());
 			int[] parent = PrimMST.primMST(graph);
 
-			mstinfo = primMapper(parent, graph, entries);
+			output = primMapper(parent, graph, DMatrices.getDM().size());
 		}
 		else
-			mstinfo = Kruskal.MST(dm.getMatrix("X"), dm.getMatrix("w"));
+			output = Kruskal.MST(DMatrices.getXM(), DMatrices.getwM());
+
+		return output;
 	}
 
-	public MSTOut getMST()
+	private static MSTOut primMapper(int[] parent, int[][] graph, int entries)
 	{
-		return mstinfo;
-	}
-
-	public MSTOut primMapper(int[] a, int[][] b, int c)
-	{
-		MSTOut output;
 		int w_st = 0;
 		List<Coordinate<Integer>> ST = new ArrayList<Coordinate<Integer>>();
 		List<List<Integer>> X_st = new ArrayList<List<Integer>>();
 
-		for (int x = 0 ; x < c; x++)
+		for (int x = 0 ; x < entries; x++)
 		{
 			X_st.add(new ArrayList<Integer>());
 
-			for (int y = 0; y < c; y++)
+			for (int y = 0; y < entries; y++)
 			{
 				X_st.get(x).add(0);
 			}
 		}
 
-		for (int i = 1; i < a.length; i++)
+		for (int i = 1; i < parent.length; i++)
 		{
-			X_st.get(a[i]).set(i, 1);
-			X_st.get(i).set(a[i], 1);
-			w_st += b[a[i]][i];
+			X_st.get(parent[i]).set(i, 1);
+			X_st.get(i).set(parent[i], 1);
+			w_st += graph[parent[i]][i];
 		}
 
-		for (int d = 1; d < a.length; d++)
+		for (int j = 1; j < parent.length; j++)
 		{
-			ST.add(new Coordinate<Integer>((a[d] + 1), (d + 1)));
+			if ((parent[j] + 1) < (j + 1))
+				ST.add(new Coordinate<Integer>((parent[j] + 1), (j + 1)));
+			if ((parent[j] + 1) > (j + 1))
+				ST.add(new Coordinate<Integer>((j + 1), (parent[j] + 1)));
 		}
 
-		output = new MSTOut(w_st, ST, X_st);
-
-		return output;
+		return new MSTOut(w_st, ST, X_st);
 	}
 
-	public List<List<Integer>> getDM()
+	public static void main(String[] args)
 	{
-		return D_matrix;
-	}
+		List<Coordinate<Double>> test1 = MercatorMapping.MM(args[0], true);
+		// True is Matlab, false is GPS
+		Coordinate<Double> test1COM = ListOps.getCOM(test1);
+		List<Coordinate<Integer>> test2 = InitialSetup.IS(test1);
+		DMOut test3 = DistanceMatrix.DM(test2);
+		MSTOut test4 = MC(test3, false);
+		// True is Prim, false is Kruskal
 
-	public int[][] getDMArray()
-	{
-		return List_ops.ll2array(D_matrix);
-	}
+		System.out.println(">> The mapped data has " + test1.size() + " entries.");
+		System.out.println(">> The mapped data has COM:");
+		System.out.println(ListOps.getCOM(test1));
+		System.out.println(">> The mapped data contains:");
+		ListOps.printDoubleCoords(test1);
 
-	public List<Coordinate<Integer>> getHCS()
-	{
-		return HCSlist;
-	}
+		System.out.println(">> The HCS data has " + test2.size() + " entries.");
+		System.out.println(">> The HCS data contains:");
+		ListOps.printIntCoords(test2);
 
-	public int[][] getHCSArray()
-	{
-		return List_ops.lc2array(HCSlist);
-	}
+		System.out.println(">> The DM is:");
+		ListOps.printMatrix(test3.getDM());
 
-	public Coordinate<Double> getMMcom()
-	{
-		return MMcom;
-	}
-
-	public List<Coordinate<Double>> getMMlist()
-	{
-		return MMlist;
-	}
-
-	public void printMST()
-	{
-		mstinfo.printAll();
-	}
-
-	public void printDM()
-	{
-		System.out.println(">> D is:");
-		List_ops.print_matrix(D_matrix);
-	}
-
-	public void printHCS()
-	{
-		System.out.println(">> HCS normalized points (u, v) are:");
-		List_ops.print_coordlist_int(HCSlist);
-	}
-
-	public void printMMcom()
-	{
-		System.out.println(">> Center of mass is:");
-		System.out.println(MMcom);
-	}
-
-	public void printMMlist()
-	{
-		System.out.println(">> Input points (x_r, y_r) are:");
-		List_ops.print_coordlist_double(MMlist);
-	}
-
-	public void printAll()
-	{
-		printMST();
-		printDM();
-		printHCS();
-		printMMcom();
-		printMMlist();
+		System.out.println(">> The MST information is:");
+		test4.printAll();
 	}
 }

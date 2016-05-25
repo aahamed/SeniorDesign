@@ -1,46 +1,49 @@
-# Top Level Makefile
-# Put rules for compilation/running here
+### Top Level Makefile ###
 
-BIN=./bin/
-SRC=./src/
-LIB=./lib/*
-TEST=./test/
-GP=./gnuplot/
-CP=-cp '$(BIN);$(LIB)'
-ODIR=-d $(BIN)
-OSNAME = $(OS)
+BIN = ./bin/
+LIB = ./lib/*
+SRC = ./src/
+TEST = ./test/
+GP = ./gnuplot/
+ODIR = -d $(BIN)
+OS = $(shell uname)
 XLINT = -Xlint:unchecked
 
-# Determine OS
+# Determine 'CP' based on OS #
 
 ifeq '$(OS)' 'Windows_NT'
-	# set variables for windows
-	OSNAME=$(OS)
-	CP=-cp '$(BIN);$(LIB)'
+	# For Windows
+	CP = -cp '$(BIN);$(LIB)'
+else ifeq '$(OS)' 'Darwin'
+	# For OS X
+	CP = -cp '$(BIN):$(LIB)'
+else ifeq '$(OS)' 'Linux'
+	# For Linux
+	CP = -cp '$(BIN):$(LIB)'
 else
-	# get OS name
-	OSNAME=$(shell uname)
-	# set variables according to OS
-
-	# Mac OS X
-	ifeq '$(OSNAME)' 'Darwin'
-		CP=-cp '$(BIN):$(LIB)'
-	endif
-
-	# Linux
-	ifeq '$(OSNAME)' 'Linux'
-		CP=-cp '$(BIN):$(LIB)'
-	endif
+	echo Unknown OS. Add condition for your OS.
 endif
 
+### Make Rules ###
 
-#Make Rules
+# General #
 
 all:
 	javac $(CP) $(ODIR) $(SRC)*.java
 
+help:
+	java $(CP) MainBody --help
+
+run:
+	java $(CP) MainGUI
+
+graph:
+	java $(CP) TransformScale
+
 clean:
 	rm -rf $(BIN)*.class
+
+# TODO: Everything Else #
 
 GlobalConstants: $(SRC)GlobalConstants.java
 	javac $(CP) $(ODIR) $(SRC)GlobalConstants.java
@@ -93,26 +96,14 @@ InitMax: Coordinate GlobalConstants HCS PrimMST
 LocateM2:
 	javac $(CP) $(ODIR) $(SRC)LocateM2.java
 
-Main: $(SRC)MainBody.java
-	javac $(CP) $(ODIR) $(SRC)MainBody.java
-
 testMain:
-	java $(CP) MainBody -m -k -i ./src/input/min.txt
+	java $(CP) MainBody -m -k -i ./input/min.txt
 
-graphInit:
-	gnuplot -persist $(GP)initial.gnu
+testMain2:
+	java $(CP) MainBody -g -k -i ./input/in.txt
 
-graphFinal:
-	gnuplot -persist $(GP)graph.gnu
-
-graphFinalPNG:
-	gnuplot -persist $(GP)graphpng.gnu
-
-echo_osname:
-	echo $(OSNAME)
-
-echo_cp:
-	echo $(CP)
+testMain3:
+	java $(CP) MainBody -m -p -i ./input/min.txt
 
 testJunit: $(TEST)TestJunit.java $(TEST)TestRunner.java
 	javac $(CP) $(ODIR) $(TEST)TestJunit.java $(TEST)TestRunner.java

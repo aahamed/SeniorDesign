@@ -1,100 +1,12 @@
 /*
  * Author: Josue Galeas
- * Last Edit: Mar 6, 2016
- * Description: Main body of the algorithm.
+ * Last Edit: May 5, 2016
+ * Description: Main body of the connectivity algorithm.
  */
 
 import java.util.ArrayList;
 import java.util.List;
 import Jama.Matrix;
-
-class ReshapeDM
-{
-	public static void Type1(List<List<Integer>> DM, int[] RCV)
-	{
-		int entries = DM.size();
-		int row = RCV[0] - 1;
-		int col = RCV[1] - 1;
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			if ((i == row) || (i == col))
-				DM.get(i).add(GlobalConstants.H);
-			else
-				DM.get(i).add(0);
-		}
-		for (int j = 0; j < (entries + 1); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		DM.add(temp);
-	}
-
-	public static void Type2(List<List<Integer>> DM, int[] RCV)
-	{
-		int entries = DM.size();
-		int row = RCV[0] - 1;
-		int col = RCV[1] - 1;
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			if ((i == row) || (i == col))
-			{
-				DM.get(i).add(GlobalConstants.H);
-				DM.get(i).add(GlobalConstants.H);
-			}
-			else
-			{
-				DM.get(i).add(0);
-				DM.get(i).add(0);
-			}
-		}
-		for (int j = 0; j < (entries + 2); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		DM.add(temp);
-		DM.add(temp);
-	}
-
-	public static void Type3(List<List<Integer>> DM)
-	{
-		int entries = DM.size();
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			DM.get(i).add(1);
-			DM.get(i).add(1);
-		}
-		for (int j = 0; j < (entries + 2); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		DM.add(temp);
-		DM.add(temp);
-	}
-
-	public static void Type4(List<List<Integer>> DM)
-	{
-		int entries = DM.size();
-		List<Integer> temp = new ArrayList<Integer>();
-
-		for (int i = 0; i < entries; i++)
-		{
-			DM.get(i).add(0);
-		}
-		for (int j = 0; j < (entries + 1); j++)
-		{
-			temp.add(GlobalConstants.TRANS_RANGE);
-		}
-		DM.get(entries - 1).set(entries, GlobalConstants.H);
-		DM.get(entries - 2).set(entries, GlobalConstants.H);
-		DM.add(temp);
-	}
-}
 
 public class MainBody
 {
@@ -102,55 +14,31 @@ public class MainBody
 	private static boolean q_matlab;
 	private static boolean q_mstalgo;
 
+	private static List<Coordinate<Double>> XYr;
+	private static int originalNodes;
+
 	private static List<Coordinate<Double>> CenList1 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> CenList2 = new ArrayList<Coordinate<Double>>();
 	private static List<Coordinate<Double>> C1C2List = new ArrayList<Coordinate<Double>>();
 
-	private static int[] minE(List<List<Integer>> a)
+	private static int[] maxMST(List<Coordinate<Integer>> MST, List<List<Integer>> DM)
 	{
 		int[] output = new int[3];
-		int x_entries = a.size();
-		int y_entries = a.get(0).size();
-		int minv = Integer.MAX_VALUE;
-		int row = 0, col = 0;
+		int row = 0, col = 0, maxv = 0;
+		int xST = 0, yST = 0;
 
-		for (int x = 0; x < x_entries; x++)
+		for (int c = 0; c < MST.size(); c++)
 		{
-			for (int y = 0; y < y_entries; y++)
+			xST = MST.get(c).getX() - 1;
+			yST = MST.get(c).getY() - 1;
+
+			// Temporary fix for those weird extra ANs in the final graph
+			// use an if and if else by placing the smaller endpoint in the ST coordinate first
+			if (DM.get(xST).get(yST) > maxv)
 			{
-				if (a.get(x).get(y) < minv)
-				{
-					minv = a.get(x).get(y);
-					row = x;
-					col = y;
-				}
-			}
-		}
-
-		output[0] = row + 1;
-		output[1] = col + 1;
-		output[2] = minv;
-
-		return output;
-	}
-
-	private static int[] maxMST(List<Coordinate<Integer>> a, List<List<Integer>> b)
-	{
-		int[] output = new int[3];
-		int len = a.size();
-		int maxv = 0;
-		int row = 0, col = 0;
-		int x_st = 0, y_st = 0;
-
-		for (int c = 0; c < len; c++)
-		{
-			x_st = a.get(c).getX() - 1;
-			y_st = a.get(c).getY() - 1;
-			if (b.get(x_st).get(y_st) > maxv)
-			{
-				maxv = b.get(x_st).get(y_st);
-				row = x_st;
-				col = y_st;
+				maxv = DM.get(xST).get(yST);
+				row = xST;
+				col = yST;
 			}
 		}
 
@@ -161,14 +49,14 @@ public class MainBody
 		return output;
 	}
 
-	private static int[] getUVs(List<Coordinate<Integer>> a, int[] b)
+	private static int[] getUVs(List<Coordinate<Integer>> UV, int[] rcv)
 	{
 		int[] output = new int[4];
 
-		output[0] = a.get(b[0] - 1).getX(); // u(row)
-		output[1] = a.get(b[0] - 1).getY(); // v(row)
-		output[2] = a.get(b[1] - 1).getX(); // u(col)
-		output[3] = a.get(b[1] - 1).getY(); // v(col)
+		output[0] = UV.get(rcv[0] - 1).getX(); // u(row)
+		output[1] = UV.get(rcv[0] - 1).getY(); // v(row)
+		output[2] = UV.get(rcv[1] - 1).getX(); // u(col)
+		output[3] = UV.get(rcv[1] - 1).getY(); // v(col)
 
 		return output;
 	}
@@ -185,16 +73,14 @@ public class MainBody
 		return output;
 	}
 
-	private static List<Coordinate<Integer>> PrimPrep(int[] a)
+	public static List<Coordinate<Double>> getXYr()
 	{
-		List<Coordinate<Integer>> output = new ArrayList<Coordinate<Integer>>();
+		return XYr;
+	}
 
-		for (int i = 1; i < a.length; i++)
-		{
-			output.add(new Coordinate<Integer>((a[i] + 1), (i + 1)));
-		}
-
-		return output;
+	public static int getOriginalNodes()
+	{
+		return originalNodes;
 	}
 
 	private static void options(String[] a)
@@ -274,7 +160,7 @@ public class MainBody
 
 	private static void helpMenu()
 	{
-		System.out.println("Usage: java MainBody [--help] [<args>] [-i <path>]");
+		System.out.println("Usage: MainBody [--help] [<args>] [-i <path>]");
 		System.out.println();
 		System.out.println("Input file:");
 		System.out.println("    -i followed by the path to input text file");
@@ -294,22 +180,21 @@ public class MainBody
 		options(args);
 
 		// Step 1: Find out the distance matrix
+		XYr = MercatorMapping.MM(input_filename, q_matlab);
+		Coordinate<Double> XYc = ListOps.getCOM(XYr);
+		List<Coordinate<Integer>> UV = InitialSetup.IS(XYr);
+		DMOut DMatrices = DistanceMatrix.DM(UV);
 		// Calculating Minimal Spanning Tree
-		MSTCalc mc = new MSTCalc(input_filename, q_matlab, q_mstalgo);
-		mc.printAll(); // TODO: For debugging
-		System.out.println();
+		MSTOut Tree = MSTCalc.MC(DMatrices, q_mstalgo);
 
 		// Place ANs to achieve connection
-		List<Coordinate<Integer>> UV = mc.getHCS();
 		int[] rcv, pq;
 		Coordinate<Integer> p = null, q = null;
 		Coordinate<Double> cen1, cen2;
-		MSTOut Tree = mc.getMST();
 		List<Coordinate<Integer>> ST = Tree.getST();
-		List<List<Integer>> D2 = mc.getDM();
+		List<List<Integer>> D2 = DMatrices.getDM();
 		GlobalConstants.n = D2.size();
-		Coordinate<Double> XYc = mc.getMMcom();
-		List<Coordinate<Double>> XYr = mc.getMMlist();
+		originalNodes = GlobalConstants.n;
 		boolean exit = false;
 		// Pointer if-statement
 		int Nsign;
@@ -327,7 +212,6 @@ public class MainBody
 		Coordinate<Integer> AN, AN2, O = new Coordinate<Integer>(0, 0);
 		Coordinate<Double> C1, C2;
 		double num;
-		int[][] HOPE;
 
 		System.out.println(">> Entering IN placement loop."); // TODO: DEBUG
 		while (!exit)
@@ -336,7 +220,7 @@ public class MainBody
 			// Search through the Spanning Tree to pick up the shortest edge
 			rcv = maxMST(ST, D2);
 			System.out.println();
-			System.out.println("Current longest edge is at: (" + rcv[0] + ", " + rcv[1] + "), and that length is: " + rcv[2]);
+			System.out.printf("Current longest edge is at: (%d, %d), and that length is: %d\n", rcv[0], rcv[1], rcv[2]);
 			if (rcv[2] <= GlobalConstants.H)
 				break;
 			// Prepare for Placement
@@ -414,10 +298,9 @@ public class MainBody
 						// the spanning Tree. Meanwhile, the dimension of D2
 						// needs to be RESHAPED
 						ReshapeDM.Type1(D2, rcv);
-						IMOUT = InitMax.initMax(XYr, XYc, D2);
+						IMOUT = InitMax.initMax(XYr, XYc, D2, q_mstalgo);
 						UV = IMOUT.getHCSList();
 						D2 = IMOUT.getDMatrix();
-						// ST = PrimPrep(IMOUT.getParent());
 						ST = IMOUT.getST();
 					}
 				}
@@ -460,10 +343,9 @@ public class MainBody
 					// Update information in distance matrix
 					ReshapeDM.Type2(D2, rcv);
 					D2.get(GlobalConstants.n - 2).set((GlobalConstants.n - 1), GlobalConstants.H);
-					IMOUT = InitMax.initMax(XYr, XYc, D2);
+					IMOUT = InitMax.initMax(XYr, XYc, D2, q_mstalgo);
 					UV = IMOUT.getHCSList();
 					D2 = IMOUT.getDMatrix();
-					// ST = PrimPrep(IMOUT.getParent());
 					ST = IMOUT.getST();
 				}
 				else
@@ -594,31 +476,25 @@ public class MainBody
 							// 	System.out.println("\tRecursive: More than two nodes needed case!"); // TODO: DEBUG
 							base_t = GlobalConstants.n - 3;
 
-							// D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);
-							// D2.get(base_t).set((base_t + 2), GlobalConstants.H);
-							HOPE = List_ops.ll2array(D2); // TODO: WORK-AROUND
-							HOPE[base_t - 1][base_t + 1] = GlobalConstants.H;
-							HOPE[base_t][base_t + 2] = GlobalConstants.H;
-							D2 = List_ops.array2ll(HOPE);
+							D2.get(base_t - 1).set((base_t + 1), GlobalConstants.H);
+							D2.get(base_t).set((base_t + 2), GlobalConstants.H);
 						}
 					}
 
 					// After placement, change the Max Value to be 0 --> R/r
 					D2.get(rcv[0] - 1).set(base, GlobalConstants.H);
 					D2.get(rcv[1] - 1).set((base + 1), GlobalConstants.H);
-					IMOUT = InitMax.initMax(XYr, XYc, D2);
+					IMOUT = InitMax.initMax(XYr, XYc, D2, q_mstalgo);
 					UV = IMOUT.getHCSList();
 					D2 = IMOUT.getDMatrix();
-					// ST = PrimPrep(IMOUT.getParent());
 					ST = IMOUT.getST();
 				}
 			}
 		}
+
 		System.out.println(">> Done with AN placement loop. Algorithm complete."); // TODO: DEBUG
-		System.out.println(">> Final list of node locations:");
-		List_ops.print_coordlist_double(XYr);
-		WriteFile.WF(XYr);
-		System.out.println(">> Original node locations saved in \"./src/output/original.dat\"");
-		System.out.println(">> Additional node locations saved in \"./src/output/additional.dat\"");
+		WriteFile.WF(XYr, originalNodes);
+		System.out.println(">> Original node locations saved in \"./output/original.dat\"");
+		System.out.println(">> Additional node locations saved in \"./output/additional.dat\"");
 	}
 }
