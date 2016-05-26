@@ -9,12 +9,20 @@ Software Dependencies
 * GNUplot (version 4.6 patchlevel 6 or greater)
 	* **Note:** See installation instructions below
 
-Command-Line Usage
-------------------
+GUI Usage
+---------
 1. Navigate to the project's root directory, and compile the codebase with: `make all`
 	* **Note:** If you do not wish to use Make, use:
 		* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
 		* OS X/Linux: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
+2. Run the GUI with: `make run`
+	* **Note:** If you do not wish to use Make, use:
+		* Windows: `java -cp './bin/;./lib/*' MainGUI`
+		* OS X/Linux: `java -cp './bin/:./lib/*' MainGUI`
+
+Command-Line Usage (with Make)
+------------------------------
+1. Navigate to the project's root directory, and compile the codebase with: `make all`
 2. Run the code with:
 	* Windows: `java -cp './bin/;./lib/*' MainBody`
 	* OS X/Linux: `java -cp './bin/:./lib/*' MainBody`
@@ -37,28 +45,46 @@ Command-Line Usage
 	* Input text file should be formatted as follows:
 		* See `./input/in.txt` for an example of how to set up GPS coordinates
 		* See `./input/min.txt` for an example of how to set up MATLAB generated coordinates
-4. To plot the results using GNUplot, use: `make graphFinal`
-	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graph.gnu`
-5. To save the plot directly to a PNG file, use: `make graphFinalPNG`
-	* **Note:** If you do not wish to use Make, use: `gnuplot -persist ./gnuplot/graphpng.gnu`
+4. To plot the results using GNUplot, use: `make graphGNU`
+5. To plot the results using Java instead, use: `make graphJava`
 
-GUI Usage
----------
-1. Navigate to the project's root directory, and compile the codebase with: `make all`
-	* **Note:** If you do not wish to use Make, use:
-		* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
-		* OS X/Linux: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
-2. Run the GUI with: `make run`
-	* **Note:** If you do not wish to use Make, use:
-		* Windows: `java -cp './bin/;./lib/*' MainGUI`
-		* OS X/Linux: `java -cp './bin/:./lib/*' MainGUI`
+Command-Line Usage (without Make)
+------------------------------
+1. Navigate to the project's root directory, and compile the codebase with:
+	* Windows: `javac -cp './bin/;./lib/*' -d ./bin/ ./src/*.java`
+	* OS X/Linux: `javac -cp './bin/:./lib/*' -d ./bin/ ./src/*.java`
+2. Run the code with:
+	* Windows: `java -cp './bin/;./lib/*' MainBody`
+	* OS X/Linux: `java -cp './bin/:./lib/*' MainBody`
+3. Set options with flags:
+	* Use `--help` flag to see usage details:
+		```
+		Usage: MainBody [--help] [<args>] [-i <path>]
+
+		Input file:
+		-i followed by the path to input text file
+
+		Type of input data:
+		-g for GPS coordinates (Default)
+		-m for MATLAB generated coordinates
+
+		MST algorithm to be used:
+		-k for Kruskal's algorithm (Default)
+		-p for Prim's algorithm
+		```
+	* Input text file should be formatted as follows:
+		* See `./input/in.txt` for an example of how to set up GPS coordinates
+		* See `./input/min.txt` for an example of how to set up MATLAB generated coordinates
+4. To plot the results using GNUplot, use: `gnuplot -persist ./gnuplot/graph.gnu`
+5. To plot the results using Java instead, use:
+	* Windows: `java -cp './bin/;./lib/*' TransformScale`
+	* OS X/Linux: `java -cp './bin/:./lib/*' TransformScale`
 
 GNUplot Installation
 --------------------
 ### For Windows:
 * Download and install GNUplot for Windows from [here](https://sourceforge.net/projects/gnuplot/files/gnuplot/)
 * Add GNUplot to your terminal's PATH environment variable so that you can invoke it from the command line
-	* There should be plenty of information online on how to accomplish this
 	* An example of how to do this could be: `export PATH="$PATH:/c/Program Files/gnuplot/bin"`
 
 ### For OS X:

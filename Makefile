@@ -21,7 +21,7 @@ else ifeq '$(OS)' 'Linux'
 	# For Linux
 	CP = -cp '$(BIN):$(LIB)'
 else
-	echo Unknown OS. Add condition for your OS.
+	echo Unknown OS. Add condition for your OS. Use \'shell uname\' to determine your OS.
 endif
 
 ### Make Rules ###
@@ -37,11 +37,16 @@ help:
 run:
 	java $(CP) MainGUI
 
-graph:
-	java $(CP) TransformScale
-
 clean:
 	rm -rf $(BIN)*.class
+
+# Graphing #
+
+graphGNU:
+	gnuplot -persist ./gnuplot/graph.gnu
+
+graphJava:
+	java $(CP) TransformScale
 
 # TODO: Everything Else #
 
